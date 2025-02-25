@@ -1,4 +1,5 @@
-import { s as safe_equals, e as equals, H as HYDRATION_ERROR, g as get_descriptor, r as run_all, i as index_of, d as define_property, a as is_array, b as HYDRATION_START, c as HYDRATION_END, f as array_from, h as render, p as push$1, j as setContext, k as pop$1 } from "./index.js";
+import { s as safe_equals, e as equals, g as get_descriptor, r as run_all, i as index_of, d as define_property, a as is_array, b as array_from } from "./equality.js";
+import { H as HYDRATION_ERROR, a as HYDRATION_START, b as HYDRATION_END, r as render, p as push$1, s as setContext, c as pop$1 } from "./index.js";
 import "clsx";
 const BROWSER = false;
 let base = "";
@@ -1394,7 +1395,7 @@ const options = {
   root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets2 + '/favicon.png" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets2 + '/favicon.png" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<meta name="google-signin-client_id"\n   			  content="import.meta.env.VITE_GOOGLE_SIGNIN_API_KEY"/>\n\n		<script src="https://accounts.google.com/gsi/client" async defer><\/script>\n\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
     error: ({ status, message }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -1466,7 +1467,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "2rjywo"
+  version_hash: "1w80gp"
 };
 async function get_hooks() {
   let handle;

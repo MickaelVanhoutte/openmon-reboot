@@ -1,0 +1,5 @@
+- landing page
+- authent
+- mongoose
+- save / load 
+- recreate game from old openmon

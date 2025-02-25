@@ -4,6 +4,11 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="google-signin-client_id"
+   			  content="import.meta.env.VITE_GOOGLE_SIGNIN_API_KEY"/>
+
+		<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
