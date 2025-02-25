@@ -8,12 +8,6 @@ export const onGoogleScriptLoad = (decodeJwtResponse) => {
             // to decode the credential response.
             const responsePayload = decodeJwtResponse(response.credential);
             console.log('ID: ' + responsePayload.sub);
-            console.log('Full Name: ' + responsePayload.name);
-            console.log('Given Name: ' + responsePayload.given_name);
-            console.log('Family Name: ' + responsePayload.family_name);
-            console.log('Image URL: ' + responsePayload.picture);
-            console.log('Email: ' + responsePayload.email);
-            console.log('Encoded JWT ID token: ' + response.credential);
             document.cookie = `auth=${response.credential}`;
             window.location.reload();
         };
@@ -25,7 +19,6 @@ export const onGoogleScriptLoad = (decodeJwtResponse) => {
             document.getElementById('googleSignIn'),
             { theme: 'outline', size: 'large', text: "signin_with", shape: "rectangular", logo_alignment: "left" } // customization attributes
         );
-        google.accounts.id.prompt(); // also display the One Tap dialog
     } catch { }
 };
 
@@ -38,3 +31,23 @@ export const decodeJwtResponse = (token: string) => {
 
     return JSON.parse(jsonPayload);
 };
+
+export const getUser = (): User => {
+    const cookies = document.cookie.split(';').reduce((res, c) => { const [key, val] = c.trim().split('='); res[key] = val; return res; }
+        , {});
+    const auth = cookies['auth'];
+    let user = null;
+    if (auth) {
+        user = decodeJwtResponse(auth);
+    }
+    return user;
+}
+
+export interface User {
+    sub: string;
+    name: string;
+    given_name: string;
+    family_name: string;
+    picture: string;
+    email: string;
+}

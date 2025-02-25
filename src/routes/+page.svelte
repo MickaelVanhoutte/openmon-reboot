@@ -1,17 +1,17 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { decodeJwtResponse, onGoogleScriptLoad } from '$lib';
+    import { decodeJwtResponse, onGoogleScriptLoad, getUser } from '$lib';
 
-    export let data;
-    //let { user } = $props();
+    let user = null;
   
     onMount(() => {
         onGoogleScriptLoad(decodeJwtResponse);
+        user = getUser();
     });
 </script>
 
-{#if data.user}
-    <p>Logged in as {data.user.email}</p>
+{#if user}
+    <p>Logged in as {user.email}</p>
 {:else}
 
 <div id="googleSignIn"></div>
