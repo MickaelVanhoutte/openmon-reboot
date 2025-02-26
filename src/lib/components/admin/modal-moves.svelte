@@ -29,22 +29,24 @@
     });
 </script>
 
-<div class="flex h-16 items-center gap-5">
-  <SearchMoves bind:selected />
+<div class="flex h-16 items-center gap-5 gap-x-1">
+  <div class="w-1/2">
+    <SearchMoves bind:selected/>
+  </div>
   {#if selected}
-    <button on:click={() => addMove()} class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30">Add {selected.name}</button>
+    <button on:click={() => addMove()} class="rounded-md bg-indigo-600 w-1/2 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30">Add {selected.name}</button>
   {/if}
 </div>
 
 <ul role="list" class="divide-y divide-gray-100">
 {#each movesByLevel as move, index}
 
-    <li class="flex justify-between gap-x-6 py-5">
+    <li class="flex justify-between gap-6 gap-x-0 py-5">
       <div class="flex min-w-0 gap-x-4">
         <img class="size-12 flex-none rounded-full bg-gray-50" src="{'images/types/'+move.type?.toLocaleLowerCase()+'-small.png'}" alt="">
         <div class="min-w-0 flex-auto">
           <p class="text-m font-semibold text-gray-900">{move.name}</p>
-          <p class="mt-1 truncate text-xs/5 text-gray-500">{move.effect?.short_effect}</p>
+          <p class="mt-1 truncate text-xs/5 text-gray-500 text-ellipsis">{move.effect?.short_effect}</p>
         </div>
       </div>
       <div class="sm:flex sm:flex-col sm:items-end">

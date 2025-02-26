@@ -181,16 +181,17 @@
   <style>
     .mini-pic {
         position: absolute;
-        top: -4em;
-        right: .75em;
-        max-height: 260px;
+        top: 5em;
+        right: 4em;
+        max-width: 120px;
+        max-height: 160px;
     }
 
     @media (min-width: 860px) {
         .mini-pic {
-            top: -5em;
             right: 4em;
             max-height: 260px;
+            max-width: 50%;
         }
     }
   </style>

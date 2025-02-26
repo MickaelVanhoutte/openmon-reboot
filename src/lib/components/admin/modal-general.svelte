@@ -7,9 +7,9 @@
 
 <div class="w-full mt-1">
     <h2 class="text-2xl font-bold">{pokeForm?.name?.english}</h2>
-    <div class="flex gap-x-4 mt-2 items-end">
+    <div class="flex gap-x-2 mt-2 items-end">
         {#each pokeForm.type as type, index}
-            <div>
+            <div class="max-w-1/2">
                 <label for="price" class="block text-sm/6 font-medium text-gray-900">Type {index + 1}</label>
                 <div class="mt-2">
                     <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
