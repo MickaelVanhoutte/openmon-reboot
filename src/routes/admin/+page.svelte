@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Pokedex from '$lib/components/admin/pokedex.svelte';
     import { decodeJwtResponse, onGoogleScriptLoad, getUser, isAuthorized } from '$lib/google-auth';
     import { onMount } from 'svelte';
 
@@ -139,15 +140,7 @@
 
          {:else if activeMenu === 'Pokedex'}
 
-            todo:  <br>
-            load current pokedex file <br>
-            start from scratch <br>
-            export pokedex as json  <br>
-            add pokemon <br>
-            edit stats, moves, abilities, evolutions <br>
-            search pokemon <br>
-            filter pokemon <br>
-            sort pokemon <br>
+            <Pokedex></Pokedex>
 
         {:else if activeMenu === 'Items'}
 
