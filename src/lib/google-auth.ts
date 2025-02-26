@@ -54,7 +54,7 @@ export const getUser = (): User => {
   return user;
 };
 
-import { PUBLIC_ADMIN_MAIL } from '$env/static/public';
+import { PUBLIC_ADMIN_MAIL } from "$env/static/public";
 
 export const isAuthorized = (user: User): boolean => {
   // matches env ADMIN_MAIL

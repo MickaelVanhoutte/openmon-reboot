@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { FullDexEntry } from "$lib/pokedex/fulldex";
     import { onMount } from "svelte";
 
         export let selected: FullDexEntry;
@@ -25,11 +26,10 @@
         }) : fullDex;
         
         onMount(() => {
-            fetch("/base-pokedex.json")
+            fetch("/base-pokedex-moves.json")
                 .then((response) => response.json())
                 .then((data) => {
                     fullDex = data;
-                    console.log(fullDex);
                 });
         });
 </script>
