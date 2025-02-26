@@ -98,7 +98,7 @@
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
           {#each menus as menu }
           <a href="{'#'+menu}" 
-          class={menu === activeMenu ? 'block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}
+          class={menu === activeMenu ? 'block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white' : 'block text-gray-300 hover:bg-gray-700 hover:text-white'}
           aria-current="page" on:click={() => activeMenu = menu}>{menu}</a>    
           {/each}
         </div>
