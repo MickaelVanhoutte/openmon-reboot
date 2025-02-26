@@ -26,7 +26,7 @@
         }) : fullDex;
         
         onMount(() => {
-            fetch("/base-pokedex-moves.json")
+            fetch("base-pokedex-moves.json")
                 .then((response) => response.json())
                 .then((data) => {
                     fullDex = data;

@@ -25,7 +25,7 @@
         }) : allMoves;
         
         onMount(() => {
-            fetch("/all-moves.json")
+            fetch("all-moves.json")
                 .then((response) => response.json())
                 .then((data) => {
                     allMoves = data;
