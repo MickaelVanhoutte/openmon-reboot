@@ -25,6 +25,10 @@
         }, 500);
     }
 
+    const save = () => {
+        console.log(selected);
+    }
+
     onMount(() => {
         // fetch("/pokedex.json")
         //     .then((response) => response.json())
@@ -88,12 +92,67 @@ sort pokemon <br>
   
             <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
               <div class="px-4 sm:px-6">
-                <h2 class="text-base font-semibold text-gray-900" id="slide-over-title">Add a Pokemon</h2>
+                <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Add a Pokemon</h2>
               </div>
               <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                <!-- Your content -->
-                 <SearchDex bind:selected/>
-                 stats, attacks
+                
+                <!-- Drawer content -->
+                <div class="w-full columns-1 gap-4 sm:columns-2 flex items-center h-30">
+                    <div class="w-full">
+                        <SearchDex bind:selected/>
+                    </div>
+                    <div class="w-full h-full flex justify-center">
+                        {#if selected}
+                        <img class="h-full" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{selected.id}.png" alt="">
+
+                        {/if}
+                    </div>
+                </div>
+
+                {#if selected}
+                    <div class="w-full mt-1">
+                        <h2 class="text-2xl font-bold">{selected.name?.english}</h2>
+                        <div class="flex gap-x-4 mt-2">
+                            {#each selected.type as type, index}
+
+                            <div>
+                                <label for="price" class="block text-sm/6 font-medium text-gray-900">Type {index + 1}</label>
+                                <div class="mt-2">
+                                  <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                        
+                                    <input type="text"  value="{type}"  class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Type">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            {/each}
+                        </div>
+
+                        <div class="flex-1 mt-2">
+                            
+                            <label for="HP" class="block mb-1 text-sm font-medium text-gray-900">HP ({selected.base?.HP})</label>
+                            <input id="HP" type="range" min="5" max="255" value="{selected.base?.HP}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                            <label for="attack" class="block mb-1 text-sm font-medium text-gray-900">Attack  ({selected.base?.attack})</label>
+                            <input id="attack" type="range" min="5" max="255" value="{selected.base?.attack}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            
+                            <label for="defense" class="block mb-1 text-sm font-medium text-gray-900">Defense ({selected.base?.defense})</label>
+                            <input id="defense" type="range" min="5" max="255" value="{selected.base?.defense}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                            <label for="spAttack" class="block mb-1 text-sm font-medium text-gray-900">Sp.Attack ({selected.base?.spAttack})</label>
+                            <input id="spAttack" type="range" min="5" max="255" value="{selected.base?.spAttack}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                            <label for="spDefense" class="block mb-1 text-sm font-medium text-gray-900">Sp.Defense ({selected.base?.spDefense})</label>
+                            <input id="spDefense" type="range" min="5" max="255" value="{selected.base?.spDefense}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                            <label for="speed" class="block mb-1 text-sm font-medium text-gray-900">Speed ({selected.base?.speed})</label>
+                            <input id="speed" type="range" min="5" max="255" value="{selected.base?.speed}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        </div>
+                    </div>
+
+
+                    <button on:click={save} class="fixed bottom-2 right-2 rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500">Save</button>
+                {/if}
               </div>
             </div>
           </div>
