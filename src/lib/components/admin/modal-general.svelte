@@ -1,11 +1,17 @@
 <script lang="ts">
     import type { FullDexEntry } from "$lib/pokedex/fulldex";
+    import TypeSelect from "./type-select.svelte";
 
     export let pokeForm: FullDexEntry;
     export let baseEntry: FullDexEntry;
 
 
-    $: {console.log({pokeForm}); console.log({baseEntry});}
+    $:total = Object.values(pokeForm.base).reduce((acc, curr) => acc + curr, 0);
+
+    function selectType(e: CustomEvent, index: number){
+        pokeForm.type[index] = e.detail;
+    }
+
 </script>
 
 
@@ -13,21 +19,17 @@
     <h2 class="text-2xl font-bold">{pokeForm?.name?.english}</h2>
     <div class="flex gap-x-2 mt-2 items-end">
         {#each pokeForm.type as type, index}
-            <div class="max-w-1/2">
-                <label for="price" class="block text-sm/6 font-medium text-gray-900">Type {index + 1}</label>
-                <div class="mt-2">
-                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                        <input type="text"  value="{type}"  class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Type">
-                    </div>
-                </div>
+            <div class="w-1/4">
+                <label for="type1" class="block text-sm/6 font-medium text-gray-900">Type {index + 1}</label>
+                <TypeSelect selected={type} on:typeSelect={(e:CustomEvent) => selectType(e, index)}/>
             </div>
         {/each}
         {#if pokeForm.type.length < 2}
-            <button on:click={() => pokeForm.type = [...pokeForm.type, 'Normal']} class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 h-fit">Add Type</button>
+            <button on:click={() => pokeForm.type = [...pokeForm.type, 'normal']} class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 h-fit">Add Type</button>
         {/if}
     </div>
 
-    <div class="flex-1 mt-2">
+    <div class="flex-1 mt-10">
         
         <label for="HP" class="block mb-1 text-sm font-medium text-gray-900">
             HP <span class="font-bold text-green-600">({pokeForm.base?.HP})</span>
@@ -76,5 +78,8 @@
             {/if}
         </label>
         <input id="speed" type="range" min="5" max="255" bind:value="{pokeForm.base.speed}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+    <div>
+        <p class="text-lg underline decoration-blue-600">Total: {total}</p>
     </div>
 </div>

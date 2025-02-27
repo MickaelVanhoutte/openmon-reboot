@@ -4,6 +4,7 @@
     import ModalGeneral from "./modal-general.svelte";
     import ModalMoves from "./modal-moves.svelte";
     import type { FullDexEntry } from "$lib/pokedex/fulldex";
+    import ModalEvolutions from "./modal-evolutions.svelte";
 
     // load current pokedex file
     export let pokedex: FullDexEntry[] = [];
@@ -134,14 +135,14 @@
             <button disabled={!pokeForm} on:click={() => tab = 2} class="{tab === 2 ? 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-blue-600' : 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 border-gray-100 hover:border-gray-300'}" id="moves-tab" data-tabs-target="#moves" type="button" role="tab" aria-controls="moves" aria-selected="false">Moves</button>
         </li>
         <li class="me-2" role="presentation">
-            <button disabled={!pokeForm} on:click={() => tab = 3} class="{tab === 3 ? 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-blue-600' : 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 border-gray-100 hover:border-gray-300'}" id="others-tab" data-tabs-target="#others" type="button" role="tab" aria-controls="others" aria-selected="false">Others</button>
+            <button disabled={!pokeForm} on:click={() => tab = 3} class="{tab === 3 ? 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-blue-600' : 'inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 border-gray-100 hover:border-gray-300'}" id="evos-tab" data-tabs-target="#evos" type="button" role="tab" aria-controls="evos" aria-selected="false">Evolutions</button>
         </li>
     </ul>
 </div>
 <div id="default-tab-content">
     <div class="{tab === 1 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="general" role="tabpanel" aria-labelledby="general-tab">
         
-        <div class="w-full columns-1 gap-4 sm:columns-2 flex items-center h-30">
+        <div class="w-full columns-1 gap-4 sm:columns-2 flex items-start h-20">
             <div class="w-full">
                 <SearchDex bind:selected {originalPokedex}/>
             </div>
@@ -165,8 +166,10 @@
         {/if}
 
     </div>
-    <div class="{tab === 3 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="others" role="tabpanel" aria-labelledby="others-tab">
-        <p class="text-sm text-gray-500 ">This is some placeholder content the <strong class="font-medium text-gray-800 ">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    <div class="{tab === 3 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="evos" role="tabpanel" aria-labelledby="evos-tab">
+      {#if pokeForm}  
+        <ModalEvolutions bind:pokeForm={pokeForm} {originalPokedex}/>
+      {/if}
     </div>
 
     {#if pokeForm}
