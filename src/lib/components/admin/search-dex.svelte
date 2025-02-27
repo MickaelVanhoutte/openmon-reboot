@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { FullDexEntry } from "$lib/pokedex/fulldex";
-    import { onMount } from "svelte";
 
         export let selected: FullDexEntry;
-        let fullDex: FullDexEntry[] = [];
+        export let originalPokedex: FullDexEntry[];
+
         let isOpen = false;
         let searchValue = '';
         
@@ -17,21 +17,14 @@
             toggleDropdown();
         }
 
-        $:filtered = searchValue && searchValue?.length > 2 ? fullDex.filter((entry) => {
+        $:filtered = searchValue && searchValue?.length > 2 ? originalPokedex.filter((entry) => {
             let frenchNorm = entry?.name?.french?.normalize('NFD')?.replace(/\p{Diacritic}/gu, '')?.toLocaleLowerCase();
             let englishNorm = entry?.name?.english?.toLocaleLowerCase();
             return frenchNorm?.includes(searchValue?.toLocaleLowerCase()) ||
             englishNorm?.includes(searchValue?.toLocaleLowerCase()) ||
             entry?.type?.join('')?.toLocaleLowerCase()?.includes(searchValue?.toLocaleLowerCase());
-        }) : fullDex;
+        }) : originalPokedex;
         
-        onMount(() => {
-            fetch("base-pokedex-moves.json")
-                .then((response) => response.json())
-                .then((data) => {
-                    fullDex = data;
-                });
-        });
 </script>
 
 <div class="relative group">

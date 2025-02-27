@@ -12,7 +12,6 @@
        onGoogleScriptLoad(decodeJwtResponse);
        user = getUser();
        authorized = isAuthorized(user);
-       console.log(user, user.email, authorized);
        if(user && !authorized){
            window.location.href = '/';
        }

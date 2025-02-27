@@ -7,17 +7,26 @@
 
     // load current pokedex file
     export let pokedex: FullDexEntry[] = [];
+    export let originalPokedex: FullDexEntry[] = [];
 
     let selected: FullDexEntry;
-    $: pokeForm = selected ? {...selected} : undefined;
+    let edited: FullDexEntry;
+
+    $: pokeForm = edited ? structuredClone(edited) : selected ? structuredClone(selected) : undefined;
+
+    //$: pokeForm = selected ? structuredClone(selected) : undefined;
     
     let showModal = false;
     let closedModal = true;
     let tab = 1;
 
     function edit(pokemon: FullDexEntry) {
-        selected = pokemon;
-        toggleModal();
+        const original = originalPokedex.find((entry) => entry.id === pokemon.id);
+        if(original){
+          edited = pokemon;
+          selected = original;
+          toggleModal();
+        }
     }
 
     function remove(pokemon: FullDexEntry) {
@@ -31,13 +40,8 @@
         }, 500);
     }
 
-    const exportDex = () => {
-      console.log(pokedex);
-    }
-
     const save = () => {
         if(pokeForm){
-          console.log(pokeForm);
           pokedex = pokedex.filter((entry) => entry.id !== pokeForm?.id);
           pokedex = [...pokedex, pokeForm];
           pokedex.sort((a, b) => a.id - b.id);
@@ -51,6 +55,11 @@
              .then((data) => {
                  pokedex = data;
              });
+        fetch("base-pokedex-moves.json")
+          .then((response) => response.json())
+          .then((data) => {
+              originalPokedex = data;
+          });
     });
 </script>
 
@@ -110,7 +119,7 @@
               <div class="px-4 sm:px-6">
                 <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Add a Pokemon</h2>
               </div>
-              <div class="relative mt-6 flex-1 px-4 sm:px-6">
+              <div class="relative mt-6 flex-1 px-1">
 
                 <!-- Drawer content -->
 
@@ -134,7 +143,7 @@
         
         <div class="w-full columns-1 gap-4 sm:columns-2 flex items-center h-30">
             <div class="w-full">
-                <SearchDex bind:selected/>
+                <SearchDex bind:selected {originalPokedex}/>
             </div>
             <div class="w-full h-full flex justify-center">
                 {#if selected}
@@ -145,7 +154,7 @@
         </div>
 
         {#if pokeForm}
-           <ModalGeneral bind:pokeForm={pokeForm}/> 
+           <ModalGeneral bind:pokeForm={pokeForm} bind:baseEntry={selected}/> 
         {/if}
 
 

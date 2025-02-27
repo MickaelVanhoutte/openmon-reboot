@@ -4,7 +4,6 @@ export const onGoogleScriptLoad = (decodeJwtResponse) => {
       // decodeJwtResponse() is a custom function defined by you
       // to decode the credential response.
       const responsePayload = decodeJwtResponse(response.credential);
-      console.log("ID: " + responsePayload.sub);
       document.cookie = `auth=${response.credential}`;
       window.location.reload();
     };
@@ -58,7 +57,6 @@ import { PUBLIC_ADMIN_MAIL } from "$env/static/public";
 
 export const isAuthorized = (user: User): boolean => {
   // matches env ADMIN_MAIL
-  console.log(user.email, PUBLIC_ADMIN_MAIL, user.email === PUBLIC_ADMIN_MAIL);
   return user !== null && user.email === PUBLIC_ADMIN_MAIL;
 };
 

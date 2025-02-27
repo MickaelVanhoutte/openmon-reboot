@@ -38,15 +38,15 @@
   {/if}
 </div>
 
-<ul role="list" class="divide-y divide-gray-100">
+<ul role="list" class="divide-y divide-gray-100 w-full">
 {#each movesByLevel as move, index}
 
-    <li class="flex justify-between gap-6 gap-x-0 py-5">
-      <div class="flex min-w-0 gap-x-4">
+    <li class="flex justify-stretch  sm:justify-between gap-2 gap-x-0 py-5 w-full">
+      <div class="flex min-w-0 gap-x-4 max-w-1/2">
         <img class="size-12 flex-none rounded-full bg-gray-50" src="{'images/types/'+move.type?.toLocaleLowerCase()+'-small.png'}" alt="">
         <div class="min-w-0 flex-auto">
           <p class="text-m font-semibold text-gray-900">{move.name}</p>
-          <p class="mt-1 truncate text-xs/5 text-gray-500 text-ellipsis">{move.effect?.short_effect}</p>
+          <p class="mt-1 truncate text-xs/5 text-gray-500">{move.effect?.short_effect}</p>
         </div>
       </div>
       <div class="sm:flex sm:flex-col sm:items-end">
