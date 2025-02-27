@@ -10,10 +10,14 @@
     export let pokedex: FullDexEntry[] = [];
     export let originalPokedex: FullDexEntry[] = [];
 
+    let pokeForm: FullDexEntry | undefined;
     let selected: FullDexEntry;
     let edited: FullDexEntry;
 
-    $: pokeForm = edited ? structuredClone(edited) : selected ? structuredClone(selected) : undefined;
+    function setForm(){
+      pokeForm = edited ? structuredClone(edited) : selected ? structuredClone(selected) : undefined
+    }
+    $:selected, setForm();
 
     //$: pokeForm = selected ? structuredClone(selected) : undefined;
     

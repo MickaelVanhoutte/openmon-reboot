@@ -40,8 +40,8 @@ export interface FullDexEntry {
   species: string;
   description: string;
   evolution: {
-    prev: [string, string][];
-    next: [string, string][];
+    prev: [string, string];
+    next: [string, string];
   };
   profile: {
     height: string;
