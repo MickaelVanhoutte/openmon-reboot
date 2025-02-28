@@ -144,7 +144,7 @@
     </ul>
 </div>
 <div id="default-tab-content">
-    <div class="{tab === 1 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="general" role="tabpanel" aria-labelledby="general-tab">
+    <div class="{tab === 1 ? 'p-1 md:p-4 rounded-lg bg-gray-50' : 'hidden p-1 md:p-4 rounded-lg bg-gray-50' }" id="general" role="tabpanel" aria-labelledby="general-tab">
         
         <div class="w-full columns-1 gap-4 sm:columns-2 flex items-start h-20">
             <div class="w-full">
@@ -164,13 +164,13 @@
 
 
     </div>
-    <div class="{tab === 2 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="moves" role="tabpanel" aria-labelledby="moves-tab">
+    <div class="{tab === 2 ? 'p-1 md:p-4 rounded-lg bg-gray-50' : 'hidden p-1 md:p-4 rounded-lg bg-gray-50' }" id="moves" role="tabpanel" aria-labelledby="moves-tab">
         {#if pokeForm}
             <ModalMoves bind:pokeForm={pokeForm}/>
         {/if}
 
     </div>
-    <div class="{tab === 3 ? 'p-4 rounded-lg bg-gray-50' : 'hidden p-4 rounded-lg bg-gray-50' }" id="evos" role="tabpanel" aria-labelledby="evos-tab">
+    <div class="{tab === 3 ? 'p-1 md:p-4 rounded-lg bg-gray-50' : 'hidden p-1 md:p-4 rounded-lg bg-gray-50' }" id="evos" role="tabpanel" aria-labelledby="evos-tab">
       {#if pokeForm}  
         <ModalEvolutions bind:pokeForm={pokeForm} {originalPokedex}/>
       {/if}

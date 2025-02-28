@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex h-16 items-center gap-5 gap-x-1">
-  <div class="w-1/2">
+  <div class="w-full md:w-1/2">
     <SearchMoves bind:selected bind:pokeForm/>
   </div>
   {#if selected}
@@ -38,10 +38,11 @@
   {/if}
 </div>
 
-<ul role="list" class="divide-y divide-gray-100 w-full">
+<ul role="list" class="divide-y divide-gray-100 w-full max-w-full">
 {#each movesByLevel as move, index}
 
-    <li class="flex justify-between items-center gap-2 gap-x-0 py-5 w-full max-w-full border-b-blue-200">
+    <li class="py-2 w-full max-w-11/12 md:max-w-full border-b-blue-200">
+      <div class="flex justify-between items-center md:gap-2 gap-x-0 w-full max-w-full">
       <div class="flex min-w-0 gap-x-4 max-w-2/3">
         <img class="size-12 flex-none rounded-full bg-gray-50" src="{'images/types/'+move.type?.toLocaleLowerCase()+'-small.png'}" alt="">
         <div class="min-w-0 flex-auto">
@@ -56,6 +57,7 @@
         </div>
         <button on:click={() => remove(move.id)} class="rounded-md bg-red-400 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-red-500">Remove</button>
       </div>
+    </div>
     </li>
  
 {/each}

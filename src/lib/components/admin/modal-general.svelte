@@ -19,7 +19,7 @@
     <h2 class="text-2xl font-bold">{pokeForm?.name?.english}</h2>
     <div class="flex gap-x-2 mt-2 items-end">
         {#each pokeForm.type as type, index}
-            <div class="w-1/4">
+            <div class="max-w-1/2 w-1/2 md:w-1/3">
                 <label for="type1" class="block text-sm/6 font-medium text-gray-900">Type {index + 1}</label>
                 <TypeSelect selected={type} on:typeSelect={(e:CustomEvent) => selectType(e, index)}/>
             </div>
