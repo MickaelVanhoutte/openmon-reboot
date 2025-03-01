@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Dashboard from '$lib/components/admin/dashboard.svelte';
     import Maps from '$lib/components/admin/maps.svelte';
     import Pokedex from '$lib/components/admin/pokedex.svelte';
     import { decodeJwtResponse, onGoogleScriptLoad, getUser, isAuthorized, type User } from '$lib/google-auth';
@@ -128,15 +129,7 @@
         <!-- Your content -->
          {#if activeMenu === 'Dashboard'}
 
-            todo:  <br>
-            load current pokedex file <br>
-            display nb of pokemon <br>
-            display nb of moves <br>
-            display nb of abilities <br>
-            display type repartitions  <br>
-            display stats repartitions <br>
-            display moves repartitions <br>
-            
+            <Dashboard/>
 
          {:else if activeMenu === 'Pokedex'}
 

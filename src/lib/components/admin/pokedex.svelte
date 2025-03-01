@@ -104,7 +104,7 @@
 </ul>
 
 
-<div class="flex h-16 items-center justify-end">
+<div class="flex h-16 items-center justify-end sticky bottom-0">
   <a download="pokedex.json" href={"data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(pokedex))} class="absolute bottom-8 rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500">Export as JSON</a>
 </div>
 
@@ -201,6 +201,10 @@
       </div>
     </div>
   </div>
+
+
+  todo: <br>
+  save work in indexeddb regularly<br>
 
   <style>
     .mini-pic {

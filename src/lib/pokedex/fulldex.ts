@@ -54,7 +54,7 @@ export interface FullDexEntry {
     height: string;
     weight: string;
     egg: string[];
-    ability: [string, string][];
+    ability: [string, string][]; // [ability, hidden]
     gender: string;
   };
   image: {
