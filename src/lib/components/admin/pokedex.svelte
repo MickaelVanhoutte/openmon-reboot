@@ -66,7 +66,7 @@
              .then((data) => {
                  pokedex = data;
              });
-        fetch("base-pokedex-moves.json")
+        fetch("resources/dex/base-pokedex-moves.json")
           .then((response) => response.json())
           .then((data) => {
               originalPokedex = data;
@@ -117,10 +117,10 @@
         <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
           <div class="{showModal ? 'pointer-events-auto relative w-screen max-w-6xl transform transition ease-in-out duration-500 sm:duration-700 translate-x-0' : 'pointer-events-auto relative w-screen max-w-md transform transition ease-in-out duration-500 sm:duration-700 translate-x-full'}">
             <div class="{showModal ? 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-100' : 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-0'}">
-              <button on:click={toggleModal} type="button" class="relative rounded-md text-gray-300 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden">
+              <button on:click={toggleModal} type="button" class="relative rounded-md text-gray-100 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden">
                 <span class="absolute -inset-2.5"></span>
                 <span class="sr-only">Close panel</span>
-                <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" data-slot="icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
               </button>

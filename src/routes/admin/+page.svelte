@@ -1,11 +1,12 @@
 <script lang="ts">
+    import Maps from '$lib/components/admin/maps.svelte';
     import Pokedex from '$lib/components/admin/pokedex.svelte';
-    import { decodeJwtResponse, onGoogleScriptLoad, getUser, isAuthorized } from '$lib/google-auth';
+    import { decodeJwtResponse, onGoogleScriptLoad, getUser, isAuthorized, type User } from '$lib/google-auth';
     import { onMount } from 'svelte';
 
-    let user = null;
+    let user: User | null = null;
     let authorized = false;
-    let menus = ['Dashboard', 'Pokedex', 'Items'];
+    let menus = ['Dashboard', 'Pokedex', 'Items', 'Maps'];
     let activeMenu: string = 'Dashboard';
 
      onMount(() => {
@@ -139,7 +140,7 @@
 
          {:else if activeMenu === 'Pokedex'}
 
-            <Pokedex></Pokedex>
+            <Pokedex/>
 
         {:else if activeMenu === 'Items'}
 
@@ -153,11 +154,12 @@
             filter item <br>
             sort item <br>
             
-
+        {:else if activeMenu === 'Maps'}
+          <Maps/>
         {/if}
       </div>
     </main>
-  </div>
-  {:else if !user}
+</div>
+{:else if !user}
   <div id="googleSignIn"></div>
 {/if}

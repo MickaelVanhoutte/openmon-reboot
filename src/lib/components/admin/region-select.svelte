@@ -27,7 +27,7 @@
     }
 
     onMount(() => {
-        fetch("generations.json")
+        fetch("resources/dex/generations.json")
             .then((response) => response.json())
             .then((data) => {
                 generations = data;

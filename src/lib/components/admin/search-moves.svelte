@@ -26,7 +26,7 @@
         }) : allMoves).sort((a, b) => a.type.localeCompare(b.type)).filter((entry) => pokeForm.moves.findIndex((move) => move.id === entry.id) === -1);
         
         onMount(() => {
-            fetch("all-moves.json")
+            fetch("resources/dex/all-moves.json")
                 .then((response) => response.json())
                 .then((data) => {
                     allMoves = data;
