@@ -66,20 +66,18 @@
     </div>
 
     {#if multipleNext?.length > 0}
-        <div class="w-full lg:flex justify-center gap-1">
+    <svg class="block mt-0 ml-auto mr-auto" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="32" height="32" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 298.04"><path fill-rule="nonzero" d="M12.08 70.78c-16.17-16.24-16.09-42.54.15-58.7 16.25-16.17 42.54-16.09 58.71.15L256 197.76 441.06 12.23c16.17-16.24 42.46-16.32 58.71-.15 16.24 16.16 16.32 42.46.15 58.7L285.27 285.96c-16.24 16.17-42.54 16.09-58.7-.15L12.08 70.78z"/></svg>
+        <div class="w-full flex flex-wrap justify-center gap-1">
             {#each multipleNext as nex, index}
-                <div class="flex flex-col items-center gap-5">
+                <div class="flex flex-col items-center gap-5 mt-10 min-w-1/4 lg:min-w-1/5">
             
-                    <input type="text" class="w-32 text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5" bind:value={pokeForm.evolution.next[index][1]} />
-                    <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="32" height="32" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 298.04"><path fill-rule="nonzero" d="M12.08 70.78c-16.17-16.24-16.09-42.54.15-58.7 16.25-16.17 42.54-16.09 58.71.15L256 197.76 441.06 12.23c16.17-16.24 42.46-16.32 58.71-.15 16.24 16.16 16.32 42.46.15 58.7L285.27 285.96c-16.24 16.17-42.54 16.09-58.7-.15L12.08 70.78z"/></svg>
-
-
                     <p>{nex.name.english}</p>
                     <img class="grayscale" src={nex.image.thumbnail} alt="" />
                     {#if index < next.length - 1}
                     <p>{pokeForm.evolution.next[0][1]}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="32" height="32" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 298.04"><path fill-rule="nonzero" d="M12.08 70.78c-16.17-16.24-16.09-42.54.15-58.7 16.25-16.17 42.54-16.09 58.71.15L256 197.76 441.06 12.23c16.17-16.24 42.46-16.32 58.71-.15 16.24 16.16 16.32 42.46.15 58.7L285.27 285.96c-16.24 16.17-42.54 16.09-58.7-.15L12.08 70.78z"/></svg>
                     {/if}
+                    <input type="text" class="w-full text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5" bind:value={pokeForm.evolution.next[index][1]} />
                 </div>
             {/each}
         </div>

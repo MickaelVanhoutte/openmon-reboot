@@ -7,6 +7,7 @@
 
 
     $:total = Object.values(pokeForm.base).reduce((acc, curr) => acc + curr, 0);
+    $:ogTotal = Object.values(baseEntry.base).reduce((acc, curr) => acc + curr, 0);
 
     function selectType(e: CustomEvent, index: number){
         pokeForm.type[index] = e.detail;
@@ -80,6 +81,6 @@
         <input id="speed" type="range" min="5" max="255" bind:value="{pokeForm.base.speed}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
     </div>
     <div>
-        <p class="text-lg underline decoration-blue-600">Total: {total}</p>
+        <p class="text-lg underline decoration-blue-600">Total: {total} {ogTotal !== total ? '(old: ' + ogTotal +')' : ''}</p>
     </div>
 </div>

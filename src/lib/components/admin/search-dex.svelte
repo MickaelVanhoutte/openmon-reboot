@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { FullDexEntry } from "$lib/pokedex/fulldex";
+    import type { FullDexEntry, Generation } from "$lib/pokedex/fulldex";
     import { clickOutside } from "$lib/utils";
 
+        export let generation: Generation;
         export let selected: FullDexEntry;
         export let originalPokedex: FullDexEntry[];
 
@@ -18,7 +19,9 @@
             toggleDropdown();
         }
 
-        $:filtered = searchValue && searchValue?.length > 2 ? originalPokedex.filter((entry) => {
+        $:filtered = (searchValue && searchValue?.length > 2) || generation?.id !== 0 ? originalPokedex
+        .slice(generation? generation.indexes[0] - 1 : 0, generation ? generation.indexes[1] : originalPokedex.length)
+        .filter((entry) => {
             let frenchNorm = entry?.name?.french?.normalize('NFD')?.replace(/\p{Diacritic}/gu, '')?.toLocaleLowerCase();
             let englishNorm = entry?.name?.english?.toLocaleLowerCase();
             return frenchNorm?.includes(searchValue?.toLocaleLowerCase()) ||
@@ -37,10 +40,19 @@
     </button>
     <div id="dropdown-menu" class="{isOpen ? 'absolute z-10 right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1 dropdown-sizes' : 'hidden absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1'}">
       <!-- Search input -->
-      <input bind:value={searchValue} id="search-input" class="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none sticky" type="text" placeholder="Search items" autocomplete="off">
+      <input bind:value={searchValue} id="search-input" class="block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none sticky" type="text" placeholder="Search by name (en/fr), type" autocomplete="off">
       <!-- Dropdown content goes here -->
         {#each filtered as entry}
-            <span on:click={() => select(entry)} class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">{entry.name?.english}</span>
+        <div on:click={() => select(entry)} class="flex justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">
+          <span >{entry.name?.english}</span>
+          <div class="flex gap-2">
+          {#each entry.type as type}
+          <img class="size-6 flex-none rounded-full bg-gray-50" src={"images/types/"+type?.toLocaleLowerCase()+"-small.png"} alt="">
+          {/each}
+        </div>
+          
+        </div>
+           
         {/each}
 
     </div>

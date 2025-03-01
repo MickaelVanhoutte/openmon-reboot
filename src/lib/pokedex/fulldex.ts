@@ -1,3 +1,10 @@
+export interface Generation {
+  name: string;
+  id: number;
+  indexes: number[];
+}
+
+
 export interface Move {
   id: number;
   name: string;

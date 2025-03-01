@@ -3,8 +3,9 @@
     import SearchDex from "./search-dex.svelte";
     import ModalGeneral from "./modal-general.svelte";
     import ModalMoves from "./modal-moves.svelte";
-    import type { FullDexEntry } from "$lib/pokedex/fulldex";
+    import type { FullDexEntry, Generation } from "$lib/pokedex/fulldex";
     import ModalEvolutions from "./modal-evolutions.svelte";
+    import RegionSelect from "./region-select.svelte";
 
     // load current pokedex file
     export let pokedex: FullDexEntry[] = [];
@@ -13,6 +14,7 @@
     let pokeForm: FullDexEntry | undefined;
     let selected: FullDexEntry;
     let edited: FullDexEntry;
+    let generation: Generation;
 
     function setForm(){
       pokeForm = edited ? structuredClone(edited) : selected ? structuredClone(selected) : undefined
@@ -24,6 +26,10 @@
     let showModal = false;
     let closedModal = true;
     let tab = 1;
+
+    const setRegion = (e: CustomEvent<Generation>) => {
+      generation = e.detail;
+    }
 
     function edit(pokemon: FullDexEntry) {
         const original = originalPokedex.find((entry) => entry.id === pokemon.id);
@@ -55,7 +61,7 @@
     }
 
     onMount(() => {
-        fetch("/pokedex.json")
+        fetch("final/pokedex.json")
              .then((response) => response.json())
              .then((data) => {
                  pokedex = data;
@@ -146,24 +152,26 @@
 <div id="default-tab-content">
     <div class="{tab === 1 ? 'p-1 md:p-4 rounded-lg bg-gray-50' : 'hidden p-1 md:p-4 rounded-lg bg-gray-50' }" id="general" role="tabpanel" aria-labelledby="general-tab">
         
-        <div class="w-full columns-1 gap-4 sm:columns-2 flex items-start h-20">
+        <div class="w-1/2 columns-2 gap-4 flex flex-col items-start h-20">
             <div class="w-full">
-                <SearchDex bind:selected {originalPokedex}/>
-            </div>
-            <div class="w-full h-full flex justify-center">
-                {#if selected}
-                <img class="mini-pic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{selected.id}.png" alt="">
+              <RegionSelect on:genSelect={setRegion}/>
+          </div>
+          <div class="w-full">
+            <SearchDex bind:selected {originalPokedex} {generation}/>
+          </div>
+        </div>
 
-                {/if}
-            </div>
+        <div class="w-full h-full flex justify-center mb-10">
+          {#if selected}
+            <img class="mini-pic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{selected.id}.png" alt="">
+          {/if}
         </div>
 
         {#if pokeForm}
            <ModalGeneral bind:pokeForm={pokeForm} bind:baseEntry={selected}/> 
         {/if}
-
-
     </div>
+  
     <div class="{tab === 2 ? 'p-1 md:p-4 rounded-lg bg-gray-50' : 'hidden p-1 md:p-4 rounded-lg bg-gray-50' }" id="moves" role="tabpanel" aria-labelledby="moves-tab">
         {#if pokeForm}
             <ModalMoves bind:pokeForm={pokeForm}/>
