@@ -1,0 +1,47 @@
+[
+    {
+        "name" : "None",
+        "id" : 0,
+        "indexes": [1, 898]
+    },
+    {
+        "name" : "Kanto",
+        "id" : 1,
+        "indexes": [1, 151] 
+    },
+    {
+        "name" : "Johto",
+        "id" : 2,
+        "indexes": [152, 251] 
+    },
+    {
+        "name" : "Hoenn",
+        "id" : 3,
+        "indexes": [252, 386] 
+    },
+    {
+        "name" : "Sinnoh",
+        "id" : 4,
+        "indexes": [387, 493] 
+    },
+    {
+        "name" : "Unova",
+        "id" : 5,
+        "indexes": [494, 649] 
+    },
+    {
+        "name" : "Kalos",
+        "id" : 6,
+        "indexes": [650, 721] 
+    },
+    {
+        "name" : "Alola",
+        "id" : 7,
+        "indexes": [722, 809] 
+    },
+    {
+        "name" : "Galar",
+        "id" : 8,
+        "indexes": [810, 898]
+    }
+]
