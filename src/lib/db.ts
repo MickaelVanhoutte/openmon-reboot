@@ -1,5 +1,5 @@
-import Dexie, { type EntityTable, type Observable } from "dexie";
-import { liveQuery } from "dexie";
+import Dexie, { type EntityTable, type Observable } from 'dexie';
+import { liveQuery } from 'dexie';
 
 interface Save {
   id?: number;
@@ -7,16 +7,16 @@ interface Save {
   updated: number;
 }
 
-const db = new Dexie("Save") as Dexie & {
+const db = new Dexie('Save') as Dexie & {
   saves: EntityTable<
     Save,
-    "id" // primary key "id" (for the typings only)
+    'id' // primary key "id" (for the typings only)
   >;
 };
 
 // Schema declaration:
 db.version(1).stores({
-  saves: "++id, created, updated", // primary key "id" (for the runtime!)
+  saves: '++id, created, updated', // primary key "id" (for the runtime!)
 });
 
 export type { Save };
