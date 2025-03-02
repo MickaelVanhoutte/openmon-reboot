@@ -13,10 +13,16 @@
     let moveCount: number = 0;
     let abilityCount: number = 0;
     let typeRepartitions: {type: string, count: number}[] = [];
-    let statsRepartitions = {};
-    let movesRepartitions = {};
+    let movesRepartitions: {type: string, count: number}[] = []
+
+    let attackStats: number = 0;
+    let defenseStats: number = 0;
+    let spAttackStats: number = 0;
+    let spDefenseStats: number = 0;
 
     let typeChartOpt: ApexOptions;
+    let statsChartOpt: ApexOptions;
+    let moveTypesOpt: ApexOptions;
 
     function startAnalysis(){
         const moves = new Set();
@@ -24,6 +30,12 @@
         pokedex.forEach((pokemon) => {
             pokemon.moves.forEach((move) => {
                 moves.add(move.name);
+                const repartIdx = movesRepartitions.findIndex((entry) => entry.type === move.type);
+                if(repartIdx !== -1){
+                    movesRepartitions[repartIdx].count++;
+                }else{
+                    movesRepartitions.push({type: move.type, count: 1});
+                }
             });
             pokemon.profile.ability.forEach((ability) => {
                 abilities.add(ability[0]);
@@ -36,6 +48,10 @@
                     typeRepartitions.push({type, count: 1});
                 }
             });
+            attackStats += pokemon.base.attack;
+            defenseStats += pokemon.base.defense;
+            spAttackStats += pokemon.base.spAttack;
+            spDefenseStats += pokemon.base.spDefense;
         });
         pokemonCount = pokedex.length;
         moveCount = moves.size;
@@ -81,6 +97,144 @@
                 },
 
             };
+
+        statsChartOpt = {
+            series: [
+                {
+                name: "Attack",
+                color: "#31C48D",
+                data: [attackStats],
+                },
+                {
+                name: "Defense",
+                data: [defenseStats],
+                color: "#F05252",
+                },
+                {
+                name: "Sp. Attack",
+                data: [spAttackStats],
+                color: "#5B8FF9",
+                },
+                {
+                name: "Sp. Defense",
+                data: [spDefenseStats],
+                color: "#5D7092",
+                }
+            ],
+            chart: {
+                sparkline: {
+                enabled: false,
+                },
+                type: "bar",
+                width: "100%",
+                height: 400,
+                toolbar: {
+                show: false,
+                }
+            },
+            fill: {
+                opacity: 1,
+            },
+            plotOptions: {
+                bar: {
+                horizontal: true,
+                columnWidth: "100%",
+                borderRadiusApplication: "end",
+                borderRadius: 6,
+                dataLabels: {
+                    position: "top",
+
+                },
+                },
+            },
+            legend: {
+                labels: {
+                    colors: "white",
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: (value, opts) => {
+                return  opts.config.series[opts.seriesIndex].name + ': ' +value;
+                },
+            },
+            tooltip: {
+                shared: true,
+                intersect: false,
+            },
+            xaxis: {
+                labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+                }
+            },
+            yaxis: {
+                labels: {
+                show: true,
+                formatter: (value) => {
+                    return 'Total stats';
+                },
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+                }
+            },
+            grid: {
+                show: true,
+                strokeDashArray: 4,
+                padding: {
+                left: 2,
+                right: 2,
+                top: -20
+                },
+            }
+        }
+
+        moveTypesOpt = {
+                series: movesRepartitions.map((entry) => entry.count),
+                labels: movesRepartitions.map((entry) => entry.type),
+                colors: movesRepartitions.map((entry) => typeChart[entry.type?.toLocaleLowerCase()].color),
+                chart: {
+                    height: 420,
+                    width: "100%",
+                    type: "pie",
+                },
+                stroke: {
+                    colors: ["white"],
+                    lineCap: "",
+                },
+                plotOptions: {
+                    pie: {
+                        labels: {
+                        show: true,
+                        },
+                        size: "100%",
+                        dataLabels: {
+                        offset: -25
+                        }
+                    },
+                },
+                dataLabels: {
+                    enabled: true,
+                },
+                legend: {
+                    labels: {
+                        colors: "white",
+                    }
+                },
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+
+            };
+        
     }
 
 
@@ -129,7 +283,40 @@
 {/if}
 </div>
 
- 
+<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 mt-0.5">
+
+    <div class="flex justify-between items-start w-full">
+        <div class="flex-col items-center">
+          <div class="flex items-center mb-1">
+              <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">Move types repartition</h5>
+        </div>
+      </div>
+    </div>
+  
+    {#if moveTypesOpt}
+    <Chart options={moveTypesOpt} />
+    {/if}
+     
+</div>
+
+
+<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 mt-0.5">
+
+    <div class="flex justify-between items-start w-full">
+        <div class="flex-col items-center">
+          <div class="flex items-center mb-1">
+              <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">Stats repartition</h5>
+        </div>
+      </div>
+    </div>
+  
+    {#if statsChartOpt}
+    <Chart options={statsChartOpt} />
+    {/if}
+     
+</div>
+
+
   
 
 
