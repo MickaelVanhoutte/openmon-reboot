@@ -85,9 +85,21 @@
       // should we rescale ? 
       const totalWidth = x * refWidth;
       const totalHeight = y * refHeight;
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
+      const maxTileY = canvas.offsetHeight / refHeight;
+      const maxTileX = canvas.offsetWidth / refWidth;
+      const xDiff = edited.width - maxTileX;
+      const yDiff = edited.height - maxTileY;
       
+      if(xDiff > 0 || yDiff > 0){
+        if(xDiff > yDiff){
+            scale = maxTileX / edited.width;
+        }else {
+            scale = maxTileY / edited.height;
+        }
+        }
+
+     
+
       ctx.scale(scale, scale);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -112,16 +124,16 @@
         edited = { ...edited, height: parseInt(e.currentTarget.value) };
     }
 
-    function addTile(e){
+    function addTile(e: MouseEvent & { currentTarget: EventTarget & HTMLCanvasElement; }){
         if(!selectedTile || !canvas || !spriteSizeReference){
             return;
         }
         const ctx = canvas.getContext('2d');
-        console.log(e);
+        const ctxTileSize = spriteSizeReference.offsetWidth * scale;
         // position in canvas based on e
         const position = {
-            x: Math.floor(e.offsetX / spriteSizeReference.offsetWidth),
-            y: Math.floor(e.offsetY / spriteSizeReference.offsetHeight)
+            x: Math.floor(e.offsetX / ctxTileSize),
+            y: Math.floor(e.offsetY / ctxTileSize)
         };
         const sourceStart = {
             x: selectedTile.x * tilesetConfig?.tileSize,
@@ -289,16 +301,16 @@
                                     {/each}
                                 </div>
                         </div>
-                        <div class="w-3/4 h-full overflow-hidden flex flex-col gap-4">
+                        <div class="w-3/4 h-full overflow-hidden flex flex-col gap-4 pb-8">
                             {#if edited}
                                 <div class="w-full flex flex-wrap content-start gap-4">
                                     <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map label" bind:value={edited.label} />
                                     <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map width" on:change={(e) => editWidth(e)} value={edited.width}/>
                                     <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map height" on:change={(e) => editHeight(e)} value={edited.height}/>
                                 </div>
-                                <div bind:this={canvasContainer} class="">
+                                <div bind:this={canvasContainer} class="grow w-full max-h-max">
                                     {#if squareSize}
-                                        <canvas id="canvas" on:click={e => addTile(e)} bind:this={canvas} ></canvas>
+                                        <canvas id="canvas" width="1024" height="720" on:click={e => addTile(e)} bind:this={canvas} ></canvas>
                                     {/if}
                                 </div>
                             {/if}
@@ -317,6 +329,8 @@
     #canvas {
         image-rendering: pixelated;
         border: 1px solid black;
+        width: 100%;
+        height: 100%;
     }
 </style>
 
