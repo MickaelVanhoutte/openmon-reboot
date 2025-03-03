@@ -1,5 +1,5 @@
-import fs from "fs";
-import basePokedex from "./base-pokedex-moves.json" assert { type: "json" };
+import fs from 'fs';
+import basePokedex from './base-pokedex-moves.json' assert { type: 'json' };
 
 // Create a set to store unique moves
 const uniqueMovesSet = new Set();
@@ -8,8 +8,7 @@ const uniqueMovesSet = new Set();
 basePokedex.forEach((pokemon) => {
   const { moves } = pokemon;
   moves.forEach((move) => {
-    const { id, name, type, power, accuracy, pp, effect, priority, target } =
-      move;
+    const { id, name, type, power, accuracy, pp, effect, priority, target } = move;
     const moveKey = JSON.stringify({
       id,
       name,
@@ -26,9 +25,7 @@ basePokedex.forEach((pokemon) => {
 });
 
 // Convert the set back to an array of move objects
-const uniqueMovesArray = Array.from(uniqueMovesSet).map((moveKey) =>
-  JSON.parse(moveKey),
-);
+const uniqueMovesArray = Array.from(uniqueMovesSet).map((moveKey) => JSON.parse(moveKey));
 
 // sort by move id
 uniqueMovesArray.sort((a, b) => a.id - b.id);
@@ -43,10 +40,6 @@ uniqueMovesArray.forEach((move, index) => {
 });
 
 // Write the unique moves to all-moves.json
-fs.writeFileSync(
-  "./all-moves.json",
-  JSON.stringify(uniqueMovesArray, null, 2),
-  "utf8",
-);
+fs.writeFileSync('./all-moves.json', JSON.stringify(uniqueMovesArray, null, 2), 'utf8');
 
-console.log("Unique moves have been written to all-moves.json");
+console.log('Unique moves have been written to all-moves.json');

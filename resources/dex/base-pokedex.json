@@ -12800,9 +12800,7 @@
     "species": "Fish Pokémon",
     "description": "Because of its wretched appearance, most people pay it no attention, but there are some who collect Feebas—and Feebas alone!",
     "evolution": {
-      "next": [
-        ["350", "trade holding Prism Scale, or level up with max Beauty"]
-      ]
+      "next": [["350", "trade holding Prism Scale, or level up with max Beauty"]]
     },
     "profile": {
       "height": "0.6 m",
@@ -26860,10 +26858,7 @@
     "species": "Stag Beetle Pokémon",
     "description": "Vikavolt flusters opponents with acrobatic flying maneuvers. This creates an opening for it to deliver an electric beam attack.",
     "evolution": {
-      "prev": [
-        "737",
-        "use Thunder Stone, in Gen 8, or level up in a Magnetic Field area"
-      ]
+      "prev": ["737", "use Thunder Stone, in Gen 8, or level up in a Magnetic Field area"]
     },
     "profile": {
       "height": "1.5 m",
