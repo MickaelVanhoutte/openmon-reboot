@@ -15,6 +15,9 @@
   let edited: Map;
   let mapSize: { x: number; y: number } = { x: 15, y: 15 };
   let selectedTile: { x: number; y: number } | undefined;
+  let translatePos: { x: number; y: number } = {x: 0, y: 0};
+  let startDragOffset: { x: number; y: number } = {x: 0, y: 0};
+  let dragging = false;
   let showMapModal = false;
   let closedModal = true;
   let optimized = false;
@@ -24,6 +27,7 @@
   let canvasContainer: HTMLDivElement;
   let squareSize = 32;
   let scale = 1;
+  let mode: 'tile' | 'grab' = 'tile'
 
   const toggleModal = () => {
     console.log('toggle');
@@ -49,6 +53,9 @@
       console.log('optimize');
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
+
+      
+
       optimized = true;
     }
   }
@@ -59,7 +66,48 @@
 
   function selectTile(x: number, y: number) {
     selectedTile = { x, y };
+    mode = 'tile';
   }
+
+  function scaleUp(){
+    if(scale < 5){
+        scale += .5;
+    }
+  } 
+
+  function scaleDown(){
+    if(scale > .5){
+        scale -= .5
+    }
+  }
+
+  function canvasClick(e){
+    if(mode === 'tile'){
+        addTile(e);
+    }else {
+        dragging = true;
+        startDragOffset = {
+            x: e.clientX - translatePos.x,
+            y : e.clientY - translatePos.y
+        };
+    }
+  }
+
+  function stopDragging(){
+    dragging = false;
+  }
+
+  function drag(e){
+    if(mode !== 'grab' || !dragging){
+        return;
+    }
+    translatePos = {
+        x: e.clientX - startDragOffset.x,
+        y: e.clientY - startDragOffset.y
+    };
+    //drawCanvasGrid();
+  }
+
 
   function drawCanvasGrid(){
     const ctx = canvas.getContext('2d');
@@ -100,8 +148,9 @@
 
      
 
-      ctx.scale(scale, scale);
+        ctx.scale(scale, scale);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.translate(translatePos.x, translatePos.y);
 
       
       for (let i = 0; i < x; i++) {
@@ -131,9 +180,10 @@
         const ctx = canvas.getContext('2d');
         const ctxTileSize = spriteSizeReference.offsetWidth * scale;
         // position in canvas based on e
+
         const position = {
-            x: Math.floor(e.offsetX / ctxTileSize),
-            y: Math.floor(e.offsetY / ctxTileSize)
+            x: Math.floor((e.offsetX - translatePos.x) / ctxTileSize),
+            y: Math.floor((e.offsetY - translatePos.y) / ctxTileSize)
         };
         const sourceStart = {
             x: selectedTile.x * tilesetConfig?.tileSize,
@@ -141,15 +191,15 @@
         };
     
         const destStart = {
-            x: position.x * spriteSizeReference.offsetWidth,
-            y: position.y * spriteSizeReference.offsetHeight
+            x: position.x * ctxTileSize,
+            y: position.y * ctxTileSize
         };
         console.log(sourceStart, destStart);
 
         ctx?.drawImage(spriteImg, sourceStart.x, sourceStart.y, tilesetConfig?.tileSize, tilesetConfig?.tileSize, destStart.x, destStart.y, spriteSizeReference.offsetWidth, spriteSizeReference.offsetHeight);
     }
 
-  $: if (canvas && edited && spriteSizeReference) {
+  $: if (canvas && edited && spriteSizeReference && scale && translatePos) {
     drawCanvasGrid();
   }
 
@@ -264,7 +314,7 @@
               <!-- Drawer content -->
 
                 {#if tilesetConfig}
-                    <div class="overflow-hidden w-full h-full flex gap-8">
+                    <div class="w-full h-full flex gap-8">
                         <div class="w-1/4 h-full overflow-y-scroll relative">
                             <img
                                 bind:this={spriteImg}
@@ -301,18 +351,40 @@
                                     {/each}
                                 </div>
                         </div>
-                        <div class="w-3/4 h-full overflow-hidden flex flex-col gap-4 pb-8">
+                        <div class="w-3/4 h-full flex flex-col gap-4 pb-8 relative">
                             {#if edited}
                                 <div class="w-full flex flex-wrap content-start gap-4">
                                     <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map label" bind:value={edited.label} />
                                     <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map width" on:change={(e) => editWidth(e)} value={edited.width}/>
                                     <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Map height" on:change={(e) => editHeight(e)} value={edited.height}/>
+                                    <button type="button" on:click={() => mode = (mode === 'grab' ? 'tile' : 'grab') } class:bg-blue-700={mode === 'grab'} class=" text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500 {mode==='grab' ? 'dark:text-white' : ''}" class:text-white={mode === 'grab'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-7" viewBox="0 0 24 24" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2071 5.6797C11.0909 5.85386 11 6.14834 11 6.5V7V8C11 8.55228 10.5523 9 10 9C9.44772 9 9 8.55228 9 8V7C9 6.64834 8.90906 6.35386 8.79295 6.1797C8.6966 6.03518 8.61209 6 8.5 6C8.38791 6 8.3034 6.03518 8.20705 6.1797C8.09094 6.35386 8 6.64834 8 7V10V12C8 12.5523 7.55228 13 7 13C6.44772 13 6 12.5523 6 12V10C6 9.64834 5.90906 9.35386 5.79295 9.1797C5.6966 9.03518 5.61209 9 5.5 9C5.38791 9 5.3034 9.03518 5.20705 9.1797C5.09094 9.35386 5 9.64834 5 10V14C5 15.033 5.70057 16.1402 7.0547 17.0429C8.3875 17.9315 10.1939 18.5 12 18.5C15.6675 18.5 18 16.251 18 14V8.5C18 8.14834 17.9091 7.85386 17.7929 7.6797C17.6966 7.53518 17.6121 7.5 17.5 7.5C17.3879 7.5 17.3034 7.53518 17.2071 7.6797C17.0909 7.85386 17 8.14834 17 8.5V9C17 9.55228 16.5523 10 16 10C15.4477 10 15 9.55228 15 9V8.5V7C15 6.64834 14.9091 6.35386 14.7929 6.1797C14.6966 6.03518 14.6121 6 14.5 6C14.3879 6 14.3034 6.03518 14.2071 6.1797C14.0909 6.35386 14 6.64834 14 7V8.5C14 9.05228 13.5523 9.5 13 9.5C12.4477 9.5 12 9.05228 12 8.5V7V6.5C12 6.14834 11.9091 5.85386 11.7929 5.6797C11.6966 5.53518 11.6121 5.5 11.5 5.5C11.3879 5.5 11.3034 5.53518 11.2071 5.6797ZM13.2855 4.34094C13.6245 4.12954 14.0313 4 14.5 4C15.3879 4 16.0534 4.46482 16.4571 5.0703C16.573 5.24423 16.6684 5.42998 16.7452 5.62242C16.975 5.54395 17.227 5.5 17.5 5.5C18.3879 5.5 19.0534 5.96482 19.4571 6.5703C19.8409 7.14614 20 7.85166 20 8.5V14C20 17.749 16.3325 20.5 12 20.5C9.80613 20.5 7.6125 19.8185 5.9453 18.7071C4.29943 17.6098 3 15.967 3 14V10C3 9.35166 3.15906 8.64614 3.54295 8.0703C3.9466 7.46482 4.61209 7 5.5 7C5.67545 7 5.84222 7.01815 6 7.05195V7C6 6.35166 6.15906 5.64614 6.54295 5.0703C6.9466 4.46482 7.61209 4 8.5 4C8.96874 4 9.37549 4.12954 9.71446 4.34094C10.1243 3.85131 10.7281 3.5 11.5 3.5C12.2719 3.5 12.8757 3.85131 13.2855 4.34094Z" fill="currentColor"/>
+                                            </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </button>
+
+                                    <button type="button" on:click={() => scaleUp() } class=" text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500 {mode==='grab' ? 'dark:text-white' : ''}" class:text-white={mode === 'grab'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg"  class="h-4 w-7" viewBox="0 0 16 16" fill="none">
+                                            <path d="M10 1H6V6L1 6V10H6V15H10V10H15V6L10 6V1Z" fill="currentColor"/>
+                                            </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </button>
+
+                                    <button type="button" on:click={() => scaleDown() } class=" text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500 {mode==='grab' ? 'dark:text-white' : ''}" class:text-white={mode === 'grab'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg"  class="h-4 w-7" viewBox="0 0 16 16" fill="none">
+                                            <path d="M1 10L1 6L15 6V10L1 10Z" fill="currentColor"/>
+                                            </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </button>
                                 </div>
                                 <div bind:this={canvasContainer} class="grow w-full max-h-max">
                                     {#if squareSize}
-                                        <canvas id="canvas" width="1024" height="720" on:click={e => addTile(e)} bind:this={canvas} ></canvas>
+                                        <canvas on:mousedown={e => canvasClick(e)} on:mousemove={e => drag(e)} on:mouseup={() => stopDragging()} id="canvas" width="1024" height="720" bind:this={canvas} ></canvas>
                                     {/if}
                                 </div>
+
+                        
                             {/if}
                         </div>
                     </div>
