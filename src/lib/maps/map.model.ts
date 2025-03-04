@@ -4,7 +4,7 @@ export interface Map {
   width: number;
   height: number;
 
-  grid: { x: number, y: number }[][];
+  grid: { x: number; y: number }[][];
 }
 
 export interface Tile {
