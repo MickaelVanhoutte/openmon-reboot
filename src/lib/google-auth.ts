@@ -12,40 +12,40 @@ export const onGoogleScriptLoad = (decodeJwtResponse) => {
       callback: handleCredentialResponse,
     });
     google.accounts.id.renderButton(
-      document.getElementById("googleSignIn"),
+      document.getElementById('googleSignIn'),
       {
-        theme: "outline",
-        size: "large",
-        text: "signin_with",
-        shape: "rectangular",
-        logo_alignment: "left",
+        theme: 'outline',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'rectangular',
+        logo_alignment: 'left',
       }, // customization attributes
     );
   } catch {}
 };
 
 export const decodeJwtResponse = (token: string) => {
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(
     atob(base64)
-      .split("")
+      .split('')
       .map((c) => {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join(""),
+      .join(''),
   );
 
   return JSON.parse(jsonPayload);
 };
 
 export const getUser = (): User => {
-  const cookies = document.cookie.split(";").reduce((res, c) => {
-    const [key, val] = c.trim().split("=");
+  const cookies = document.cookie.split(';').reduce((res, c) => {
+    const [key, val] = c.trim().split('=');
     res[key] = val;
     return res;
   }, {});
-  const auth = cookies["auth"];
+  const auth = cookies['auth'];
   let user = null;
   if (auth) {
     user = decodeJwtResponse(auth);
@@ -53,7 +53,7 @@ export const getUser = (): User => {
   return user;
 };
 
-import { PUBLIC_ADMIN_MAIL } from "$env/static/public";
+import { PUBLIC_ADMIN_MAIL } from '$env/static/public';
 
 export const isAuthorized = (user: User): boolean => {
   // matches env ADMIN_MAIL

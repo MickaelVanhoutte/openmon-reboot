@@ -4,12 +4,7 @@ export class Nature {
   public decreasedStatId: string;
   public increasedStatId: string;
 
-  constructor(
-    id: number,
-    identifier: string,
-    decreasedStatId: string,
-    increasedStatId: string,
-  ) {
+  constructor(id: number, identifier: string, decreasedStatId: string, increasedStatId: string) {
     this.id = id;
     this.identifier = identifier;
     this.decreasedStatId = decreasedStatId;
@@ -102,7 +97,7 @@ export class Move {
   public id: number;
   public name: string;
   public type: string;
-  public category: "physical" | "special" | "no-damage";
+  public category: 'physical' | 'special' | 'no-damage';
   public power: number;
   public accuracy: number;
   public pp: number;
@@ -118,25 +113,25 @@ export class Move {
     id: number,
     name: string,
     type: string,
-    category: "physical" | "special" | "no-damage",
+    category: 'physical' | 'special' | 'no-damage',
     power: number,
     accuracy: number,
     pp: number,
     priority: number,
     target:
-      | "all-opponents"
-      | "selected-pokemon"
-      | "users-field"
-      | "user"
-      | "user-and-allies"
-      | "entire-field"
-      | "random-opponent"
-      | "all-other-pokemon"
-      | "specific-move"
-      | "opponents-field"
-      | "ally"
-      | "all-pokemon"
-      | "user-or-ally",
+      | 'all-opponents'
+      | 'selected-pokemon'
+      | 'users-field'
+      | 'user'
+      | 'user-and-allies'
+      | 'entire-field'
+      | 'random-opponent'
+      | 'all-other-pokemon'
+      | 'specific-move'
+      | 'opponents-field'
+      | 'ally'
+      | 'all-pokemon'
+      | 'user-or-ally',
     effect: MoveEffect,
     effectChance: number,
     description: string,
@@ -170,14 +165,14 @@ export class Sprites {
 export class PokedexEntry {
   public id: number = 0;
   public regionalId: number = 0;
-  public name: string = "UNKNOWN";
+  public name: string = 'UNKNOWN';
   public types: string[] = [];
   public abilities: string[] = [];
   public moves: Move[] = [];
   public stats: Stats = new Stats();
   public height: number = 0;
   public weight: number = 0;
-  public description: string = "UNKNOWN";
+  public description: string = 'UNKNOWN';
   public isLegendary: boolean = false;
   public captureRate: number = 1;
   public growthRateId: number = 1;
@@ -199,152 +194,152 @@ export class PokedexEntry {
 export const NATURES: Nature[] = [
   {
     id: 1,
-    identifier: "hardy",
-    decreasedStatId: "attack",
-    increasedStatId: "attack",
+    identifier: 'hardy',
+    decreasedStatId: 'attack',
+    increasedStatId: 'attack',
   },
   {
     id: 2,
-    identifier: "bold",
-    decreasedStatId: "attack",
-    increasedStatId: "defense",
+    identifier: 'bold',
+    decreasedStatId: 'attack',
+    increasedStatId: 'defense',
   },
   {
     id: 3,
-    identifier: "modest",
-    decreasedStatId: "attack",
-    increasedStatId: "specialAttack",
+    identifier: 'modest',
+    decreasedStatId: 'attack',
+    increasedStatId: 'specialAttack',
   },
   {
     id: 4,
-    identifier: "calm",
-    decreasedStatId: "attack",
-    increasedStatId: "specialDefense",
+    identifier: 'calm',
+    decreasedStatId: 'attack',
+    increasedStatId: 'specialDefense',
   },
   {
     id: 5,
-    identifier: "timid",
-    decreasedStatId: "attack",
-    increasedStatId: "speed",
+    identifier: 'timid',
+    decreasedStatId: 'attack',
+    increasedStatId: 'speed',
   },
   {
     id: 6,
-    identifier: "lonely",
-    decreasedStatId: "defense",
-    increasedStatId: "attack",
+    identifier: 'lonely',
+    decreasedStatId: 'defense',
+    increasedStatId: 'attack',
   },
   {
     id: 7,
-    identifier: "docile",
-    decreasedStatId: "defense",
-    increasedStatId: "defense",
+    identifier: 'docile',
+    decreasedStatId: 'defense',
+    increasedStatId: 'defense',
   },
   {
     id: 8,
-    identifier: "mild",
-    decreasedStatId: "defense",
-    increasedStatId: "specialAttack",
+    identifier: 'mild',
+    decreasedStatId: 'defense',
+    increasedStatId: 'specialAttack',
   },
   {
     id: 9,
-    identifier: "gentle",
-    decreasedStatId: "defense",
-    increasedStatId: "specialDefense",
+    identifier: 'gentle',
+    decreasedStatId: 'defense',
+    increasedStatId: 'specialDefense',
   },
   {
     id: 10,
-    identifier: "hasty",
-    decreasedStatId: "defense",
-    increasedStatId: "speed",
+    identifier: 'hasty',
+    decreasedStatId: 'defense',
+    increasedStatId: 'speed',
   },
   {
     id: 11,
-    identifier: "adamant",
-    decreasedStatId: "specialAttack",
-    increasedStatId: "attack",
+    identifier: 'adamant',
+    decreasedStatId: 'specialAttack',
+    increasedStatId: 'attack',
   },
   {
     id: 12,
-    identifier: "impish",
-    decreasedStatId: "specialAttack",
-    increasedStatId: "defense",
+    identifier: 'impish',
+    decreasedStatId: 'specialAttack',
+    increasedStatId: 'defense',
   },
   {
     id: 13,
-    identifier: "bashful",
-    decreasedStatId: "specialAttack",
-    increasedStatId: "specialAttack",
+    identifier: 'bashful',
+    decreasedStatId: 'specialAttack',
+    increasedStatId: 'specialAttack',
   },
   {
     id: 14,
-    identifier: "careful",
-    decreasedStatId: "specialAttack",
-    increasedStatId: "specialDefense",
+    identifier: 'careful',
+    decreasedStatId: 'specialAttack',
+    increasedStatId: 'specialDefense',
   },
   {
     id: 15,
-    identifier: "rash",
-    decreasedStatId: "specialDefense",
-    increasedStatId: "specialAttack",
+    identifier: 'rash',
+    decreasedStatId: 'specialDefense',
+    increasedStatId: 'specialAttack',
   },
   {
     id: 16,
-    identifier: "jolly",
-    decreasedStatId: "specialAttack",
-    increasedStatId: "speed",
+    identifier: 'jolly',
+    decreasedStatId: 'specialAttack',
+    increasedStatId: 'speed',
   },
   {
     id: 17,
-    identifier: "naughty",
-    decreasedStatId: "specialDefense",
-    increasedStatId: "attack",
+    identifier: 'naughty',
+    decreasedStatId: 'specialDefense',
+    increasedStatId: 'attack',
   },
   {
     id: 18,
-    identifier: "lax",
-    decreasedStatId: "specialDefense",
-    increasedStatId: "defense",
+    identifier: 'lax',
+    decreasedStatId: 'specialDefense',
+    increasedStatId: 'defense',
   },
   {
     id: 19,
-    identifier: "quirky",
-    decreasedStatId: "specialDefense",
-    increasedStatId: "specialDefense",
+    identifier: 'quirky',
+    decreasedStatId: 'specialDefense',
+    increasedStatId: 'specialDefense',
   },
   {
     id: 20,
-    identifier: "naive",
-    decreasedStatId: "specialDefense",
-    increasedStatId: "speed",
+    identifier: 'naive',
+    decreasedStatId: 'specialDefense',
+    increasedStatId: 'speed',
   },
   {
     id: 21,
-    identifier: "brave",
-    decreasedStatId: "speed",
-    increasedStatId: "attack",
+    identifier: 'brave',
+    decreasedStatId: 'speed',
+    increasedStatId: 'attack',
   },
   {
     id: 22,
-    identifier: "relaxed",
-    decreasedStatId: "speed",
-    increasedStatId: "defense",
+    identifier: 'relaxed',
+    decreasedStatId: 'speed',
+    increasedStatId: 'defense',
   },
   {
     id: 23,
-    identifier: "quiet",
-    decreasedStatId: "speed",
-    increasedStatId: "specialAttack",
+    identifier: 'quiet',
+    decreasedStatId: 'speed',
+    increasedStatId: 'specialAttack',
   },
   {
     id: 24,
-    identifier: "sassy",
-    decreasedStatId: "speed",
-    increasedStatId: "specialDefense",
+    identifier: 'sassy',
+    decreasedStatId: 'speed',
+    increasedStatId: 'specialDefense',
   },
   {
     id: 25,
-    identifier: "serious",
-    decreasedStatId: "speed",
-    increasedStatId: "speed",
+    identifier: 'serious',
+    decreasedStatId: 'speed',
+    increasedStatId: 'speed',
   },
 ];

@@ -1,12 +1,14 @@
 export interface Map {
-    label: string;
-    width: number;
-    height: number;
+  id: string;
+  label: string;
+  width: number;
+  height: number;
 
-    grid: number[][];
+  layers: Layer[];
 }
 
-export interface Tile {
-    index: number;
-    color: string;
+export interface Layer {
+  label?: string;
+  visible: boolean;
+  grid: { x: number; y: number }[][];
 }
