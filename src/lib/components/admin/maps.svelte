@@ -83,7 +83,7 @@
   }
 
   function newMap() {
-    edited = { id: '0', label: 'new map', width: 5, height: 5, layers: [] };
+    edited = { id: '0', label: 'new map', width: 25, height: 25, layers: [] };
     // init grid arrays
     initMapGrid();
     selectedLayerIdx = 0;
@@ -179,7 +179,6 @@
   }
 
   function drawCanvasGrid() {
-    console.log('draw');
     const ctx = canvas.getContext('2d');
     if (!optimized && ctx) {
       optimizeCanvas(ctx);
