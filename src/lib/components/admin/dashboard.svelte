@@ -164,7 +164,7 @@
           show: true,
           style: {
             fontFamily: 'Inter, sans-serif',
-            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400',
+            cssClass: 'text-xs font-normal fill-gray-500',
           },
         },
       },
@@ -176,7 +176,7 @@
           },
           style: {
             fontFamily: 'Inter, sans-serif',
-            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400',
+            cssClass: 'text-xs font-normal fill-gray-500',
           },
         },
       },
@@ -242,30 +242,31 @@
   });
 </script>
 
-<Card class="max-w-full sm:max-w-auto">
+<div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6">
+
   <dl
-    class="grid max-w-screen-xl grid-cols-1 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-2 xl:grid-cols-3 dark:text-white sm:p-8"
+          class="grid max-w-screen-xl grid-cols-1 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 sm:p-8"
   >
     <div class="flex flex-col items-center justify-center">
       <dt class="mb-2 text-3xl font-extrabold">{pokemonCount}</dt>
-      <dd class="text-gray-500 dark:text-gray-400">Pokemons</dd>
+      <dd class="text-gray-500">Pokemons</dd>
     </div>
     <div class="flex flex-col items-center justify-center">
       <dt class="mb-2 text-3xl font-extrabold">{moveCount}</dt>
-      <dd class="text-gray-500 dark:text-gray-400">Moves</dd>
+      <dd class="text-gray-500">Moves</dd>
     </div>
     <div class="flex flex-col items-center justify-center">
       <dt class="mb-2 text-3xl font-extrabold">{abilityCount}</dt>
-      <dd class="text-gray-500 dark:text-gray-400">Abilities</dd>
+      <dd class="text-gray-500">Abilities</dd>
     </div>
   </dl>
-</Card>
+</div>
 
-<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+<div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6 mt-2">
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
           Types repartition
         </h5>
       </div>
@@ -277,11 +278,11 @@
   {/if}
 </div>
 
-<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 mt-0.5">
+<div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6 mt-2">
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
           Move types repartition
         </h5>
       </div>
@@ -293,11 +294,11 @@
   {/if}
 </div>
 
-<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 mt-0.5">
+<div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6 mt-2">
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
           Stats repartition
         </h5>
       </div>
