@@ -1,45 +1,54 @@
 import Dexie, { type EntityTable, type Observable } from 'dexie';
 import { liveQuery } from 'dexie';
+import type { GameData } from './game/data.model';
 
-interface Save {
-  id?: number;
-  created: number;
-  updated: number;
-}
+// interface Save {
+//   id?: number;
+//   created: number;
+//   updated: number;
+// }
 
-const db = new Dexie('Save') as Dexie & {
-  saves: EntityTable<
-    Save,
+const db = new Dexie('data') as Dexie & {
+  gameData: EntityTable<
+    GameData,
     'id' // primary key "id" (for the typings only)
   >;
 };
 
 // Schema declaration:
 db.version(1).stores({
-  saves: '++id, created, updated', // primary key "id" (for the runtime!)
+  gameData: '++id, pokedex, maps', // primary key "id" (for the runtime!)
 });
 
-export type { Save };
 export { db };
 
-export async function createSave(save: Save) {
+export async function createData(data: GameData): Promise<number | undefined>{
   try {
-    const id = await db.saves.add(save);
-
-    console.log(`Save successfully added. Got id ${id}`);
+    const id = await db.gameData.add(data);
+    return id;
   } catch (error) {
-    console.log(`Failed to add save: ${error}`);
+    if(error?.toString()?.includes('Key already exists')) {
+     updateData(data);
+     return Promise.resolve(data.id);
+    } else {
+      console.log(`Failed to add data: ${error}`);
+    }
   }
 }
 
-export function getSaves(): Observable<Save[]> {
-  return liveQuery(() => db.saves.toArray());
+export function getDataById(id: number): Observable<GameData | undefined> {
+  return liveQuery(() => db.gameData.get(id));
 }
 
-export function updateSave(save: Save) {
-  db.saves.put(save);
+export function getData(): Observable<GameData[]> {
+  return liveQuery(() => db.gameData.toArray());
 }
 
-export function deleteSave(id: number) {
-  db.saves.delete(id);
+export function updateData(data: GameData) {
+  db.gameData.put(data);
 }
+
+export function deleteData(id: number) {
+  db.gameData.delete(id);
+}
+

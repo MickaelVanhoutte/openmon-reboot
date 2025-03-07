@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { GameData } from '$lib/game/data.model';
   import type { FullDexEntry, Generation } from '$lib/pokedex/fulldex';
   import { clickOutside } from '$lib/utils';
 
+  export let data: GameData;
   export let generation: Generation;
   export let selected: FullDexEntry;
   export let originalPokedex: FullDexEntry[];
@@ -80,8 +82,8 @@
     <!-- Dropdown content goes here -->
     {#each filtered as entry}
       <div
-        on:click={() => select(entry)}
-        class="flex justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+        on:click={(e) => data.pokedex.find(pk => pk.id === entry.id) ? e.preventDefault() : select(entry)}
+        class="flex justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 rounded-md {data.pokedex.find(pk => pk.id === entry.id) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
       >
         <span>{entry.name?.english}</span>
         <div class="flex gap-2">

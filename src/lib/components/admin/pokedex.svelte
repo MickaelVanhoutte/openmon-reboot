@@ -239,7 +239,7 @@
                       <RegionSelect on:genSelect={setRegion} />
                     </div>
                     <div class="w-full">
-                      <SearchDex bind:selected {originalPokedex} {generation} />
+                      <SearchDex bind:selected {originalPokedex} {generation} {data} />
                     </div>
                   </div>
 

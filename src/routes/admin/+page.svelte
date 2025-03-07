@@ -11,15 +11,41 @@
   } from '$lib/google-auth';
   import { onMount } from 'svelte';
   import type {GameData} from '$lib/game/data.model';
+  import { createData, getData, getDataById } from '$lib/db';
+  import { Button, Tooltip } from 'flowbite-svelte';
 
   let user: User | null = null;
   let authorized = false;
   let menus = ['Dashboard', 'Pokedex', 'Items', 'Maps'];
   let activeMenu: string = 'Dashboard';
   let gameData: GameData;
+  let indexedData: GameData | undefined;
+
 
   const save = () => {
-    console.log('save', gameData);
+    createData(gameData).then((data) => {
+      gameData.id = data;
+    });
+  }
+
+  const testGameData = () => {
+    console.log(gameData);
+    window.location.href = '/test';
+  }
+
+  function needSave(){
+    console.log('check')
+    return JSON.stringify(gameData) !== JSON.stringify(indexedData);
+  }
+
+  function fetchFromStatics(){
+    console.log('fetching from statics');
+    fetch('final/game-data.json')
+              .then((response) => response.json())
+              .then((data) => {
+                gameData = data;
+                console.log(data);
+              });
   }
 
   onMount(() => {
@@ -29,12 +55,21 @@
     if (user && !authorized) {
       window.location.href = '/';
     }else {
-      fetch('final/game-data.json')
-              .then((response) => response.json())
-              .then((data) => {
-                gameData = data;
-                console.log(data);
-              });
+      getDataById(1).subscribe({
+        next: (data) => {
+          if(data){
+            gameData = data;
+            indexedData = {...data};
+            console.log(data);
+          }else{
+            fetchFromStatics();
+          }
+        },
+        error: (error) => {
+          console.error(error);
+          fetchFromStatics();
+        }
+      });
     }
   });
 </script>
@@ -70,12 +105,33 @@
                 <div>
                   <div>
 
+
+                    {#if needSave()}
+
+                    <a      data-tooltip-target="tooltip-save"
+                            on:click={save}
+                            href="#"
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                    >Save</a
+                    >
+                    <Tooltip><p class="min-w-36">Save data in indexedDB to avoid losing your work</p></Tooltip>
+                    
+                    {:else}
                     <a
                             download="game-data.json"
                             href={'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(gameData))}
                             class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
-                    >Export</a
-                    >
+                    >Export</a>
+                    <Tooltip><p class="min-w-36">Download the data to put it in your project</p></Tooltip>
+                    {/if}
+
+                    <a  
+                            href="#"
+                            on:click={testGameData}
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                    >Test</a>
+                    <Tooltip><p class="min-w-36">Start the game in test mode</p></Tooltip>
+
                   </div>
                 </div>
 
