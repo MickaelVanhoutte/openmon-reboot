@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { FullDexEntry } from '$lib/pokedex/fulldex';
-  import { Card, Chart } from 'flowbite-svelte';
-  import { onMount } from 'svelte';
   //import ApexCharts from "apexcharts";
-  import { typeChart } from '$lib/pokedex/fulldex';
-  import type { ApexOptions } from 'apexcharts';
+  import {typeChart} from '$lib/pokedex/fulldex';
+  import {Chart} from 'flowbite-svelte';
+  import type {ApexOptions} from 'apexcharts';
+  import type {GameData} from '$lib/game/data.model';
 
-  let pokedex: FullDexEntry[] = [];
+  export let data: GameData;
 
   let pokemonCount: number = 0;
   let moveCount: number = 0;
@@ -26,7 +25,7 @@
   function startAnalysis() {
     const moves = new Set();
     const abilities = new Set();
-    pokedex.forEach((pokemon) => {
+    data.pokedex.forEach((pokemon) => {
       pokemon.moves.forEach((move) => {
         moves.add(move.name);
         const repartIdx = movesRepartitions.findIndex((entry) => entry.type === move.type);
@@ -52,7 +51,7 @@
       spAttackStats += pokemon.base.spAttack;
       spDefenseStats += pokemon.base.spDefense;
     });
-    pokemonCount = pokedex.length;
+    pokemonCount = data.pokedex.length;
     moveCount = moves.size;
     abilityCount = abilities.size;
 
@@ -232,14 +231,10 @@
     };
   }
 
-  onMount(() => {
-    fetch('final/pokedex.json')
-      .then((response) => response.json())
-      .then((data) => {
-        pokedex = data;
-        startAnalysis();
-      });
-  });
+  $: if(data?.pokedex){
+    console.log('analysis')
+    startAnalysis();
+  }
 </script>
 
 <div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6">

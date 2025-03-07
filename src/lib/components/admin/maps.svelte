@@ -1,16 +1,11 @@
 <script lang="ts">
     import {onMount} from 'svelte';
-    import type {Map} from '$lib/maps/map.model';
+    import type {Map, TilesetConfig} from '$lib/maps/map.model';
     import MapLayers from './map-layers.svelte';
+    import type {GameData} from '$lib/game/data.model';
 
-    interface TilesetConfig {
-        name: string;
-        tileSize: number;
-        x: number;
-        y: number;
-    }
+    export let data: GameData;
 
-    let maps: Map[] = [];
     let tilesetConfig: TilesetConfig | undefined;
     let edited: Map;
     let selectedLayerIdx: number = 0;
@@ -29,6 +24,9 @@
     let spriteImg: HTMLImageElement;
     let spriteSizeReference: HTMLDivElement;
     let canvasContainer: HTMLDivElement;
+    let editorContainer: HTMLDivElement;
+    let actionsContainer: HTMLDivElement;
+    let saveContainer: HTMLDivElement;
     let squareSize = 32;
     let scale = 1;
     let mode: 'tile' | 'grab' = 'tile';
@@ -84,7 +82,7 @@
     }
 
     function newMap() {
-        edited = {id: '0', label: 'new map', width: 25, height: 25, layers: []};
+        edited = {id: 'i' + data.maps?.length, label: 'new map', width: 20, height: 16, layers: []};
         // init grid arrays
         initMapGrid();
         selectedLayerIdx = 0;
@@ -97,6 +95,46 @@
         toggleModal();
     }
 
+    const save = () => {
+        if (edited) {
+            const startX = 0;
+            const startY = 0;
+            const width = edited.width * squareSize;
+            const height = edited.height * squareSize;
+
+            // redraw without grid
+            drawCanvasGrid(false);
+            const imageData = canvas?.getContext('2d')?.getImageData(startX, startY, width, height);
+            if(imageData) {
+                // Create a temporary canvas to draw the image data
+                const tempCanvas = document.createElement("canvas");
+                const tempCtx = tempCanvas.getContext("2d");
+
+                // Set the size of the temporary canvas to match the extracted region
+                tempCanvas.width = width;
+                tempCanvas.height = height;
+
+                // Draw the extracted image data onto the temporary canvas
+                tempCtx?.putImageData(imageData, 0, 0);
+
+                // Now get the base64 image data of the extracted region
+                edited.minimap = tempCanvas.toDataURL("image/png");
+            }
+
+            if (data?.maps?.find((entry) => entry.id === edited.id)) {
+                data.maps = data.maps.map((entry) => {
+                    if (entry.id === edited.id) {
+                        return edited;
+                    }
+                    return entry;
+                });
+            } else {
+                data.maps = [...data.maps, edited];
+            }
+            toggleModal();
+        }
+    };
+
     function optimizeCanvas(ctx: CanvasRenderingContext2D) {
         if (canvas && ctx) {
             ctx.imageSmoothingEnabled = true;
@@ -106,7 +144,7 @@
     }
 
     function remove(map: Map) {
-        maps = maps.filter((entry) => entry.id !== map.id);
+        data.maps = data.maps.filter((entry) => entry.id !== map.id);
     }
 
     function selectTile(x: number, y: number) {
@@ -179,16 +217,18 @@
         }
     }
 
-    function drawCanvasGrid() {
+    function drawCanvasGrid(grid: boolean = true) {
         const ctx = canvas.getContext('2d');
         if (!optimized && ctx) {
             optimizeCanvas(ctx);
         }
-        canvas.width = canvasContainer.offsetWidth;
-        canvas.height = canvasContainer.offsetHeight;
         const refWidth = spriteSizeReference?.offsetWidth;
         const refHeight = spriteSizeReference?.offsetHeight;
         squareSize = refWidth || refHeight;
+
+        canvas.width = editorContainer.offsetWidth;
+        canvas.height = editorContainer.offsetHeight - actionsContainer.offsetHeight - saveContainer.offsetHeight - 30;
+
         //const smaller = canvas.height < canvas.width ? canvas.height : canvas.width;
         //const tileWidth = smaller / edited.width;
         if (ctx && tilesetConfig && spriteSizeReference) {
@@ -203,8 +243,7 @@
             ctx.translate(translatePos.x, translatePos.y);
 
             const visibleLayers = edited.layers?.filter((layer) => layer.visible);
-            console.log(visibleLayers?.length);
-            if (visibleLayers?.length === 0) {
+            if (visibleLayers?.length === 0 && grid) {
                 for (let i = 0; i < x; i++) {
                     for (let j = 0; j < y; j++) {
                         // draw rect borders
@@ -216,7 +255,7 @@
                     for (let i = 0; i < x; i++) {
                         for (let j = 0; j < y; j++) {
                             // draw rect borders
-                            if (index === 0) {
+                            if (index === 0 && grid) {
                                 ctx.strokeRect(i * refWidth, j * refHeight, refWidth, refHeight);
                             }
                             // draw tile
@@ -293,12 +332,7 @@
     }
 
     onMount(() => {
-        fetch('final/maps.json')
-            .then((response) => response.json())
-            .then((data) => {
-                maps = data;
-            });
-
+        edited = data?.maps[0];
         fetch('final/tileset-config.json')
             .then((response) => response.json())
             .then((data: TilesetConfig) => {
@@ -307,152 +341,158 @@
     });
 </script>
 
-<div class="flex h-16 items-center justify-end">
-    <button
-            on:click={() => newMap()}
-            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
-    >New map
-    </button>
-</div>
+{#if data.maps}
 
-<ul role="list" class="divide-y divide-gray-100">
-    {#each maps as map}
-        <li class="flex justify-between gap-x-6 py-5">
-            <div class="flex min-w-0 gap-x-4">
-                <div class="min-w-0 flex-auto">
-                    <p class="text-m/6 font-semibold text-gray-900">{map.label}</p>
-                    <p class="mt-1 truncate text-s/5 text-gray-500">Types, abilities</p>
+    <div class="flex h-16 items-center justify-end">
+        <button
+                on:click={() => newMap()}
+                class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+        >New map
+        </button>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+        {#each data.maps as map}
+            <li class="flex justify-between gap-x-6 py-5">
+                <div class="flex min-w-0 gap-x-4">
+                    <div class="min-w-0 flex-auto">
+                        <p class="text-m/6 font-semibold text-gray-900">{map.label}</p>
+                        <img src="{map.minimap}" alt="minimap" class="h-32 w-auto"/>
+                    </div>
                 </div>
-            </div>
-            <div class="sm:flex sm:flex-col sm:items-end">
-                <p on:click={() => edit(map)} class="text-m text-gray-900">Edit</p>
-                <p on:click={() => remove(map)} class="mt-1 text-sm text-gray-500">Delete</p>
-            </div>
-        </li>
-    {/each}
+                <div class="sm:flex sm:flex-col sm:items-end">
+                    <p on:click={() => edit(map)} class="text-m text-gray-900">Edit</p>
+                    <p on:click={() => remove(map)} class="mt-1 text-sm text-gray-500">Delete</p>
+                </div>
+            </li>
+        {/each}
 
-    {#if maps.length === 0}
-        <li class="py-5">
-            <p class="text-center text-gray-500">No maps yet, add some !</p>
-        </li>
-    {/if}
-</ul>
+        {#if data.maps.length === 0}
+            <li class="py-5">
+                <p class="text-center text-gray-500">No maps yet, add some !</p>
+            </li>
+        {/if}
+    </ul>
 
-<div
-        class={showMapModal
+    <div
+            class={showMapModal
     ? 'relative ease-linear z-10'
     : closedModal
       ? 'relative ease-linear -z-10'
       : 'relative ease-linear z-10'}
-        aria-labelledby="slide-over-title"
-        role="dialog"
-        aria-modal="true"
->
-    <div
-            class={showMapModal
+            aria-labelledby="slide-over-title"
+            role="dialog"
+            aria-modal="true"
+    >
+        <div
+                class={showMapModal
       ? 'fixed ease-in-out duration-500 inset-0 bg-gray-500/75 transition-opacity opacity-100'
       : 'fixed ease-in-out duration-500 inset-0 bg-gray-500/75 transition-opacity opacity-0'}
-            aria-hidden="true"
-    ></div>
+                aria-hidden="true"
+        ></div>
 
-    <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                <div
-                        class={showMapModal
-            ? 'pointer-events-auto relative w-screen max-w-screen h-screen transform transition ease-in-out duration-500 sm:duration-700 translate-x-0'
-            : 'pointer-events-auto relative w-screen max-w-md transform transition ease-in-out duration-500 sm:duration-700 translate-x-full'}
-                >
+        <div class="fixed inset-0 overflow-hidden">
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                     <div
                             class={showMapModal
+            ? 'pointer-events-auto relative w-screen max-w-screen h-screen transform transition ease-in-out duration-500 sm:duration-700 translate-x-0'
+            : 'pointer-events-auto relative w-screen max-w-md transform transition ease-in-out duration-500 sm:duration-700 translate-x-full'}
+                    >
+                        <div
+                                class={showMapModal
               ? 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-100'
               : 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-0'}
-                    >
-                        <button
-                                on:click={toggleModal}
-                                type="button"
-                                class="relative rounded-md text-gray-100 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
                         >
-                            <span class="absolute -inset-2.5"></span>
-                            <span class="sr-only">Close panel</span>
-                            <svg
-                                    class="size-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="3"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                    data-slot="icon"
+                            <button
+                                    on:click={toggleModal}
+                                    type="button"
+                                    class="relative rounded-md text-gray-100 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
                             >
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="flex h-full max-h-full flex-col overflow-y-hidden bg-white shadow-xl">
-                        <div class="px-4 sm:px-6 p-2">
-                            <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Map editor</h2>
+                                <span class="absolute -inset-2.5"></span>
+                                <span class="sr-only">Close panel</span>
+                                <svg
+                                        class="size-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="3"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                        data-slot="icon"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="relative flex-1 px-1 h-full">
-                            <!-- Drawer content -->
 
-                            {#if tilesetConfig}
-                                <div class="w-full h-full flex gap-2">
-                                    <div class="w-1/4 h-full overflow-hidden relative">
+                        <div class="flex h-screen max-h-screen flex-col overflow-y-hidden bg-white shadow-xl">
+                            <div class="px-4 sm:px-6 p-2">
+                                <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Map editor</h2>
+                            </div>
+                            <div class="relative flex-1 px-1 h-full overflow-hidden">
+                                <!-- Drawer content -->
 
-                                        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
-                                            <li class="me-2">
-                                                <a href="#" on:click={()=> selectedTab = 'tiles'} aria-current="page"
-                                                   class="inline-block p-4 rounded-t-lg {selectedTab === 'tiles' ? 'active text-blue-600 bg-gray-100' : 'hover:text-gray-600 hover:bg-gray-50'}">Tiles</a>
-                                            </li>
-                                            <li class="me-2">
-                                                <a href="#" on:click={()=> selectedTab = 'objects'}
-                                                   class="inline-block p-4 rounded-t-lg {selectedTab === 'objects' ? 'active text-blue-600 bg-gray-100' : 'hover:text-gray-600 hover:bg-gray-50'}">Objects</a>
-                                            </li>
-                                        </ul>
-                                        {#if selectedTab === 'tiles'}
-                                            <div class="relative h-full w-full overflow-y-scroll">
-                                                <img
-                                                        bind:this={spriteImg}
-                                                        class="w-full h-auto aspect-auto mb-8"
-                                                        src="final/tileset.png"
-                                                        alt=""
-                                                />
+                                {#if tilesetConfig}
+                                    <div class="w-full h-full flex gap-2">
+                                        <div class="w-1/4 h-full relative">
 
-                                                <div class="absolute top-0 left-0 w-full h-full flex flex-wrap box-border">
-                                                    {#each {length: tilesetConfig.y} as _, i}
-                                                        {#each {length: tilesetConfig.x} as _, j}
-                                                            {#if i === 0 && j === 0}
-                                                                <div
-                                                                        bind:this={spriteSizeReference}
-                                                                        on:click={() => selectTile(j, i)}
-                                                                        role="button"
-                                                                        class="border-1 border-black hover:border-2 hover:border-blue-500 hover:backdrop-brightness-125"
-                                                                        style="
+                                            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
+                                                <li class="me-2">
+                                                    <a href="#" on:click={()=> selectedTab = 'tiles'}
+                                                       aria-current="page"
+                                                       class="inline-block p-4 rounded-t-lg {selectedTab === 'tiles' ? 'active text-blue-600 bg-gray-100' : 'hover:text-gray-600 hover:bg-gray-50'}">Tiles</a>
+                                                </li>
+                                                <li class="me-2">
+                                                    <a href="#" on:click={()=> selectedTab = 'objects'}
+                                                       class="inline-block p-4 rounded-t-lg {selectedTab === 'objects' ? 'active text-blue-600 bg-gray-100' : 'hover:text-gray-600 hover:bg-gray-50'}">Objects</a>
+                                                </li>
+                                            </ul>
+                                            {#if selectedTab === 'tiles'}
+                                                <div class="relative h-full w-full overflow-y-scroll">
+                                                    <img
+                                                            bind:this={spriteImg}
+                                                            class="w-full h-auto aspect-auto mb-8"
+                                                            src="final/tileset.png"
+                                                            alt=""
+                                                    />
+
+                                                    <div class="absolute top-0 left-0 w-full h-full flex flex-wrap box-border">
+                                                        {#each {length: tilesetConfig.y} as _, i}
+                                                            {#each {length: tilesetConfig.x} as _, j}
+                                                                {#if i === 0 && j === 0}
+                                                                    <div
+                                                                            bind:this={spriteSizeReference}
+                                                                            on:click={() => selectTile(j, i)}
+                                                                            role="button"
+                                                                            class="border-1 border-black hover:border-2 hover:border-blue-500 hover:backdrop-brightness-125"
+                                                                            style="
                                             width: calc(100% / {tilesetConfig.x});
                                             aspect-ratio: 1 / 1;
                                         "
-                                                                ></div>
-                                                            {:else}
-                                                                <div
-                                                                        on:click={() => selectTile(j, i)}
-                                                                        role="button"
-                                                                        class="border-1 border-black hover:border-2 hover:border-blue-500 hover:backdrop-brightness-125"
-                                                                        style="
+                                                                    ></div>
+                                                                {:else}
+                                                                    <div
+                                                                            on:click={() => selectTile(j, i)}
+                                                                            role="button"
+                                                                            class="border-1 border-black hover:border-2 hover:border-blue-500 hover:backdrop-brightness-125"
+                                                                            style="
                                                     width: calc(100% / {tilesetConfig.x});
                                                     aspect-ratio: 1 / 1;
                                                 "
-                                                                ></div>
-                                                            {/if}
+                                                                    ></div>
+                                                                {/if}
+                                                            {/each}
                                                         {/each}
-                                                    {/each}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        {/if}
-                                    </div>
-                                        <div class="w-3/4 h-full flex flex-col gap-4 pb-8 relative">
-                                            {#if edited}
-                                                <div class="w-full flex flex-wrap justify-between gap-4">
+                                            {/if}
+                                        </div>
+                                        {#if edited}
+                                            <div class="w-3/4 h-full flex flex-col gap-3 relative"
+                                                 bind:this={editorContainer}>
+
+                                                <div class="w-full flex flex-wrap justify-between gap-4 min-h-12"
+                                                     bind:this={actionsContainer}>
                                                     <div class="flex flex-wrap content-start gap-4">
                                                         <div id="selectedTile" class="border-1 border-black w-10 h-10">
                                                             <canvas class="w-full h-full"
@@ -584,9 +624,10 @@
                                                         />
                                                     </div>
                                                 </div>
-                                                <div bind:this={canvasContainer} class="grow w-full max-h-max">
+                                                <div bind:this={canvasContainer} class="flex-1 w-full">
                                                     {#if squareSize}
                                                         <canvas
+                                                                class="w-full h-auto"
                                                                 class:cursor-grab={mode === 'grab'}
                                                                 class:cursor-grabbing={mode === 'grab' && dragging}
                                                                 class:cursor-cell={mode === 'tile'}
@@ -594,94 +635,105 @@
                                                                 on:mousemove={(e) => canvasMove(e)}
                                                                 on:mouseup={() => stopDragging()}
                                                                 id="canvas"
-                                                                width="1024"
-                                                                height="720"
+                                                                width="600"
+                                                                height="600"
                                                                 bind:this={canvas}
                                                         ></canvas>
                                                     {/if}
                                                 </div>
-                                            {/if}
-                                        </div>
+
+                                                <div class="w-full flex justify-end min-h-16 pb-3"
+                                                     bind:this={saveContainer}>
+                                                    <button on:click={save}
+                                                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30 h-12 ">
+                                                        save
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        {/if}
                                     </div>
-                            {/if}
+                                {/if}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div
-        class={showLayers
+    <div
+            class={showLayers
     ? 'relative ease-linear z-10'
     : closedLayersModal
       ? 'relative ease-linear -z-10'
       : 'relative ease-linear z-10'}
-        aria-labelledby="slide-over-title"
-        role="dialog"
-        aria-modal="true"
->
-    <div
-            class={showLayers
+            aria-labelledby="slide-over-title"
+            role="dialog"
+            aria-modal="true"
+    >
+        <div
+                class={showLayers
       ? 'fixed ease-in-out duration-500 inset-0 bg-gray-500/75 transition-opacity opacity-100'
       : 'fixed ease-in-out duration-500 inset-0 bg-gray-500/75 transition-opacity opacity-0'}
-            aria-hidden="true"
-    ></div>
+                aria-hidden="true"
+        ></div>
 
-    <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-1/2 w-auto pl-10">
-                <div
-                        class={showLayers
-            ? 'pointer-events-auto relative w-screen max-w-screen h-screen transform transition ease-in-out duration-500 sm:duration-700 translate-x-0'
-            : 'pointer-events-auto relative w-screen max-w-md transform transition ease-in-out duration-500 sm:duration-700 translate-x-full'}
-                >
+        <div class="fixed inset-0 overflow-hidden">
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-1/2 w-auto pl-10">
                     <div
                             class={showLayers
+            ? 'pointer-events-auto relative w-screen max-w-screen h-screen transform transition ease-in-out duration-500 sm:duration-700 translate-x-0'
+            : 'pointer-events-auto relative w-screen max-w-md transform transition ease-in-out duration-500 sm:duration-700 translate-x-full'}
+                    >
+                        <div
+                                class={showLayers
               ? 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-100'
               : 'absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4 opacity-0'}
-                    >
-                        <button
-                                on:click={toggleLayers}
-                                type="button"
-                                class="relative rounded-md text-gray-100 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
                         >
-                            <span class="absolute -inset-2.5"></span>
-                            <span class="sr-only">Close panel</span>
-                            <svg
-                                    class="size-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="3"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                    data-slot="icon"
+                            <button
+                                    on:click={toggleLayers}
+                                    type="button"
+                                    class="relative rounded-md text-gray-100 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
                             >
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="flex h-full max-h-full flex-col overflow-y-hidden bg-white shadow-xl">
-                        <div class="px-4 sm:px-6 p-2">
-                            <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Layers</h2>
+                                <span class="absolute -inset-2.5"></span>
+                                <span class="sr-only">Close panel</span>
+                                <svg
+                                        class="size-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="3"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                        data-slot="icon"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="relative flex-1 px-1 h-full">
-                            <!-- Drawer content -->
-                            <MapLayers
-                                    bind:map={edited}
-                                    bind:selectedLayerIdx
-                                    bind:showLayers
-                                    bind:closedLayersModal
-                            />
+
+                        <div class="flex h-full max-h-full flex-col overflow-y-hidden bg-white shadow-xl">
+                            <div class="px-4 sm:px-6 p-2">
+                                <h2 class="text-3xl font-semibold text-gray-900" id="slide-over-title">Layers</h2>
+                            </div>
+                            <div class="relative flex-1 px-1 h-full">
+                                <!-- Drawer content -->
+                                <MapLayers
+                                        bind:map={edited}
+                                        bind:selectedLayerIdx
+                                        bind:showLayers
+                                        bind:closedLayersModal
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+{/if}
 
 <style>
     #canvas {

@@ -10,11 +10,17 @@
     type User,
   } from '$lib/google-auth';
   import { onMount } from 'svelte';
+  import type {GameData} from '$lib/game/data.model';
 
   let user: User | null = null;
   let authorized = false;
   let menus = ['Dashboard', 'Pokedex', 'Items', 'Maps'];
   let activeMenu: string = 'Dashboard';
+  let gameData: GameData;
+
+  const save = () => {
+    console.log('save', gameData);
+  }
 
   onMount(() => {
     onGoogleScriptLoad(decodeJwtResponse);
@@ -22,6 +28,13 @@
     authorized = isAuthorized(user);
     if (user && !authorized) {
       window.location.href = '/';
+    }else {
+      fetch('final/game-data.json')
+              .then((response) => response.json())
+              .then((data) => {
+                gameData = data;
+                console.log(data);
+              });
     }
   });
 </script>
@@ -37,7 +50,6 @@
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 {#each menus as menu}
                   <a
                     href={'#' + menu}
@@ -56,37 +68,17 @@
               <!-- Profile dropdown -->
               <div class="relative ml-3">
                 <div>
-                  <button
-                    type="button"
-                    class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                    id="user-menu-button"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                  >
-                    <span class="absolute -inset-1.5"></span>
-                    <span class="sr-only">Open user menu</span>
-                    <img class="size-8 rounded-full" src={user.picture} alt="" />
-                  </button>
+                  <div>
+
+                    <a
+                            download="game-data.json"
+                            href={'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(gameData))}
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                    >Export</a
+                    >
+                  </div>
                 </div>
 
-                <!--
-                  Dropdown menu, show/hide based on menu state.
-  
-                  Entering: "transition ease-out duration-100"
-                    From: "transform opacity-0 scale-95"
-                    To: "transform opacity-100 scale-100"
-                  Leaving: "transition ease-in duration-75"
-                    From: "transform opacity-100 scale-100"
-                    To: "transform opacity-0 scale-95"
-                
-                <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-                </div>
-              </div>
-            -->
               </div>
             </div>
             <div class="-mr-2 flex md:hidden">
@@ -135,7 +127,7 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
             {#each menus as menu}
               <a
                 href={'#' + menu}
@@ -149,12 +141,9 @@
           </div>
           <div class="border-t border-gray-700 pt-4 pb-3">
             <div class="flex items-center px-5">
-              <div class="shrink-0">
-                <img class="size-10 rounded-full" src={user.picture} alt="" />
-              </div>
-              <div class="ml-3">
-                <div class="text-base/5 font-medium text-white">{user.name}</div>
-                <div class="text-sm font-medium text-gray-400">{user.email}</div>
+
+              <div>
+                <button on:click={save} class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30">save</button>
               </div>
             </div>
           </div>
@@ -170,22 +159,24 @@
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <!-- Your content -->
-        {#if activeMenu === 'Dashboard'}
-          <Dashboard />
-        {:else if activeMenu === 'Pokedex'}
-          <Pokedex />
-        {:else if activeMenu === 'Items'}
-          todo: <br />
-          load current items file <br />
-          start from scratch <br />
-          export items as json <br />
-          add item <br />
-          edit item <br />
-          search item <br />
-          filter item <br />
-          sort item <br />
-        {:else if activeMenu === 'Maps'}
-          <Maps />
+        {#if gameData}
+          {#if activeMenu === 'Dashboard'}
+            <Dashboard bind:data={gameData}/>
+          {:else if activeMenu === 'Pokedex'}
+            <Pokedex bind:data={gameData}/>
+          {:else if activeMenu === 'Items'}
+            todo: <br />
+            load current items file <br />
+            start from scratch <br />
+            export items as json <br />
+            add item <br />
+            edit item <br />
+            search item <br />
+            filter item <br />
+            sort item <br />
+          {:else if activeMenu === 'Maps'}
+            <Maps bind:data={gameData}/>
+          {/if}
         {/if}
       </div>
     </main>

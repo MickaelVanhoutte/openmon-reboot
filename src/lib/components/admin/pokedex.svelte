@@ -6,9 +6,10 @@
   import type { FullDexEntry, Generation } from '$lib/pokedex/fulldex';
   import ModalEvolutions from './modal-evolutions.svelte';
   import RegionSelect from './region-select.svelte';
+  import type {GameData} from '$lib/game/data.model';
 
   // load current pokedex file
-  export let pokedex: FullDexEntry[] = [];
+  export let data: GameData;
   export let originalPokedex: FullDexEntry[] = [];
 
   let pokeForm: FullDexEntry | undefined;
@@ -19,7 +20,7 @@
   function setForm() {
     pokeForm = edited ? structuredClone(edited) : selected ? structuredClone(selected) : undefined;
   }
-  $: selected, setForm();
+  $: if(selected) setForm();
 
   //$: pokeForm = selected ? structuredClone(selected) : undefined;
 
@@ -41,7 +42,7 @@
   }
 
   function remove(pokemon: FullDexEntry) {
-    pokedex = pokedex.filter((entry) => entry.id !== pokemon.id);
+    data.pokedex = data.pokedex.filter((entry) => entry.id !== pokemon.id);
   }
 
   const toggleModal = () => {
@@ -53,19 +54,15 @@
 
   const save = () => {
     if (pokeForm) {
-      pokedex = pokedex.filter((entry) => entry.id !== pokeForm?.id);
-      pokedex = [...pokedex, pokeForm];
-      pokedex.sort((a, b) => a.id - b.id);
+      data.pokedex = data.pokedex.filter((entry) => entry.id !== pokeForm?.id);
+      data.pokedex = [...data.pokedex, pokeForm];
+      data.pokedex.sort((a, b) => a.id - b.id);
       toggleModal();
     }
   };
 
   onMount(() => {
-    fetch('final/pokedex.json')
-      .then((response) => response.json())
-      .then((data) => {
-        pokedex = data;
-      });
+    console.log('pokedex', data);
     fetch('resources/dex/base-pokedex-moves.json')
       .then((response) => response.json())
       .then((data) => {
@@ -83,7 +80,7 @@
 </div>
 
 <ul role="list" class="divide-y divide-gray-100">
-  {#each pokedex as pokemon}
+  {#each data.pokedex as pokemon}
     <li class="flex justify-between gap-x-6 py-5">
       <div class="flex min-w-0 gap-x-4">
         <img class="size-12 flex-none rounded-full bg-gray-50" src={pokemon.image.sprite} alt="" />
@@ -99,21 +96,21 @@
     </li>
   {/each}
 
-  {#if pokedex.length === 0}
+  {#if data.pokedex.length === 0}
     <li class="py-5">
       <p class="text-center text-gray-500">No Pokemon in the Pokedex, add some !</p>
     </li>
   {/if}
 </ul>
 
-<div class="flex h-16 items-center justify-end sticky bottom-0">
+<!--<div class="flex h-16 items-center justify-end sticky bottom-0">
   <a
     download="pokedex.json"
-    href={'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(pokedex))}
+    href={'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data.pokedex))}
     class="absolute bottom-8 rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500"
     >Export as JSON</a
   >
-</div>
+</div>-->
 
 <div
   class={showModal
