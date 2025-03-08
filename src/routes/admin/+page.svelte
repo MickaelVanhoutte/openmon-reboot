@@ -10,7 +10,7 @@
     type User,
   } from '$lib/google-auth';
   import { onMount } from 'svelte';
-  import type {GameData} from '$lib/game/data.model';
+  import type { GameData } from '$lib/game/data.model';
   import { createData, getData, getDataById } from '$lib/db';
   import { Button, Tooltip } from 'flowbite-svelte';
   import General from '$lib/components/admin/general.svelte';
@@ -22,31 +22,30 @@
   let gameData: GameData;
   let indexedData: GameData | undefined;
 
-
   const save = () => {
     createData(gameData).then((data) => {
       gameData.id = data;
     });
-  }
+  };
 
   const testGameData = () => {
     console.log(gameData);
     window.location.href = '/test';
-  }
+  };
 
-  function needSave(){
-    console.log('check')
+  function needSave() {
+    console.log('check');
     return JSON.stringify(gameData) !== JSON.stringify(indexedData);
   }
 
-  function fetchFromStatics(){
+  function fetchFromStatics() {
     console.log('fetching from statics');
     fetch('final/game-data.json')
-              .then((response) => response.json())
-              .then((data) => {
-                gameData = data;
-                console.log(data);
-              });
+      .then((response) => response.json())
+      .then((data) => {
+        gameData = data;
+        console.log(data);
+      });
   }
 
   onMount(() => {
@@ -55,21 +54,21 @@
     authorized = isAuthorized(user);
     if (user && !authorized) {
       window.location.href = '/';
-    }else {
+    } else {
       getDataById(1).subscribe({
         next: (data) => {
-          if(data){
+          if (data) {
             gameData = data;
-            indexedData = {...data};
+            indexedData = { ...data };
             console.log(data);
-          }else{
+          } else {
             fetchFromStatics();
           }
         },
         error: (error) => {
           console.error(error);
           fetchFromStatics();
-        }
+        },
       });
     }
   });
@@ -105,38 +104,51 @@
               <div class="relative ml-3">
                 <div>
                   <div>
-
-
                     {#if needSave()}
-
-                    <a      data-tooltip-target="tooltip-save"
-                            on:click={save}
-                            href="#"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
-                    >Save</a
-                    >
-                    <Tooltip><p class="min-w-36">Save data in indexedDB to avoid losing your work</p></Tooltip>
-                    
+                      <a
+                        data-tooltip-target="tooltip-save"
+                        on:click={save}
+                        href="#"
+                        class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                        >Save</a
+                      >
+                      <Tooltip
+                        ><p class="min-w-36">
+                          Save data in indexedDB to avoid losing your work
+                        </p></Tooltip
+                      >
                     {:else}
-                    <a
-                            download="game-data.json"
-                            href={'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(gameData))}
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
-                    >Export</a>
-                    <Tooltip><p class="min-w-36">Download the data to put it in your project</p></Tooltip>
+                      <a
+                        download="game-data.json"
+                        href={'data:text/json;charset=utf-8,' +
+                          encodeURIComponent(JSON.stringify(gameData))}
+                        class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                        >Export</a
+                      >
+                      <Tooltip
+                        ><p class="min-w-36">
+                          Download the data to put it in your project
+                        </p></Tooltip
+                      >
                     {/if}
 
-                    <a  
-                            class:disabled={gameData?.maps?.length === 0 || gameData?.pokedex?.length === 0}
-                            href="#"
-                            on:click={testGameData}
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
-                    >Test</a>
-                    <Tooltip><p class="min-w-36">{gameData?.maps?.length === 0 || gameData?.pokedex?.length === 0 ? 'You need to add pokemons or maps first': 'Start the game in test mode'}</p></Tooltip>
-
+                    <a
+                      class:disabled={gameData?.maps?.length === 0 ||
+                        gameData?.pokedex?.length === 0}
+                      href="#"
+                      on:click={testGameData}
+                      class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                      >Test</a
+                    >
+                    <Tooltip
+                      ><p class="min-w-36">
+                        {gameData?.maps?.length === 0 || gameData?.pokedex?.length === 0
+                          ? 'You need to add pokemons or maps first'
+                          : 'Start the game in test mode'}
+                      </p></Tooltip
+                    >
                   </div>
                 </div>
-
               </div>
             </div>
             <div class="-mr-2 flex md:hidden">
@@ -185,7 +197,6 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-
             {#each menus as menu}
               <a
                 href={'#' + menu}
@@ -199,9 +210,12 @@
           </div>
           <div class="border-t border-gray-700 pt-4 pb-3">
             <div class="flex items-center px-5">
-
               <div>
-                <button on:click={save} class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30">save</button>
+                <button
+                  on:click={save}
+                  class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+                  >save</button
+                >
               </div>
             </div>
           </div>
@@ -219,11 +233,11 @@
         <!-- Your content -->
         {#if gameData}
           {#if activeMenu === 'Dashboard'}
-            <Dashboard bind:data={gameData}/>
+            <Dashboard bind:data={gameData} />
           {:else if activeMenu === 'General'}
-            <General bind:data={gameData}/>
+            <General bind:data={gameData} />
           {:else if activeMenu === 'Pokedex'}
-            <Pokedex bind:data={gameData}/>
+            <Pokedex bind:data={gameData} />
           {:else if activeMenu === 'Items'}
             todo: <br />
             load current items file <br />
@@ -235,7 +249,7 @@
             filter item <br />
             sort item <br />
           {:else if activeMenu === 'Maps'}
-            <Maps bind:data={gameData}/>
+            <Maps bind:data={gameData} />
           {/if}
         {/if}
       </div>
@@ -245,9 +259,8 @@
   <div id="googleSignIn"></div>
 {/if}
 
-
 <style>
-  a.disabled{
+  a.disabled {
     pointer-events: none;
     opacity: 0.5;
   }

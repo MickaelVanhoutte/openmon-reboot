@@ -13,7 +13,6 @@ export interface Layer {
   grid: { x: number; y: number }[][];
 }
 
-
 export interface TilesetConfig {
   name: string;
   tileSize: number;

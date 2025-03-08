@@ -1,9 +1,9 @@
 <script lang="ts">
   //import ApexCharts from "apexcharts";
-  import {typeChart} from '$lib/pokedex/fulldex';
-  import {Chart} from 'flowbite-svelte';
-  import type {ApexOptions} from 'apexcharts';
-  import type {GameData} from '$lib/game/data.model';
+  import { typeChart } from '$lib/pokedex/fulldex';
+  import { Chart } from 'flowbite-svelte';
+  import type { ApexOptions } from 'apexcharts';
+  import type { GameData } from '$lib/game/data.model';
 
   export let data: GameData;
 
@@ -159,8 +159,7 @@
         },
       },
       tooltip: {
-        shared: true,
-        intersect: false,
+        enabled: false,
       },
       xaxis: {
         labels: {
@@ -235,16 +234,15 @@
     };
   }
 
-  $: if(data?.pokedex){
-    console.log('analysis')
+  $: if (data?.pokedex) {
+    console.log('analysis');
     startAnalysis();
   }
 </script>
 
 <div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6">
-
   <dl
-          class="grid max-w-screen-xl grid-cols-1 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 sm:p-8"
+    class="grid max-w-screen-xl grid-cols-1 gap-2 p-4 mx-auto text-gray-900 sm:grid-cols-3 sm:p-8"
   >
     <div class="flex flex-col items-center justify-center">
       <dt class="mb-2 text-3xl font-extrabold">{pokemonCount}</dt>
@@ -265,9 +263,7 @@
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
-          Types repartition
-        </h5>
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">Types repartition</h5>
       </div>
     </div>
   </div>
@@ -281,9 +277,7 @@
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
-          Move types repartition
-        </h5>
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">Move types repartition</h5>
       </div>
     </div>
   </div>
@@ -297,9 +291,7 @@
   <div class="flex justify-between items-start w-full">
     <div class="flex-col items-center">
       <div class="flex items-center mb-1">
-        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">
-          Stats repartition
-        </h5>
+        <h5 class="text-xl font-bold leading-none text-gray-900 me-1">Stats repartition</h5>
       </div>
     </div>
   </div>

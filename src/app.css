@@ -1,13 +1,17 @@
 @import 'tailwindcss';
 
 @font-face {
-    font-family: pokemon;
-    src: url('fonts/pokemon-ds-font.ttf');
-  }
+  font-family: pokemon;
+  src: url('fonts/pokemon-ds-font.ttf');
+}
+
+:root {
+  --spacing: 0.2rem;
+}
 
 html {
-    font-family: pokemon;
-    font-size: 24px;
-    line-height: 1;
-    font-weight: bold;
+  font-family: pokemon;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: bold;
 }

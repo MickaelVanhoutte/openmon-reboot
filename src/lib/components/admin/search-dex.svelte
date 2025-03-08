@@ -82,8 +82,13 @@
     <!-- Dropdown content goes here -->
     {#each filtered as entry}
       <div
-        on:click={(e) => data.pokedex.find(pk => pk.id === entry.id) ? e.preventDefault() : select(entry)}
-        class="flex justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 rounded-md {data.pokedex.find(pk => pk.id === entry.id) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
+        on:click={(e) =>
+          data.pokedex.find((pk) => pk.id === entry.id) ? e.preventDefault() : select(entry)}
+        class="flex justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 rounded-md {data.pokedex.find(
+          (pk) => pk.id === entry.id,
+        )
+          ? 'opacity-50 cursor-not-allowed'
+          : 'cursor-pointer'}"
       >
         <span>{entry.name?.english}</span>
         <div class="flex gap-2">
