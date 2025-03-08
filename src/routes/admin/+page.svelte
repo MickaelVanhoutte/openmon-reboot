@@ -127,11 +127,12 @@
                     {/if}
 
                     <a  
+                            class:disabled={gameData?.maps?.length === 0 || gameData?.pokedex?.length === 0}
                             href="#"
                             on:click={testGameData}
                             class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
                     >Test</a>
-                    <Tooltip><p class="min-w-36">Start the game in test mode</p></Tooltip>
+                    <Tooltip><p class="min-w-36">{gameData?.maps?.length === 0 || gameData?.pokedex?.length === 0 ? 'You need to add pokemons or maps first': 'Start the game in test mode'}</p></Tooltip>
 
                   </div>
                 </div>
@@ -243,3 +244,11 @@
 {:else if !user}
   <div id="googleSignIn"></div>
 {/if}
+
+
+<style>
+  a.disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>

@@ -84,7 +84,7 @@
       },
       legend: {
         labels: {
-          colors: 'white',
+          colors: 'grey',
         },
       },
       axisTicks: {
@@ -145,11 +145,15 @@
       },
       legend: {
         labels: {
-          colors: 'white',
+          colors: 'grey',
         },
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '12px',
+          colors: ['#333'],
+        },
         formatter: (value, opts) => {
           return opts.config.series[opts.seriesIndex].name + ': ' + value;
         },
@@ -219,7 +223,7 @@
       },
       legend: {
         labels: {
-          colors: 'white',
+          colors: 'grey',
         },
       },
       axisTicks: {

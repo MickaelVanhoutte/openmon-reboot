@@ -38,10 +38,5 @@
     "name": "Alola",
     "id": 7,
     "indexes": [722, 809]
-  },
-  {
-    "name": "Galar",
-    "id": 8,
-    "indexes": [810, 898]
   }
 ]

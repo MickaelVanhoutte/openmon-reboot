@@ -83,7 +83,7 @@
 
 <div class="flex h-16 gap-8 items-center justify-end">
 
-  <button on:click={() => (display = display === 'lines' ? 'grid' : 'lines')} class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 text-center inline-flex items-center me-2">
+  <button on:click={() => (display = display === 'lines' ? 'grid' : 'lines')} class="hidden md:inline-flex text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 text-center items-center me-2">
     {#if display === 'lines'}
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="size-6" viewBox="0 -0.5 21 21" version="1.1">
 
@@ -114,13 +114,13 @@
 
   <button
     on:click={toggleModal}
-    class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-30"
+    class="rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-white hover:bg-indigo-500 min-w-20"
     >Add</button
   >
 
   <button
   on:click={addAll}
-  class="rounded-md border-1 border-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-indigo-600 hover:bg-indigo-500 hover:text-white min-w-30"
+  class="rounded-md border-1 border-indigo-600 px-3 py-2 text-[0.8125rem]/5 font-semibold text-indigo-600 hover:bg-indigo-500 hover:text-white min-w-20"
   >Add all</button
 >
 </div>
