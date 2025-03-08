@@ -362,7 +362,7 @@
                 </div>
                 <div class="sm:flex sm:flex-col sm:items-end">
                     <p on:click={() => edit(map)} class="text-m text-gray-900">Edit</p>
-                    <p on:click={() => remove(map)} class="mt-1 text-sm text-gray-500">Delete</p>
+                    <p on:click={() => remove(map)} class="mt-1 text-sm text-red-500">Delete</p>
                 </div>
             </li>
         {/each}

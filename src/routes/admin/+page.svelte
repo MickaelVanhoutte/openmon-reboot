@@ -13,10 +13,11 @@
   import type {GameData} from '$lib/game/data.model';
   import { createData, getData, getDataById } from '$lib/db';
   import { Button, Tooltip } from 'flowbite-svelte';
+  import General from '$lib/components/admin/general.svelte';
 
   let user: User | null = null;
   let authorized = false;
-  let menus = ['Dashboard', 'Pokedex', 'Items', 'Maps'];
+  let menus = ['Dashboard', 'General', 'Pokedex', 'Items', 'Maps'];
   let activeMenu: string = 'Dashboard';
   let gameData: GameData;
   let indexedData: GameData | undefined;
@@ -218,6 +219,8 @@
         {#if gameData}
           {#if activeMenu === 'Dashboard'}
             <Dashboard bind:data={gameData}/>
+          {:else if activeMenu === 'General'}
+            <General bind:data={gameData}/>
           {:else if activeMenu === 'Pokedex'}
             <Pokedex bind:data={gameData}/>
           {:else if activeMenu === 'Items'}

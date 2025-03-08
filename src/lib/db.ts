@@ -17,7 +17,7 @@ const db = new Dexie('data') as Dexie & {
 
 // Schema declaration:
 db.version(1).stores({
-  gameData: '++id, pokedex, maps', // primary key "id" (for the runtime!)
+  gameData: '++id, options, pokedex, maps', // primary key "id" (for the runtime!)
 });
 
 export { db };
