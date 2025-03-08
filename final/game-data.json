@@ -1,4 +1,10 @@
 {
+  "options": {
+    "name": "Reboot",
+    "gDriveSync": false,
+    "difficulty": 1,
+    "shinyRate": 0
+  },
   "pokedex": [],
   "maps": []
 }
