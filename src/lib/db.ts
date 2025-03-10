@@ -62,16 +62,17 @@ export function deleteData(id: number) {
 
 // Save
 
-export async function createSave(save: Save): Promise<number | undefined> {
+export async function createSave(save: Save): Promise<number> {
   try {
     const id = await db.saves.add(save);
-    return id;
+    return id || -1;
   } catch (error) {
     if (error?.toString()?.includes('Key already exists')) {
       updateSave(save);
-      return Promise.resolve(save.id);
+      return Promise.resolve(save.id || -1);
     } else {
       console.log(`Failed to add data: ${error}`);
+      return -1;
     }
   }
 }

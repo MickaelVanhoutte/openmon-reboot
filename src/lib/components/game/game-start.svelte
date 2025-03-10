@@ -2,17 +2,19 @@
   import { fly } from 'svelte/transition';
   import type { GameData } from '$lib/game/data.model';
   import SaveSelection from './save-selection.svelte';
+  import type { Save } from '$lib/db';
+  import GameWorld from './game-world.svelte';
 
   export let debug = false;
   export let gameData: GameData;
 
   export let clickedStart = false;
+  let selectedSave: Save | undefined;
 </script>
 
 {#if !clickedStart}
   <div
     class="h-screen w-screen bg-blue-500 overflow-hidden relative wrapper-title"
-    transition:fly={{ y: 200, duration: 2000 }}
   >
     <div class="flex flex-col items-center justify-center h-full">
       <h1 class="text-4xl font-bold text-white">Pokemon {gameData.options.name}</h1>
@@ -27,8 +29,10 @@
       <div class="snow"></div>
     {/each}
   </div>
-{:else}
-  <SaveSelection {gameData} {debug} />
+{:else if !selectedSave}
+  <SaveSelection {gameData} {debug} bind:selectedSave />
+{:else if selectedSave}
+  <GameWorld {gameData} {debug} {selectedSave} />
 {/if}
 
 <style lang="scss">
