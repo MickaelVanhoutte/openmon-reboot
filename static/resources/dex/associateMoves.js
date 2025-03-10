@@ -21,6 +21,6 @@ const mergedData = basePokedex.map((pokemon) => {
 });
 
 // Write the merged data to base-pokedex-moves.json
-fs.writeFileSync('./base-pokedex-moves.json', JSON.stringify(mergedData), 'utf8');
+//fs.writeFileSync('./base-pokedex-moves.json', JSON.stringify(mergedData), 'utf8');
 
 console.log('Merged data has been written to base-pokedex-moves.json');
