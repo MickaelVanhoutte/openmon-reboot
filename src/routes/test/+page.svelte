@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import GameStart from '$lib/components/game/game-start.svelte';
   import { getDataById } from '$lib/db';
   import type { GameData } from '$lib/game/data.model';
@@ -56,4 +56,4 @@
   <GameStart debug={true} {gameData} />
 {:else if !user}
   <div id="googleSignIn"></div>
-{/if}
+{/if} -->
