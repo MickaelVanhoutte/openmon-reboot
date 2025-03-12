@@ -222,7 +222,8 @@
 </div>
 
 <nav class="menu">
-	<button class="menu-btn" on:click={() => toggleMenu()}>
+
+	<button class="btn btn-square p-2" on:click={() => toggleMenu()}>
 		{#if menu}
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
 				><path
@@ -240,7 +241,7 @@
 
 	{#if menu}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => toggleQuests()}
 			style="color: #daba2e"
 			data-title="quests"
@@ -257,8 +258,8 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.POKEMON_LIST)}
 		<button
-			class="menu-btn"
-			on:click={() => overWorldCtx.toggleMenu(MenuType.POKEMON_LIST)}
+			class="btn btn-square p-2 menu-btn relative"
+			on:click={() => overWorldCtx.openMenu(MenuType.POKEMON_LIST)}
 			style="color: #d4344b"
 			data-title="team"
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
@@ -294,7 +295,7 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.BAG)}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => overWorldCtx.openMenu(MenuType.BAG)}
 			style="color: #e57f15"
 			data-title="bag"
@@ -312,7 +313,7 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.BOX)}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => overWorldCtx.openMenu(MenuType.BOX)}
 			style="color: #594ae5"
 			data-title="boxes"
@@ -330,7 +331,7 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.POKEDEX)}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => overWorldCtx.openMenu(MenuType.POKEDEX)}
 			style="color: #f6411b"
 			data-title="dex"
@@ -361,7 +362,7 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.TRAINER)}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => overWorldCtx.openMenu(MenuType.TRAINER)}
 			style="color: #10ad6f"
 			data-title="trainer"
@@ -379,7 +380,7 @@
 
 	{#if menu && context.isMenuAvailable(MenuType.BAG)}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => toggleMap()}
 			style="color: rgb(90 177 66)"
 			data-title="map"
@@ -396,7 +397,7 @@
 
 	{#if menu}
 		<button
-			class="menu-btn"
+			class="btn btn-square p-2 menu-btn relative"
 			on:click={() => save()}
 			style="color:#05aab3"
 			data-title="save"
@@ -415,28 +416,26 @@
 
 {#if context.flags.getFlag(FlagEntry.RUNNING_SHOES_UNLOCKED) && !displayedQuests}
 	<div class="run-toggle">
-		{#if context.player?.running}
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-				<path
-					d="M9.82986 8.78986L7.99998 9.45588V13H5.99998V8.05H6.015L11.2834 6.13247C11.5274 6.03855 11.7922 5.99162 12.0648 6.0008C13.1762 6.02813 14.1522 6.75668 14.4917 7.82036C14.678 8.40431 14.848 8.79836 15.0015 9.0025C15.9138 10.2155 17.3653 11 19 11V13C16.8253 13 14.8823 12.0083 13.5984 10.4526L12.9008 14.4085L15 16.17V23H13V17.1025L10.7307 15.1984L10.003 19.3253L3.10938 18.1098L3.45667 16.1401L8.38071 17.0084L9.82986 8.78986ZM13.5 5.5C12.3954 5.5 11.5 4.60457 11.5 3.5C11.5 2.39543 12.3954 1.5 13.5 1.5C14.6046 1.5 15.5 2.39543 15.5 3.5C15.5 4.60457 14.6046 5.5 13.5 5.5Z"
-				></path>
-			</svg>
-		{:else}
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+		<label class="toggle text-base-content">
+			<input type="checkbox" 
+			checked={context.player?.running ? true : undefined}
+			on:change={() => (context.player.running = !context.player?.running)}>
+
+
+			<svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
 				<path
 					d="M7.61713 8.71233L10.8222 6.38373C11.174 6.12735 11.6087 5.98543 12.065 6.0008C13.1764 6.02813 14.1524 6.75668 14.4919 7.82036C14.6782 8.40431 14.8481 8.79836 15.0017 9.0025C15.914 10.2155 17.3655 11 19.0002 11V13C16.8255 13 14.8825 12.0083 13.5986 10.4526L12.901 14.4085L14.9621 16.138L17.1853 22.246L15.3059 22.93L13.266 17.3256L9.87576 14.4808C9.32821 14.0382 9.03139 13.3192 9.16231 12.5767L9.67091 9.6923L8.99407 10.1841L6.86706 13.1116L5.24902 11.9361L7.60016 8.7L7.61713 8.71233ZM13.5002 5.5C12.3956 5.5 11.5002 4.60457 11.5002 3.5C11.5002 2.39543 12.3956 1.5 13.5002 1.5C14.6047 1.5 15.5002 2.39543 15.5002 3.5C15.5002 4.60457 14.6047 5.5 13.5002 5.5ZM10.5286 18.6813L7.31465 22.5116L5.78257 21.226L8.75774 17.6803L9.50426 15.5L11.2954 17L10.5286 18.6813Z"
 				></path>
 			</svg>
-		{/if}
 
-		<label class="switch">
-			<input
-				type="checkbox"
-				checked={context.player?.running ? true : undefined}
-				on:change={() => (context.player.running = !context.player?.running)}
-			/>
-			<span> </span>
-		</label>
+			<svg aria-label="enabled"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+				<path
+					d="M9.82986 8.78986L7.99998 9.45588V13H5.99998V8.05H6.015L11.2834 6.13247C11.5274 6.03855 11.7922 5.99162 12.0648 6.0008C13.1762 6.02813 14.1522 6.75668 14.4917 7.82036C14.678 8.40431 14.848 8.79836 15.0015 9.0025C15.9138 10.2155 17.3653 11 19 11V13C16.8253 13 14.8823 12.0083 13.5984 10.4526L12.9008 14.4085L15 16.17V23H13V17.1025L10.7307 15.1984L10.003 19.3253L3.10938 18.1098L3.45667 16.1401L8.38071 17.0084L9.82986 8.78986ZM13.5 5.5C12.3954 5.5 11.5 4.60457 11.5 3.5C11.5 2.39543 12.3954 1.5 13.5 1.5C14.6046 1.5 15.5 2.39543 15.5 3.5C15.5 4.60457 14.6046 5.5 13.5 5.5Z"
+				></path>
+			</svg>
+
+			
+		  </label>
 	</div>
 {/if}
 
@@ -465,26 +464,6 @@
 	}
 
 	.menu-btn {
-		background-color: rgba(44, 56, 69, 0.95);
-		color: white;
-		padding: 8px;
-		border-radius: 8px;
-		width: 48px;
-		height: 48px;
-		margin-bottom: 8px;
-		border: none;
-		box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.5);
-
-		svg {
-			height: 100%;
-			width: 100%;
-		}
-
-		&.full-right {
-			position: absolute;
-			top: 2%;
-			right: 2%;
-		}
 
 		&:after {
 			content: attr(data-title);
@@ -501,7 +480,7 @@
 			font-weight: bold;
 			text-transform: uppercase;
 			text-shadow: 0px 3px 4px rgba(0, 0, 0, 1);
-			animation: appear 0.5s forwards;
+			animation: appear 1s forwards;
 			animation-delay: 0.5s;
 		}
 	}

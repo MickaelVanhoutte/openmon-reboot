@@ -207,6 +207,7 @@ export class OverworldContext {
                 this.menus.mapOpened$.set(true);
                 break;
         }
+        console.log('openMenu', menuType, this.menus);
     }
 
     closeMenu(menuType: MenuType) {

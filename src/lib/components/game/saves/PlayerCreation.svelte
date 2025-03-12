@@ -80,6 +80,7 @@
 		padding: 2%;
 
 		color: #e0e0e0;
+		background-color: var(--color-base-100);
 		background-image: repeating-linear-gradient(-45deg, var(--color-base-100), var(--color-base-100) 13px, var(--color-base-200) 13px, var(--color-base-200) 14px);
 		h1 {
 			margin: .35em 0;

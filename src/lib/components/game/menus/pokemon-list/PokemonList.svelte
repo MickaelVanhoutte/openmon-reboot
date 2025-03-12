@@ -42,7 +42,7 @@
 	context.battleContext.subscribe((value) => {
 		battleContext = value;
 		if (value) {
-			first = battleContext?.playerPokemon;
+			first = battleContext?.playerSide.at(0);
 			others = context.player.monsters.filter((pkmn) => pkmn !== first);
 		}
 	});
@@ -143,6 +143,7 @@
 	}
 
 	const listener = (e: KeyboardEvent) => {
+		
 		if (context.overWorldContext.menus.openSummary || battleSummaryOpened) return;
 		if (!openOptions) {
 			if (e.key === 'ArrowUp') {
@@ -159,8 +160,10 @@
 				closeList();
 			}
 		} else {
+
 			if (e.key === 'ArrowUp') {
 				optionSelected = optionSelected === 0 ? numberOfOptions : optionSelected - 1;
+				console.log('optionSelected', optionSelected);
 			} else if (e.key === 'ArrowDown') {
 				optionSelected = optionSelected === numberOfOptions ? 0 : optionSelected + 1;
 			} else if (e.key === 'Enter') {
@@ -433,30 +436,8 @@
 		left: 0;
 		width: 100dvw;
 		height: 100dvh;
-		//background-image: url('src/assets/menus/p-sum.jpg');
-		//background-size: cover;
-		background: rgb(0, 29, 43);
-		background: -moz-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: -webkit-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-
-		background-position: top left;
-		background-repeat: round;
+		background-color: var(--color-base-100);
+		background-image: repeating-linear-gradient(-45deg, var(--color-base-100), var(--color-base-100) 13px, var(--color-base-200) 13px, var(--color-base-200) 14px);
 		z-index: var(--zIndex, 8);
 
 		.pokemons {
