@@ -1,5 +1,5 @@
 import type {PokemonInstance} from "./pokedex";
-import { browser } from "$app/environment";
+import xpChart from "../../../assets/data/final/beta/xp-chart.json";
 
 
 export class ExperienceCalculator {
@@ -9,22 +9,16 @@ export class ExperienceCalculator {
     public chartById = new Map<number, ExperienceEntry[]>();
 
     constructor() {
-        if (browser) {
-        fetch('src/assets/data/final/beta/xp-chart.json')
-            .then(response => response.json())
-            .then(data => {
-
-                // @ts-ignore
-                data.forEach((entry) => {
-                    if (!this.chartById.has(entry.growth_rate_id)) {
-                        this.chartById.set(entry.growth_rate_id, []);
-                    }
-                    // @ts-ignore
-                    this.chartById.get(entry.growth_rate_id).push(new ExperienceEntry(entry.level, entry.experience));
-                });
-                this.ready = true;
-            });
-        }
+    
+        xpChart.forEach((entry) => {
+            if (!this.chartById.has(entry.growth_rate_id)) {
+                this.chartById.set(entry.growth_rate_id, []);
+            }
+            // @ts-ignore
+            this.chartById.get(entry.growth_rate_id).push(new ExperienceEntry(entry.level, entry.experience));
+            
+        });
+        this.ready = true;     
     }
 
     public howMuchINeed(level: number, growthRateId: number): number {

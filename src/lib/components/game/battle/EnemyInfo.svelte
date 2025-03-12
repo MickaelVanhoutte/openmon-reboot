@@ -2,36 +2,19 @@
 	import { BattleContext } from '$lib/js/context/battleContext';
 	import { PokemonInstance } from '$lib/js/pokemons/pokedex';
 	import { BattleType } from '$lib/js/battle/battle-model';
-
+	import { onMount } from 'svelte';
 	/**
 	 * Opponent HP bar
 	 * TODO : status style, team pokeballs;
 	 * TODO: use the same component for player and opponent, handle position in Battle.svelte ?
 	 */
 
-	export let pokemon: PokemonInstance;
-	export let battleCtx: BattleType;
+	export let battleCtx: BattleContext;
 	export let idx: number;
 
 	let currentHp = 0;
 	let percent = 0;
-
-	$: {
-		if (pokemon) {
-			currentHp = pokemon.currentHp;
-			percent = (currentHp / pokemon.stats.hp) * 100;
-		}
-	}
-
-	function getHpColor(percent: number): string {
-		if (percent > 50) {
-			return 'bg-green-500';
-		} else if (percent > 20) {
-			return 'bg-yellow-500';
-		} else {
-			return 'bg-red-500';
-		}
-	}
+	let pokemon: PokemonInstance;
 
 	const statsFormat = {
 		attack: 'Atk',
@@ -54,6 +37,14 @@
 		accuracy: (value: number) => (value + 3) / 3,
 		evasion: (value: number) => (value + 3) / 3
 	};
+
+	battleCtx.currentAction.subscribe((_value) => {
+		if(battleCtx?.oppSide[idx]){
+			pokemon = battleCtx?.oppSide[idx];
+			currentHp = pokemon?.currentHp || 0;
+			percent = Math.floor((currentHp * 100) / pokemon.currentStats.hp);
+		}
+	});
 </script>
 
 <div class="enemy-info" style="--offSet:{idx};" class:double={battleCtx === BattleType.DOUBLE}>
@@ -84,18 +75,16 @@
 			</div>
 		</div>
 		<div class="stats">
-			{#if pokemon?.statsChanges}
-				{#each Object.entries(pokemon?.statsChanges) as [stat, value], index}
-					{#if statsFormat[stat] && statsMultiplier[stat](value) !== 1}
-						<div
-							class="mult"
-							style="--color:{statsMultiplier[stat](value) >= 1 ? '#7EAF53' : '#dc5959'}"
-						>
-							{statsFormat[stat]} : {statsMultiplier[stat](value)}x
-						</div>
-					{/if}
-				{/each}
-			{/if}
+			{#each Object.entries(pokemon?.statsChanges) as [stat, value], index}
+				{#if statsFormat[stat] && statsMultiplier[stat](value) !== 1}
+					<div
+						class="mult"
+						style="--color:{statsMultiplier[stat](value) >= 1 ? '#7EAF53' : '#dc5959'}"
+					>
+						{statsFormat[stat]} : {statsMultiplier[stat](value)}x
+					</div>
+				{/if}
+			{/each}
 		</div>
 	</div>
 </div>

@@ -5,47 +5,33 @@
 
 	export let battleCtx: BattleContext;
 	export let idx: number;
-	export let pokemon: PokemonInstance;
 
 	let currentHp = 0;
 	let percent = 0;
 	let expPercent = 0;
+	let pokemon: PokemonInstance;
 
-	interface StatFormat {
-		attack: string;
-		defense: string;
-		'special-attack': string;
-		'special-defense': string;
-		speed: string;
-	}
-
-	interface StatMultiplier {
-		attack: (value: number) => number;
-		defense: (value: number) => number;
-		'special-attack': (value: number) => number;
-		'special-defense': (value: number) => number;
-		speed: (value: number) => number;
-	}
-
-	const statsFormat: StatFormat = {
-		attack: 'ATK',
-		defense: 'DEF',
-		'special-attack': 'SP.ATK',
-		'special-defense': 'SP.DEF',
-		speed: 'SPD'
+	const statsFormat = {
+		attack: 'Atk',
+		defense: 'Def',
+		specialAttack: 'SpA',
+		specialDefense: 'SpD',
+		speed: 'Spe',
+		hp: 'HP',
+		accuracy: 'Acc',
+		evasion: 'Eva'
 	};
 
-	const statsMultiplier: StatMultiplier = {
-		attack: (value) => value * 2,
-		defense: (value) => value * 2,
-		'special-attack': (value) => value * 2,
-		'special-defense': (value) => value * 2,
-		speed: (value) => value * 2
+	const statsMultiplier = {
+		attack: (value: number) => (value + 2) / 2,
+		defense: (value: number) => (value + 2) / 2,
+		specialAttack: (value: number) => (value + 2) / 2,
+		specialDefense: (value: number) => (value + 2) / 2,
+		speed: (value: number) => (value + 2) / 2,
+		hp: (value: number) => (value + 2) / 2,
+		accuracy: (value: number) => (value + 3) / 3,
+		evasion: (value: number) => (value + 3) / 3
 	};
-
-	function getStatValue(stat: keyof StatFormat): number {
-		return statsMultiplier[stat](pokemon.stats[stat]);
-	}
 
 	battleCtx.currentAction.subscribe((_value) => {
 		if(battleCtx?.playerSide[idx]){
