@@ -66,68 +66,55 @@
 	});
 </script>
 
-<div class="load-screen">
-	{#each Array.from({ length: 8 }) as i}
-		<div class="firefly"></div>
-	{/each}
+<div class="flex flex-col items-end justify-between h-screen w-screen p-4 wrapper">
 
-	<div class="save-list">
+	<ul class="list bg-base-100 rounded-box shadow-md w-full">
 		{#each savesHolder.saves as save}
-			<div class="preview">
-				<div class="save-wrapper">
-					<button
-						class="save"
-						on:click={() => {
-							selected === save ? handleSubmit(save) : (selected = save);
-						}}
-						on:focus={() => (selected = save)}
-					>
-						<p style="font-size: 2rem">{save.id} - {save.player.name}</p>
-						<p style="font-size: 1.5rem">{new Date(save.updated).toUTCString()}</p>
-
-						{#if selected === save}
-							<i style="width: 100%; text-align: center">Continue !</i>
-						{/if}
-					</button>
-					{#if selected === save}
-						<div class="actions">
-							<!-- <button class="go" on:click={() => handleSubmit(save)}> Continue </button> -->
-							<button class="erase" on:click={() => remove(save)}>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-									><path
-										d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM13.4142 13.9997L15.182 15.7675L13.7678 17.1817L12 15.4139L10.2322 17.1817L8.81802 15.7675L10.5858 13.9997L8.81802 12.232L10.2322 10.8178L12 12.5855L13.7678 10.8178L15.182 12.232L13.4142 13.9997ZM9 4V6H15V4H9Z"
-									></path></svg
-								>
-							</button>
-						</div>
-					{/if}
-				</div>
-
-				<div
-					class="images"
-					on:click={() => {
-						selected === save ? handleSubmit(save) : (selected = save);
-					}}
-					on:focus={() => (selected = save)}
-				>
-					<img src={save.player.sprite.face.source} alt={save.player.name} />
-					{#each save.player.monsters as mon}
-						<img
+		<li class="list-row items-center w-full" 
+			on:focus={() => (selected = save)}
+		>
+			<div><img class="size-10 rounded-box" src="{save.player.sprite.face.source}"/></div>
+			<div class="min-w-40">
+			  <div>{save.id} - {save.player.name}</div>
+			  <div class="text-xs uppercase font-semibold opacity-60">{new Date(save.updated).toUTCString()}</div>
+			</div>
+			<div class="flex flex-row gap-2 flex-wrap">
+				{#each save.player.monsters as mon}
+						<img class="md:max-h-16 max-h-8"
 							src={mon.getSprite()}
 							alt={mon.name}
 						/>
 					{/each}
-				</div>
 			</div>
+			<button class="btn btn-square btn-ghost" on:click={() => {
+				selected === save ? handleSubmit(save) : (selected = save);
+			}}>
+			  <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
+			</button>
+			<button class="btn btn-square btn-ghost" on:click={() => remove(save)}>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-[1.2em]"
+				><path
+					d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM13.4142 13.9997L15.182 15.7675L13.7678 17.1817L12 15.4139L10.2322 17.1817L8.81802 15.7675L10.5858 13.9997L8.81802 12.232L10.2322 10.8178L12 12.5855L13.7678 10.8178L15.182 12.232L13.4142 13.9997ZM9 4V6H15V4H9Z"
+				></path></svg
+			>
+			</button>
+		  </li>
 		{/each}
-	</div>
+	</ul>
+
+
 
 	<div class="new-game">
-		<button on:click={() => startNew()}> Start a new game </button>
+		<button class="btn btn-primary" on:click={() => startNew()}> Start a new game </button>
 	</div>
 </div>
 
 <style lang="scss">
+
+	.wrapper {
+		background-image: repeating-linear-gradient(-45deg, var(--color-base-100), var(--color-base-100) 13px, var(--color-base-200) 13px, var(--color-base-200) 14px);
+	}
+
 	.preview {
 		width: 100%;
 		height: 30%;
@@ -151,7 +138,7 @@
 	.load-screen {
 		height: 100dvh;
 		width: 100dvw;
-		color: #262626;
+		//color: #262626;
 		box-sizing: border-box;
 		padding: 2%;
 		background: #0f0c29; /* fallback for old browsers */
@@ -169,85 +156,9 @@
 		); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 		.new-game {
-			position: absolute;
-			bottom: 1%;
-			right: 1%;
-
-			button {
-				background: #599bdc;
-				color: #ececec;
-				border: none;
-				padding: 8px;
-				border-radius: 8px;
-				width: 160px;
-				height: 32px;
-			}
-		}
-
-		.save-list {
-			height: 100%;
-			width: 100%;
-
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 8px;
-
-			overflow-y: auto;
-
-			.save-wrapper {
-				//width: 100%;
-				display: flex;
-				flex-direction: row;
-				justify-content: flex-start;
-				align-items: flex-end;
-				gap: 8px;
-
-				.actions {
-					display: flex;
-					flex-direction: column;
-					gap: 8px;
-					justify-content: flex-end;
-
-					.go {
-						//background: #262626;
-						//color: #ececec;
-						border: none;
-						padding: 8px;
-						border-radius: 8px;
-						cursor: pointer;
-						//width: 160px;
-						height: 32px;
-					}
-
-					.erase {
-						background: #dc5959;
-						color: #ececec;
-						border: none;
-						padding: 8px;
-						border-radius: 8px;
-						cursor: pointer;
-						//width: 160px;
-						height: 32px;
-					}
-				}
-
-				.save {
-					border: 1px solid #262626;
-					border-radius: 8px;
-					padding: 8px;
-					cursor: pointer;
-
-					display: flex;
-					flex-direction: column;
-					gap: 6px;
-					font-size: 24px;
-
-					p {
-						margin: 0;
-					}
-				}
-			}
+			// position: absolute;
+			// bottom: 1%;
+			// right: 1%;
 		}
 	}
 </style>

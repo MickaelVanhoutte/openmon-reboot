@@ -53,9 +53,9 @@
 	<img src="src/assets/monsters/pokedex/050.png" alt="player" class="preview-poke"/>
 
 	<form on:submit|preventDefault={handleSubmit}>
-		<h1>New game</h1>
+		<h1 class="text-2xl font-bold">New game</h1>
 		<label for="template">Are you a</label>
-		<select id="template" bind:value={selected}>
+		<select id="template" class="select" bind:value={selected}>
 			{#each templates as template}
 				<option value={template}>
 					{template === 1 ? 'Boy' : 'Girl'}
@@ -64,9 +64,9 @@
 		</select>
 
 		<label for="name">What's your name?</label>
-		<input id="name" placeholder={sprite.name} bind:value={playerName} />
+		<input id="name" class="input" placeholder={sprite.name} bind:value={playerName} />
 
-		<button type="submit" disabled={playerName?.length === 0}>Start</button>
+		<button type="submit" class="btn btn-primary mt-4" disabled={playerName?.length === 0}>Start</button>
 	</form>
 </div>
 
@@ -80,20 +80,7 @@
 		padding: 2%;
 
 		color: #e0e0e0;
-		background: #0f0c29; /* fallback for old browsers */
-		background: -webkit-linear-gradient(
-			to right,
-			#24243e,
-			#302b63,
-			#0f0c29
-		); /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(
-			to right,
-			#24243e,
-			#302b63,
-			#0f0c29
-		); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+		background-image: repeating-linear-gradient(-45deg, var(--color-base-100), var(--color-base-100) 13px, var(--color-base-200) 13px, var(--color-base-200) 14px);
 		h1 {
 			margin: .35em 0;
 		}
