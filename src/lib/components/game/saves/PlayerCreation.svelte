@@ -55,7 +55,7 @@
 	<form on:submit|preventDefault={handleSubmit}>
 		<h1 class="text-2xl font-bold">New game</h1>
 		<label for="template">Are you a</label>
-		<select id="template" class="select" bind:value={selected}>
+		<select id="template" class="select w-full" bind:value={selected}>
 			{#each templates as template}
 				<option value={template}>
 					{template === 1 ? 'Boy' : 'Girl'}
@@ -64,7 +64,7 @@
 		</select>
 
 		<label for="name">What's your name?</label>
-		<input id="name" class="input" placeholder={sprite.name} bind:value={playerName} />
+		<input id="name" class="input w-full" placeholder={sprite.name} bind:value={playerName} />
 
 		<button type="submit" class="btn btn-primary mt-4" disabled={playerName?.length === 0}>Start</button>
 	</form>
