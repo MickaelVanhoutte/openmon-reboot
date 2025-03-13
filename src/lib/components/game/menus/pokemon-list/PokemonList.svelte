@@ -223,7 +223,7 @@
 				class:switching={switchToIdx === 0}
 				on:click={() => select(0)}
 			>
-				<div class="header">
+				<div class="_header">
 					<div class="img-wrapper">
 						<img
 							src={first?.getSprite()}
@@ -237,7 +237,7 @@
 					<!-- img, name, level, gender-->
 				</div>
 
-				<div class="footer">
+				<div class="_footer">
 					<div class="hp">
 						<span>HP</span>
 						<div class="progressbar-wrapper">
@@ -261,7 +261,7 @@
 					class:switching={switchToIdx === index + 1}
 					on:click={() => select(index + 1)}
 				>
-					<div class="header">
+					<div class="_header">
 						<div class="img-wrapper">
 							<img
 								src={monster?.getSprite()}
@@ -275,7 +275,7 @@
 						<!-- img, name, level, gender-->
 					</div>
 
-					<div class="footer">
+					<div class="_footer">
 						<div class="hp">
 							<span>HP</span>
 							<div class="progressbar-wrapper">
@@ -300,7 +300,7 @@
 
 	<div class="options" class:hidden={!openOptions}>
 		{#if combo && battleContext && battleContext.player.monsters.at(selected)}
-			<ul>
+			<ul class="menu bg-base-200 rounded-box w-56">
 				{#each (battleContext.player.monsters.at(selected)?.moves || []) as move, index }
 					<li class:selected={optionSelected === index}
 						on:click={() => {
@@ -313,7 +313,7 @@
 				{/each}
 			</ul>
 		{:else}
-		<ul>
+		<ul class="menu bg-base-200 rounded-box w-56">
 			{#if !!itemToUse}
 				<li class:selected={optionSelected === 0} on:click={() => useItem()}>USE ({itemName})</li>
 				<li class:selected={optionSelected === 1} on:click={() => (openOptions = false)}>CANCEL</li>
@@ -384,35 +384,19 @@
 	}
 	.options {
 		position: absolute;
-		font-size: 32px;
-		font-weight: 500;
-		text-align: left;
-		bottom: 1%;
-		right: 1%;
-		padding: 22px 36px 22px 36px;
-		background: rgb(220, 231, 233);
-		background: linear-gradient(
-			180deg,
-			rgba(220, 231, 233, 1) 0%,
-			rgba(255, 255, 255, 1) 50%,
-			rgba(220, 231, 233, 0.713344712885154) 100%
-		);
-		border: 2px solid #54506c;
-		border-radius: 8px;
-		box-sizing: border-box;
-		transition: bottom 0.3s ease-in-out;
+		 bottom: 1%;
+		 right: 1%;
 
 		&.hidden {
 			bottom: -100dvh;
 		}
 
 		ul {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			display: flex;
-			flex-direction: column;
-			gap: 16px;
+			font-size: 1.75rem;
+			font-weight: 500;
+			text-align: left;
+			padding: 22px 36px 22px 36px;
+			border: 1px solid white;
 
 			li {
 				&.selected::before {
@@ -421,10 +405,10 @@
 					height: 0;
 					border-top: 12px solid transparent;
 					border-bottom: 12px solid transparent;
-					border-left: 12px solid #262626;
+					border-left: 12px solid white;
 					position: absolute;
-					left: 5px;
-					margin-top: 2px;
+					left: -1rem;
+					margin-top: .3rem;
 				}
 			}
 		}
@@ -501,7 +485,7 @@
 					padding: 4%;
 					align-items: normal;
 
-					.header {
+					._header {
 						padding-right: 2%;
 						width: 100%;
 
@@ -509,11 +493,12 @@
 							img {
 								max-width: 70%;
 								height: auto;
+								scale: 2
 							}
 						}
 					}
 
-					.footer {
+					._footer {
 						width: 100%;
 
 						.hp {
@@ -544,7 +529,7 @@
 					border: 6px solid greenyellow;
 				}
 
-				.header {
+				._header {
 					display: flex;
 					flex-direction: row;
 					position: relative;
@@ -566,11 +551,12 @@
 						img {
 							max-width: 50%;
 							height: auto;
+							scale: 2
 						}
 					}
 				}
 
-				.footer {
+				._footer {
 					display: flex;
 					flex-direction: column;
 					align-items: flex-end;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chart from 'chart.js/auto';
-	import abilities from '$lib/assets/data/final/beta/abilities.json';
+	//import abilities from '../../../../../assets/data/final/beta/abilities.json' assert { type: 'json' };
 	import { Nature, PokemonInstance } from '$lib/js/pokemons/pokedex';
 	import { fade, slide } from 'svelte/transition';
 	import { backInOut } from 'svelte/easing';
@@ -19,6 +19,7 @@
 	let graph: HTMLCanvasElement;
 	let editBtn: HTMLButtonElement;
 	let editLines: HTMLTableSectionElement;
+	let abilities=[];
 
 	//let pkmnList: PokemonInstance[] = context.player.monsters;
 

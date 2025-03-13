@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import PokemonInfo from './PokemonInfo.svelte';
 	import PokemonStats from './PokemonStats.svelte';
@@ -29,8 +29,8 @@
 		1: '$POKEMON STATS',
 		2: '$POKEMON MOVES',
 	};
-
-	$: filteredList = <Array<PokemonInstance>>(pkmnList.filter((pkmn) => pkmn !== undefined));
+	$: filteredList = pkmnList.filter((pkmn) => pkmn !== undefined);
+	//$: filteredList = <Array<PokemonInstance>>(pkmnList.filter((pkmn) => pkmn !== undefined));
 	$: selectedMons = filteredList[selected];
 	$: evs = selectedMons.evs;
 

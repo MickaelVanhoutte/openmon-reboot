@@ -39,6 +39,7 @@
 
 	<div class="infos">
 		<table>
+			<tbody>
 			<tr>
 				<td class="head">Pokedex ID</td>
 				<td>{('00' + selectedMons.id).slice(-3)}</td>
@@ -105,6 +106,7 @@
 					</td>
 				</tr>
 			{/if}
+			</tbody>
 		</table>
 	</div>
 </div>
