@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Move, MoveInstance, PokemonInstance } from '$lib/js/pokemons/pokedex';
+	import { MoveInstance, PokemonInstance } from '$lib/js/pokemons/pokedex';
 	import PokemonSummary from './PokemonSummary.svelte';
 	import { onMount } from 'svelte';
 	import { backInOut } from 'svelte/easing';
@@ -18,9 +18,10 @@
 	export let selected = 0;
 	export let itemToUse: number | undefined = undefined;
 	export let zIndex: number;
+	let zIndexNext = zIndex + 1;
 
 	let battleSummaryOpened = false;
-	$: numberOfOptions = !!itemToUse ? 2 : isBattle ? combo? (context.player.monsters.at(selected)?.moves?.length || 0) : 3 : 4;
+	$: numberOfOptions = !itemToUse ? 2 : isBattle ? combo? (context.player.monsters.at(selected)?.moves?.length || 0) : 3 : 4;
 	let switchToIdx: number | undefined = undefined;
 	let openOptions = false;
 	let optionSelected = 0;
@@ -37,7 +38,6 @@
 		}
 	}
 	$: itemName = itemToUse && context.ITEMS.getItem(itemToUse)?.name;
-	$: zIndexNext = zIndex + 1;
 
 	context.battleContext.subscribe((value) => {
 		battleContext = value;
@@ -167,7 +167,7 @@
 			} else if (e.key === 'ArrowDown') {
 				optionSelected = optionSelected === numberOfOptions ? 0 : optionSelected + 1;
 			} else if (e.key === 'Enter') {
-				if (!!itemToUse) {
+				if (!itemToUse) {
 					if (optionSelected === 0) {
 						useItem();
 					} else if (optionSelected === numberOfOptions) {

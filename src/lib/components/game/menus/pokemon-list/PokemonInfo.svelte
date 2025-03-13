@@ -25,7 +25,7 @@
 	out:fade
 >
 	<div class="img-wrapper">
-		<div class="img-bg">
+		<div class="img-bg relative">
 			<img
 				src={selectedMons.getSprite()}
 				alt="{selectedMons.name} img"
@@ -50,7 +50,7 @@
 			</tr>
 			<tr>
 				<td class="head">Type</td>
-				<td class="types">
+				<td class="types p-2">
 					{#each selectedMons.types as type}
 						<span style="--bg:{typeChart[type].color}" class="type">{type.toUpperCase()}</span>
 					{/each}
@@ -121,25 +121,7 @@
 		flex-direction: row;
 		//background-color: #0e2742f0;
 		//background-image: url('src/assets/menus/p-sum.jpg');
-		background: rgb(0, 29, 43);
-		background: -moz-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: -webkit-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
+
 		color: #fff;
 		text-shadow: 1px 1px 1px black;
 		z-index: var(--zIndex, 11);
@@ -204,7 +186,7 @@
 						}
 
 						&.head {
-							color: #f8d058;
+						//	color: #f8d058;
 						}
 
 						&.nature {

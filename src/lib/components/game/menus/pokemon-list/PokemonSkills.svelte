@@ -2,15 +2,15 @@
 	import { fade, slide } from 'svelte/transition';
 	import { backInOut } from 'svelte/easing';
 	import { PokemonInstance } from '$lib/js/pokemons/pokedex';
-	import PokemonSkillsEdit from './PokemonSkillsEdit.svelte';
 	import type { GameContext } from '$lib/js/context/gameContext';
-	import { typeChart } from '$lib/js/battle/battle-model';
+	import MovesSkillEdit2 from '$lib/components/game/menus/pokemon-list/MovesSkillEdit2.svelte';
 
 	export let context: GameContext;
 	export let selected: number;
 
 	export let zIndex: number;
 	export let selectedMove: number;
+	let movableMove: number = -1;
 	export let pkmnList: PokemonInstance[];
 	//let pkmnList: PokemonInstance[] = context.player.monsters;
 
@@ -24,6 +24,27 @@
 	$: description = selectedMons.moves[selectedMove].description
 		?.replace('$effect_chance', selectedMons?.moves[selectedMove]?.effectChance)
 		?.replace(mechanicRegex, '');
+
+	function handleSelect(idx: number){
+		if(movableMove !== -1 && selectedMove === idx){
+			movableMove = -1;
+			return;
+		}
+		if(movableMove === -1 && selectedMove === idx){
+			movableMove = idx;
+			return;
+		}
+		selectedMove = idx;
+		if(movableMove !== -1 && selectedMove !== movableMove){
+			// swap
+			let tmp = selectedMons.moves[selectedMove];
+			pkmnList[selected].moves[selectedMove] = selectedMons.moves[movableMove];
+			pkmnList[selected].moves[movableMove] = tmp;
+			selectedMons= pkmnList[selected];
+			movableMove = -1;
+		}
+
+	}
 </script>
 
 <div
@@ -58,37 +79,44 @@
 					>
 				</span>
 			</button>
-
-			{#each selectedMons.moves as move, index}
-				<div
-					class="move"
+			<ul class="list bg-base-100 rounded-box shadow-md overflow-hidden w-10/12" style="max-height: 99%; height: calc(25% * {selectedMons.moves?.length})">
+			{#each selectedMons.moves as move, index (move.id)}
+				<li class="list-row w-full justify-end"  style="max-height: calc(100% / ${selectedMons.moves.length});"
 					class:selected={index === selectedMove}
-					on:click={() => (selectedMove = index)}
+					class:moveable={index === movableMove}
+					on:click={() => handleSelect(index)}
 				>
-					<span style="--bg:{typeChart[move.type].color}" class="type"
-						>{move.type.toUpperCase()}</span
-					>
 
-					<div class="flex-row">
-						<div class="flex-col">
-							<span class="name">{move.name}</span>
-							<span>{move.category === 'no-damage' ? 'status' : move.category}</span>
-						</div>
-
-						<div class="flex-col">
-							<span>power {move.power ? move.power : '/'}</span>
-							<span class="pp">PP {move.currentPp}/{move.pp}</span>
-						</div>
+					<div class="flex items-start flex-col">
+						<span>pwr. {move.power ? move.power : ' /'}</span>
+						<span>pp. {move.currentPp} / {move.pp}</span>
 					</div>
-				</div>
+					<div>
+						<div class="text-xl flex justify-between w-full"><span>{move.name}</span></div>
+					</div>
+					<div class="flex flex-col gap-2 w-5">
+						<img
+								class="size-5"
+								src={`src/assets/types/${move?.type}-small.png`}
+								alt={move?.category}
+						/>
+						<img
+								class="size-5"
+								src={`src/assets/moves-cat/${move?.category}.png`}
+								alt={move?.category}
+						/>
+					</div>
+				</li>
 			{/each}
+			</ul>
+
 		</div>
 	</div>
 </div>
 
 <div class="edit" class:opened={moveEdit}>
 	{#if moveEdit}
-		<PokemonSkillsEdit bind:context bind:moveEdit bind:selectedMons bind:zIndex={nextZIndex} />
+		<MovesSkillEdit2 bind:context bind:moveEdit bind:selectedMons bind:zIndex={nextZIndex} />
 	{/if}
 </div>
 
@@ -100,27 +128,6 @@
 		position: relative;
 		display: flex;
 		flex-direction: row;
-		//background-color: #0e2742f0;
-		//background-image: url('src/assets/menus/p-sum.jpg');
-		background: rgb(0, 29, 43);
-		background: -moz-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: -webkit-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
 		color: #fff;
 
 		text-shadow: 1px 1px 1px black;
@@ -243,64 +250,10 @@
 		}
 	}
 
-	.move {
-		background: rgb(220, 231, 233);
-		background: linear-gradient(
-			180deg,
-			rgba(220, 231, 233, 1) 0%,
-			rgba(255, 255, 255, 1) 50%,
-			rgba(220, 231, 233, 0.713344712885154) 100%
-		);
-		color: #54506c;
-		padding: 12px;
-		border-radius: 8px;
-		position: relative;
-		height: calc((100% - 4 * 4%) / 4);
-		box-sizing: border-box;
-		text-shadow: none;
-		width: 80%;
-
-		.flex-row {
-			gap: 6%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			height: 100%;
-			width: 100%;
-			padding-left: 20%;
-			box-sizing: border-box;
-		}
-
-		.flex-col {
-			display: flex;
-			flex-direction: column;
-		}
-
-		&.selected {
-			border: 3px solid #54506c;
-		}
-
-		.type {
-			color: white;
-			text-shadow: 1px 1px 1px black;
-			background-color: var(--bg);
-			border-radius: 8px;
-			padding: 4px;
-			font-size: 22px;
-			position: absolute;
-			top: -4px;
-			left: -10px;
-		}
-
-		.name {
-			font-size: 22px;
-			text-transform: uppercase;
-		}
-
-		.pp {
-			font-size: 22px;
-			text-transform: uppercase;
-		}
+	.selected{
+		background: var(--color-secondary);
+	}
+	.moveable{
+		background: var(--color-primary);
 	}
 </style>

@@ -37,7 +37,7 @@
 			);
 		} else {
 			// remove 1/10, must already have evs distributed and  not go below 0
-			return selectedMons.evs[key] === 0 || selectedMons.evs[key] + testValue <= 0;
+			return selectedMons.evs[key] === 0 || selectedMons.evs[key] + testValue < 0;
 		}
 	}
 
@@ -92,8 +92,6 @@
 		// fix force reload
 		selectedMons = selectedMons;
 	}
-
-	let chart;
 
 	$: data = {
 		labels: [
@@ -214,7 +212,7 @@
 		}
 	};
 
-	function makeChart(ctx, d, l) {
+	function makeChart(ctx) {
 		const myChart = new Chart(ctx, config); //init the chart
 		return {
 			update(u) {
@@ -244,7 +242,7 @@
 </script>
 
 <div
-	class="stats"
+	class="_stats"
 	style="--zIndex:{zIndex}"
 	in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 	out:fade
@@ -374,34 +372,14 @@
 </div>
 
 <style lang="scss">
-	.stats {
+	._stats {
 		height: 100%;
 		width: 100%;
 		box-sizing: border-box;
 		position: relative;
 		display: flex;
 		flex-direction: row;
-		//background-color: #0e2742f0;
-		//background-image: url('src/assets/menus/p-sum.jpg');
-		background: rgb(0, 29, 43);
-		background: -moz-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: -webkit-linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
-		background: linear-gradient(
-			140deg,
-			rgba(0, 29, 43, 1) 0%,
-			rgba(3, 84, 142, 1) 42%,
-			rgba(0, 195, 230, 1) 100%
-		);
+
 		color: #fff;
 
 		text-shadow: 1px 1px 1px black;
