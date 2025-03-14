@@ -19,7 +19,7 @@ const config = {
       precompress: false,
     }),
     paths: {
-      base: '/openmon-reboot',
+      base: process.argv.includes('dev') ? '' : '/openmon-reboot',
     },
   },
 };
