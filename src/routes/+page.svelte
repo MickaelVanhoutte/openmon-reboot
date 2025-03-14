@@ -18,7 +18,7 @@
 	const savesHolder = new SavesHolder();
 	let gameContext: GameContext;
 	let newGame: boolean = false;
-	let started: boolean = false || DEBUG;
+	let started: boolean = DEBUG || false;
 
 	savesHolder.selectedSave$.subscribe((value: SaveContext | undefined) => {
 		if (value) {
@@ -39,7 +39,7 @@
 		});
 	}
 	let sound: Howl = new Howl({
-		src: ['src/assets/audio/battle/battle-start.mp3'],
+		src: ['audio/battle/battle-start.mp3'],
 		autoplay: false,
 		loop: true,
 		volume: 0.7
@@ -155,7 +155,7 @@
 
 	{#if rotate}
 		<div class="rotate">
-			<img src="src/assets/common/rotate.gif" alt="Please rotate your device" />
+			<img src="src/static/common/rotate.gif" alt="Please rotate your device" />
 		</div>
 	{/if}
 </div>

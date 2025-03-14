@@ -16,7 +16,7 @@
     $: if (current?.speaker) {
         if (current.speaker === 'follower' && context.player.follower) {
             //let id = ('00' + context.player.follower.pokemon.id).slice(-3);
-            src =  context.player.follower.pokemon.getSprite() //'src/assets/monsters/pokedex/' + id + '.png';
+            src =  context.player.follower.pokemon.getSprite() //'$static/monsters/pokedex/' + id + '.png';
         } else if (current.speaker !== 'self' && Number(current.speaker)) {
             console.log('getting sprite', current.speaker)
             let sprite = CHARACTER_SPRITES.getSprite(Number.parseInt(current.speaker));

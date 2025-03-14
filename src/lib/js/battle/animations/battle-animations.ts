@@ -453,7 +453,7 @@ function animateThrow(move: Move,
 
     for (let i = 0; i < repeat; i++) {
         tl.set(spriteFx, {
-            background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+            background: 'url(src/static/battle/fx/' + fxImage + '.png)',
             left: source === 'ally' ?
                 initiator.getBoundingClientRect().right - spriteSize / 2 :
                 initiator.getBoundingClientRect().left + spriteSize / 2,
@@ -485,7 +485,7 @@ function animateThrow(move: Move,
 
         if (afterEffect !== undefined) {
             tl.set(spriteFx, {
-                background: 'url(src/assets/battle/fx/elements/'+afterEffect+'.png)',
+                background: 'url(src/static/battle/fx/elements/'+afterEffect+'.png)',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: '0 0',
                 backgroundSize: 'cover',
@@ -526,7 +526,7 @@ function animateSpriteFromTarget(
     let angle = getHueAngle(move);
 
     tl.set(spriteFx, {
-        background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+        background: 'url(src/static/battle/fx/' + fxImage + '.png)',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '0 50%',
         backgroundSize: 'cover',
@@ -593,7 +593,7 @@ function animateBeam(
             duration: 1.4,
         }, 'fx')
         .set(spriteFx, {
-            background: 'url(src/assets/battle/fx/beam.png)',
+            background: 'url(src/static/battle/fx/beam.png)',
             left: source === 'ally' ?
                 initiator.getBoundingClientRect().right - (spriteSize / 2) :
                 initiator.getBoundingClientRect().left + spriteSize / 2,
@@ -652,7 +652,7 @@ function animateSpriteSelf(move: Move,
     let angle = getHueAngle(move);
 
     tl.set(spriteFx, {
-        background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+        background: 'url(src/static/battle/fx/' + fxImage + '.png)',
         left: initiator.getBoundingClientRect().left + initiator.getBoundingClientRect().width / 2 - spriteSize / 2,
         top: initiator.getBoundingClientRect().top - spriteSize / 3,
         opacity: 1,
@@ -714,7 +714,7 @@ function animateSpriteToTarget(
 
     // from initiator
     tl.set(spriteFx, {
-        background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+        background: 'url(src/static/battle/fx/' + fxImage + '.png)',
         left: source === 'ally' ?
             initiator.getBoundingClientRect().right - spriteSize / 2 :
             initiator.getBoundingClientRect().left + spriteSize / 2,
@@ -781,7 +781,7 @@ function animateSpriteOnTarget(
     let tl = gsap.timeline();
 
     tl.set(spriteFx, {
-        background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+        background: 'url(src/static/battle/fx/' + fxImage + '.png)',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '0 50%',
         backgroundSize: 'cover',
@@ -845,7 +845,7 @@ function animateSpriteDash(
             duration: .4
         }
     ).set(spriteFx, {
-        background: 'url(src/assets/battle/fx/' + fxImage + '.png)',
+        background: 'url(src/static/battle/fx/' + fxImage + '.png)',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '0 50%',
         backgroundSize: 'cover',
@@ -884,7 +884,7 @@ function animateSpriteDash(
 
     if (afterEffect !== undefined) {
         tl.set(spriteFx, {
-            background: 'url(src/assets/battle/fx/elements/'+afterEffect+'.png)',
+            background: 'url(src/static/battle/fx/elements/'+afterEffect+'.png)',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '0 0',
             backgroundSize: 'cover',

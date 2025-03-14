@@ -43,7 +43,7 @@ export class OverworldSpawn implements Character {
 
         let id = ("00" + this.pokemon.id).slice(-3);
         id = this.pokemon.isShiny ? id + 's' : id;
-        let source = `src/assets/monsters/walking/${id}.png`;
+        const source = `src/static/monsters/walking/${id}.png`;
         let image = this.images[source];
 
         if (image && image.complete) {

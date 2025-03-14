@@ -347,7 +347,7 @@
 				{#each selectedMons?.moves as move}
 					<div class="move-btn move" style="--color:{typeChart[move.type].color};">
 						<span class="move-type">
-							<svg use:inlineSvg={`src/assets/types/${move.type}.svg`} fill="currentColor"> </svg>
+							<svg use:inlineSvg={`src/static/types/${move.type}.svg`} fill="currentColor"> </svg>
 						</span>
 						<span class="move-name">{move.name.toUpperCase()}</span>
 
@@ -365,7 +365,7 @@
 						on:click={() => (selectedMoveIdx = index)}
 					>
 						<span class="move-type">
-							<svg use:inlineSvg={`src/assets/types/${move.type}.svg`} fill="currentColor"> </svg>
+							<svg use:inlineSvg={`src/static/types/${move.type}.svg`} fill="currentColor"> </svg>
 						</span>
 						<span class="move-name">{move.name.toUpperCase()}</span>
 

@@ -139,12 +139,12 @@
 			<div class="image">
 				{#if selectedPokemon?.id}
 					<img
-						src={`src/assets/monsters/pokedex/${('00' + selectedPokemon?.id).slice(-3)}.png`}
+						src={`src/static/monsters/pokedex/${('00' + selectedPokemon?.id).slice(-3)}.png`}
 						class:hide={!selectedPokemon?.viewed}
 						alt={selectedPokemon?.name}
 					/>
 				{:else}
-					<img src="src/assets/monsters/animated/000.png" alt="unknown" />
+					<img src="src/static/monsters/animated/000.png" alt="unknown" />
 				{/if}
 			</div>
 			<div>
@@ -162,7 +162,7 @@
 					on:click={() => select(index)}
 				>
 					{#if pokemon.caught}
-						<img src="src/assets/menus/pokeball.png" alt="pokemons" />
+						<img src="src/static/menus/pokeball.png" alt="pokemons" />
 					{:else}
 						<span style="height:28px; width:24px"></span>
 					{/if}
@@ -202,12 +202,12 @@
 				>
 				<img
 					style="width: 100%; opacity: 1"
-					src={`src/assets/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
+					src={`src/static/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
 				/>
 
 				<!-- <img
 					style="width: auto; height:80%; position: absolute; top: 50%; left: 50%; z-index:2; transform:translate(-50%, -50%); filter: brightness(1);"
-					src={`src/assets/monsters/animated/${('00' + pokemon?.id).slice(-3)}.gif`}
+					src={`$static/monsters/animated/${('00' + pokemon?.id).slice(-3)}.gif`}
 				/> -->
 
 				<span

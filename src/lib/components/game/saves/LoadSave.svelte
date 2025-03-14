@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { SaveContext, SavesHolder } from '$lib/js/context/savesHolder';
 
@@ -41,7 +40,7 @@
 
 	function loadSound() {
 		sound = new Howl({
-			src: ['src/assets/audio/save.mp3'],
+			src: ['src/static//audio/save.mp3'],
 			autoplay: true,
 			loop: true,
 			volume: 0.5

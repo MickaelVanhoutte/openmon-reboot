@@ -59,12 +59,12 @@ const npcs: NPC[] = [
     )
 ];
 
-export const pokecenter1 = OpenMap.fromScratch(99, 'src/assets/maps/pokecenter2.png', 20, 14,
+export const pokecenter1 = OpenMap.fromScratch(99, 'src/static/maps/pokecenter2.png', 20, 14,
     collisions, [], [], [],
     new Position(9, 12),
     [3, 6], [
     new Jonction(1,
         0, [new Position(9, 13), new Position(10, 13)], new Position(86, 30)
     )
-], 'src/assets/maps/pokecenter2-foreground.png', 39951, 14416, 40111, npcs,
+], 'src/static/maps/pokecenter2-foreground.png', 39951, 14416, 40111, npcs,
     [], 'pokecenter');

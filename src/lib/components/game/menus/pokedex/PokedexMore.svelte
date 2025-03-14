@@ -36,8 +36,8 @@
 						{#each Object.keys(typeChart) as type}
 							{#if calculateTypeEffectiveness(type, pokemon.types) === 0}
 								<div class="type" style="--tcolor:{typeChart[type].color}">
-									<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
-									<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
+									<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
+									<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
 								</div>
 							{/if}
 						{/each}
@@ -51,8 +51,8 @@
 						{#each Object.keys(typeChart) as type}
 							{#if calculateTypeEffectiveness(type, pokemon.types) === 0.25}
 								<div class="type" style="--tcolor:{typeChart[type].color}">
-									<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
-									<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
+									<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
+									<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
 								</div>
 							{/if}
 						{/each}
@@ -66,8 +66,8 @@
 						{#each Object.keys(typeChart) as type}
 							{#if calculateTypeEffectiveness(type, pokemon.types) === 0.5}
 								<div class="type" style="--tcolor:{typeChart[type].color}">
-									<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
-									<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
+									<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
+									<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
 								</div>
 							{/if}
 						{/each}
@@ -81,8 +81,8 @@
 						{#each Object.keys(typeChart) as type}
 							{#if calculateTypeEffectiveness(type, pokemon.types) === 2}
 								<div class="type" style="--tcolor:{typeChart[type].color}">
-									<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
-									<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
+									<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
+									<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
 								</div>
 							{/if}
 						{/each}
@@ -96,8 +96,8 @@
 						{#each Object.keys(typeChart) as type}
 							{#if calculateTypeEffectiveness(type, pokemon.types) === 4}
 								<div class="type" style="--tcolor:{typeChart[type].color}">
-									<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
-									<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
+									<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
+									<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
 								</div>
 							{/if}
 						{/each}
@@ -112,7 +112,7 @@
 		{#if pokemon.evolution?.length === 0}
 			<div class="evolution noEvolution">
 				<img
-					src={`src/assets/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
+					src={`src/static/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
 					alt="current pokemon"
 				/>
 				<div class="method">
@@ -123,7 +123,7 @@
 			{#each pokemon.evolution as evolution}
 				<div class="evolution">
 					<img
-						src={`src/assets/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
+						src={`src/static/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`}
 						alt="current pokemon"
 					/>
 					<div class="method">
@@ -139,7 +139,7 @@
 						>
 					</div>
 					<img
-						src={`src/assets/monsters/pokedex/${('00' + evolution?.id).slice(-3)}.png`}
+						src={`src/static/monsters/pokedex/${('00' + evolution?.id).slice(-3)}.png`}
 						alt="next evolution"
 					/>
 				</div>

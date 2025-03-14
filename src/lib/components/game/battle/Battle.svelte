@@ -14,14 +14,14 @@
 		animateRun
 	} from '$lib/js/battle/animations/battle-animations';
 
-	import moves from '../../../../assets/data/raw/moves/moves.json';
+	import moves from '$static/data/raw/moves/moves.json';
 	import {
 		ComboMove,
 		Move,
 		MoveEffect,
 		MoveInstance,
 		PokemonInstance
-	} from '../../../js/pokemons/pokedex';
+	} from '$lib/js/pokemons/pokedex';
 
 	/**
 	 * Battle screen component, handles pokemons display.
@@ -249,7 +249,7 @@
 			class="battle-bg"
 			bind:this={scene}
 			alt="background"
-			src="src/assets/battle/bg-beach6.jpg"
+			src="src/static/battle/bg-beach6.jpg"
 		/>
 		<div class="fx" bind:this={spriteFx}></div>
 		<div class="fx" bind:this={spriteFxPartner}></div>

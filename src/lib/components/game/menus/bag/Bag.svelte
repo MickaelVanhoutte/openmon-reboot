@@ -228,7 +228,7 @@
 		left: 0;
 		width: 100dvw;
 		height: 100dvh;
-		//background-image: url('src/assets/menus/p-sum.jpg');
+		//background-image: url('$static/menus/p-sum.jpg');
 		background: rgb(0, 29, 43);
 		background: -moz-linear-gradient(
 			140deg,

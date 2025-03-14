@@ -19,7 +19,7 @@
 
 	function loadSound() {
 		sound = new Howl({
-			src: ['src/assets/audio/save.mp3'],
+			src: ['src/static/audio/save.mp3'],
 			autoplay: true,
 			loop: true,
 			volume: 0.5
@@ -50,7 +50,7 @@
 	{/each}
 
 	<img src={sprite.full.source} alt="player" class="preview"/>
-	<img src="src/assets/monsters/pokedex/050.png" alt="player" class="preview-poke"/>
+	<img src="src/static/monsters/pokedex/050.png" alt="player" class="preview-poke"/>
 
 	<form on:submit|preventDefault={handleSubmit}>
 		<h1 class="text-2xl font-bold">New game</h1>

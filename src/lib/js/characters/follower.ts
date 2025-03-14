@@ -92,7 +92,7 @@ export class Follower implements Character, Interactive {
 
         let id = ("00" + this.pokemon.id).slice(-3);
         id = this.pokemon.isShiny ? id + 's' : id;
-        let source = `src/assets/monsters/walking/${id}.png`;
+        let source = `src/static/monsters/walking/${id}.png`;
         let image = this.images[source];
 
         if (image && image.complete) {
@@ -235,7 +235,7 @@ export class PokeWalkerSpriteDrawer {
 
         let id = ("00" + pokemon.id).slice(-3);
         id = pokemon.isShiny ? id + 's' : id;
-        let source = `src/assets/monsters/walking/${id}.png`;
+        let source = `src/static/monsters/walking/${id}.png`;
         let image = this.images[source];
         if (image && image.complete) {
             this.drawImage(ctx, image, playerPosition, orientation, scale, moving, walkerPosition, mapDim);

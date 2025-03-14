@@ -1,5 +1,5 @@
 import type {PokemonInstance} from "./pokedex";
-import xpChart from "../../../assets/data/final/beta/xp-chart.json";
+import xpChart from "$static/data/final/beta/xp-chart.json";
 
 
 export class ExperienceCalculator {

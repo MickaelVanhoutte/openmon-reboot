@@ -265,7 +265,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/pokeball.png" alt="pokemons" /> -->
+			<!-- <img src="$static/menus/pokeball.png" alt="pokemons" /> -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				version="1.0"
@@ -302,7 +302,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/bag.png" alt="bag" /> -->
+			<!-- <img src="$static/menus/bag.png" alt="bag" /> -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
 				><path
 					d="M7 5V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7ZM16 15H13V16H11V15H8V19H16V15ZM8 7V13H11V12H13V13H16V7H8ZM6 13V7H4V13H6ZM18 13H20V7H18V13ZM6 15H4V19H6V15ZM18 15V19H20V15H18ZM9 3V5H15V3H9Z"
@@ -320,7 +320,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/boxes.png" alt="pc boxes" /> -->
+			<!-- <img src="$static/menus/boxes.png" alt="pc boxes" /> -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
 				><path
 					d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM5.49388 7.0777L12.0001 10.8444L18.5062 7.07774L12 3.311L5.49388 7.0777ZM4.5 8.81329V16.3469L11.0001 20.1101V12.5765L4.5 8.81329ZM13.0001 20.11L19.5 16.3469V8.81337L13.0001 12.5765V20.11Z"
@@ -338,7 +338,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/pokedex.png" alt="pc boxes" /> -->
+			<!-- <img src="$static/menus/pokedex.png" alt="pc boxes" /> -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				version="1.0"
@@ -369,7 +369,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/trainer.png" alt="trainer" /> -->
+			<!-- <img src="$static/menus/trainer.png" alt="trainer" /> -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
 				><path
 					d="M3 6H21V18H3V6ZM2 4C1.44772 4 1 4.44772 1 5V19C1 19.5523 1.44772 20 2 20H22C22.5523 20 23 19.5523 23 19V5C23 4.44772 22.5523 4 22 4H2ZM13 8H19V10H13V8ZM18 12H13V14H18V12ZM10.5 10C10.5 11.3807 9.38071 12.5 8 12.5C6.61929 12.5 5.5 11.3807 5.5 10C5.5 8.61929 6.61929 7.5 8 7.5C9.38071 7.5 10.5 8.61929 10.5 10ZM8 13.5C6.067 13.5 4.5 15.067 4.5 17H11.5C11.5 15.067 9.933 13.5 8 13.5Z"
@@ -404,7 +404,7 @@
 			in:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 			out:slide={{ duration: 500, delay: 100, axis: 'x', easing: backInOut }}
 		>
-			<!-- <img src="src/assets/menus/save.png" alt="save" /> -->
+			<!-- <img src="$static/menus/save.png" alt="save" /> -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
 				><path
 					d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"

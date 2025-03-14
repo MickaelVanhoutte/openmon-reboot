@@ -120,7 +120,7 @@
 		display: flex;
 		flex-direction: row;
 		//background-color: #0e2742f0;
-		//background-image: url('src/assets/menus/p-sum.jpg');
+		//background-image: url('$static/menus/p-sum.jpg');
 
 		color: #fff;
 		text-shadow: 1px 1px 1px black;

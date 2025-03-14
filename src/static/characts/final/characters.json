@@ -4,7 +4,7 @@
         "name": "Ethan",
         "playable": true,
         "full": {
-            "source": "src/assets/characts/final/full/ethan.png",
+            "source": "src/static/characts/final/full/ethan.png",
             "startX": 0,
             "startY": 0,
             "height": 76,
@@ -12,7 +12,7 @@
             "frameNumber": 1
         },
         "face": {
-            "source": "src/assets/characts/final/faces/ethan.png",
+            "source": "src/static/characts/final/faces/ethan.png",
             "startX": 0,
             "startY": 0,
             "height": 100,
@@ -20,7 +20,7 @@
             "frameNumber": 1
         },
         "throwing": {
-            "source": "src/assets/characts/final/throwing/ethan.png",
+            "source": "src/static/characts/final/throwing/ethan.png",
             "startX": 0,
             "startY": 0,
             "height": 128,
@@ -29,7 +29,7 @@
         },
         "overworld": {
             "walking": {
-                "source": "src/assets/characts/final/walking/ethan.png",
+                "source": "src/static/characts/final/walking/ethan.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -37,7 +37,7 @@
                 "frameNumber": 4
             },
             "running": {
-                "source": "src/assets/characts/final/running/ethan.png",
+                "source": "src/static/characts/final/running/ethan.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -45,7 +45,7 @@
                 "frameNumber": 4
             },
             "biking": {
-                "source": "src/assets/characts/final/biking/ethan.png",
+                "source": "src/static/characts/final/biking/ethan.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -53,7 +53,7 @@
                 "frameNumber": 4
             },
             "surfing": {
-                "source": "src/assets/characts/final/surfing/ethan.png",
+                "source": "src/static/characts/final/surfing/ethan.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -67,7 +67,7 @@
         "name": "Lyra",
         "playable": true,
         "full": {
-            "source": "src/assets/characts/final/full/lyra.png",
+            "source": "src/static/characts/final/full/lyra.png",
             "startX": 0,
             "startY": 0,
             "height": 76,
@@ -75,7 +75,7 @@
             "frameNumber": 1
         },
         "face": {
-            "source": "src/assets/characts/final/faces/lyra.png",
+            "source": "src/static/characts/final/faces/lyra.png",
             "startX": 0,
             "startY": 0,
             "height": 100,
@@ -83,7 +83,7 @@
             "frameNumber": 1
         },
         "throwing": {
-            "source": "src/assets/characts/final/throwing/lyra.png",
+            "source": "src/static/characts/final/throwing/lyra.png",
             "startX": 0,
             "startY": 0,
             "height": 128,
@@ -92,7 +92,7 @@
         },
         "overworld": {
             "walking": {
-                "source": "src/assets/characts/final/walking/lyra.png",
+                "source": "src/static/characts/final/walking/lyra.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -100,7 +100,7 @@
                 "frameNumber": 4
             },
             "running": {
-                "source": "src/assets/characts/final/running/lyra.png",
+                "source": "src/static/characts/final/running/lyra.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -108,7 +108,7 @@
                 "frameNumber": 4
             },
             "biking": {
-                "source": "src/assets/characts/final/biking/lyra.png",
+                "source": "src/static/characts/final/biking/lyra.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -116,7 +116,7 @@
                 "frameNumber": 4
             },
             "surfing": {
-                "source": "src/assets/characts/final/surfing/lyra.png",
+                "source": "src/static/characts/final/surfing/lyra.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 64,
@@ -129,7 +129,7 @@
         "id": 3,
         "name": "Rich boy",
         "full": {
-            "source": "src/assets/characts/final/full/rich-boy.png",
+            "source": "src/static/characts/final/full/rich-boy.png",
             "startX": 0,
             "startY": 0,
             "height": 76,
@@ -137,7 +137,7 @@
             "frameNumber": 1
         },
         "face": {
-            "source": "src/assets/characts/final/faces/rich-boy.png",
+            "source": "src/static/characts/final/faces/rich-boy.png",
             "startX": 0,
             "startY": 0,
             "height": 100,
@@ -146,7 +146,7 @@
         },
         "overworld": {
           "walking": {
-            "source": "src/assets/characts/final/walking/rich-boy.png",
+            "source": "src/static/characts/final/walking/rich-boy.png",
             "startX": 0,
             "startY": 0,
             "height": 64,
@@ -159,7 +159,7 @@
         "id": 4,
         "name": "Parasol lady",
         "full": {
-            "source": "src/assets/characts/final/full/parasol-lady.png",
+            "source": "src/static/characts/final/full/parasol-lady.png",
             "startX": 0,
             "startY": 0,
             "height": 160,
@@ -168,7 +168,7 @@
         },
         "overworld": {
             "walking": {
-                "source": "src/assets/characts/final/walking/parasol-lady.png",
+                "source": "src/static/characts/final/walking/parasol-lady.png",
                 "startX": 0,
                 "startY": 0,
                 "height": 48,

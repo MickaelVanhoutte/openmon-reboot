@@ -49,12 +49,12 @@
             <div class="flex flex-col gap-2">
                 <img
                         class="size-5"
-                        src={`src/assets/types/${move?.type}-small.png`}
+                        src={`src/static/types/${move?.type}-small.png`}
                         alt={move?.category}
                 />
                 <img
                         class="size-5"
-                        src={`src/assets/moves-cat/${move?.category}.png`}
+                        src={`src/static/moves-cat/${move?.category}.png`}
                         alt={move?.category}
                 />
             </div>
@@ -77,12 +77,12 @@
             <div class="flex flex-col gap-2 order-3">
                 <img
                         class="size-5"
-                        src={`src/assets/types/${move?.type}-small.png`}
+                        src={`src/static/types/${move?.type}-small.png`}
                         alt={move?.category}
                 />
                 <img
                         class="size-5"
-                        src={`src/assets/moves-cat/${move?.category}.png`}
+                        src={`src/static/moves-cat/${move?.category}.png`}
                         alt={move?.category}
                 />
             </div>

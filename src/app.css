@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: pokemon;
-  src: url('fonts/pokemon-ds-font.ttf');
+  src: url('src/static/fonts/pokemon-ds-font.ttf');
 }
 
 :root {

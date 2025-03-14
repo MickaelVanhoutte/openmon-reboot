@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [sveltekit(), tailwindcss()],
   resolve: {
     alias: {
-      $lib: path.resolve('./src/lib')
+      $lib: path.resolve('./src/lib'),
+      $static: path.resolve('./src/static'),
     }
   }
 });

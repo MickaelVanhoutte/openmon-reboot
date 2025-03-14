@@ -1,4 +1,4 @@
-import charactersJson from "../../../assets/characts/final/characters.json";
+import charactersJson from "$static/characts/final/characters.json";
 import { Position } from "../mapping/positions";
 
 export class SpriteFromSheet {

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { inlineSvg } from '@svelte-put/inline-svg';
-	import { typeChart } from '../../../../js/battle/battle-model';
-	import { PokedexEntry } from '../../../../js/pokemons/pokedex';
+	import { typeChart } from '$lib/js/battle/battle-model';
+	import { PokedexEntry } from '$lib/js/pokemons/pokedex';
 	import { backInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
 	import Modal from '../../common/Modal.svelte';
-	import abilities from '../../../../../assets/data/final/beta/abilities.json';
+	import abilities from '$static/data/final/beta/abilities.json';
 
 	export let pokemon: PokedexEntry;
 	let abilityName: string;
@@ -32,7 +32,7 @@
 	class="stats-tab column"
 	in:slide={{ duration: 500, delay: 50, axis: 'x', easing: backInOut }}
 	class:hide={!pokemon.viewed}
-	style="background-image: url({`src/assets/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`})"
+	style="background-image: url({`src/static/monsters/pokedex/${('00' + pokemon?.id).slice(-3)}.png`})"
 >
 	<div class="main row">
 		<div class="desc">
@@ -75,8 +75,8 @@
 								{#each pokemon.types as type}
 									<div class="type" style="--tcolor:{typeChart[type].color}">
 										<span>{type}</span>
-										<svg use:inlineSvg={`src/assets/types/${type}.svg`} fill="currentColor"> </svg>
-										<!-- <img alt={type} src="src/assets/types/{type}.svg" /> -->
+										<svg use:inlineSvg={`src/static/types/${type}.svg`} fill="currentColor"> </svg>
+										<!-- <img alt={type} src="$static/types/{type}.svg" /> -->
 									</div>
 								{/each}
 							{:else}

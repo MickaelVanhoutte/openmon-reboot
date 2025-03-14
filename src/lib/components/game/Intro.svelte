@@ -39,7 +39,7 @@
 
 	function loadSound() {
 		sound = new Howl({
-			src: ['src/assets/audio/intro.mp3'],
+			src: ['audio/intro.mp3'],
 			autoplay: true,
 			loop: true,
 			volume: 0.5,
@@ -52,13 +52,13 @@
 
 	async function preloadAssets() {
 		// const imagePromises = all.flatMap(i => [
-		// 	preloadImage(`src/assets/monsters/walking/${i}.png`),
-		// 	preloadImage(`src/assets/monsters/walking/${i}s.png`),
-		// 	preloadImage(`src/assets/monsters/animated/${i}.gif`),
-		// 	preloadImage(`src/assets/monsters/animated/${i}b.gif`),
-		// 	preloadImage(`src/assets/monsters/animated/${i}s.gif`),
-		// 	preloadImage(`src/assets/monsters/animated/${i}sb.gif`),
-		// 	preloadImage(`src/assets/monsters/pokedex/${i}sb.png`)
+		// 	preloadImage(`$static/monsters/walking/${i}.png`),
+		// 	preloadImage(`$static/monsters/walking/${i}s.png`),
+		// 	preloadImage(`$static/monsters/animated/${i}.gif`),
+		// 	preloadImage(`$static/monsters/animated/${i}b.gif`),
+		// 	preloadImage(`$static/monsters/animated/${i}s.gif`),
+		// 	preloadImage(`$static/monsters/animated/${i}sb.gif`),
+		// 	preloadImage(`$static/monsters/pokedex/${i}sb.png`)
 		// ]);
 
 		// await Promise.all(imagePromises);
@@ -131,7 +131,7 @@
 		{/if}
 	</span>
 
-	<img class="logo" src="src/assets/menus/pokemon-logo.png" alt="pokemon logo" />
+	<img class="logo" src="src/static/menus/pokemon-logo.png" alt="pokemon logo" />
 
 	<div class="links">
 		<a href="https://www.tiktok.com/@azkaiser" target="_blank" class="tiktok">
@@ -153,9 +153,9 @@
 	</div>
 
 	<h3 class="animate-charcter title">UNISON</h3>
-	<!-- <img class="combo" src="src/assets/menus/combo.svg" alt="gimmick logo" /> -->
-	<img class="darkrai" src="src/assets/darkrai.png" alt="darkrai" />
-	<img class="diancie" src="src/assets/diancie.png" alt="diancie" />
+	<!-- <img class="combo" src="$static/menus/combo.svg" alt="gimmick logo" /> -->
+	<img class="darkrai" src="src/static/darkrai.png" alt="darkrai" />
+	<img class="diancie" src="src/static/diancie.png" alt="diancie" />
 	<span class="touch animate-pulse">
 		{#if ready}
 			Touch to start
@@ -176,7 +176,7 @@
 				<i
 					style="will-change: background-position;
 						animation: anim-sprite 0.5s infinite steps(1);
-						background: url('src/assets/monsters/walking/{('00' + (i + 1)).slice(-3)}{Math.random() > 0.5 ? 's' : ''}.png')"
+						background: url('src/static/monsters/walking/{('00' + (i + 1)).slice(-3)}{Math.random() > 0.5 ? 's' : ''}.png')"
 				></i>
 			</i>
 		{/each}
@@ -185,12 +185,12 @@
 
 {#if !started}
 
-	<audio src="src/assets/audio/intro.mp3" preload="auto" style="display: none"></audio>
-	<audio src="src/assets/audio/beach.mp3" preload="auto" style="display: none"></audio>
-	<audio src="src/assets/audio/forest.mp3" preload="auto" style="display: none"></audio>
-	<audio src="src/assets/audio/save.mp3" preload="auto" style="display: none"></audio>
-	<audio src="src/assets/audio/battle/battle-start.mp3" preload="auto" style="display: none"></audio>
-	<audio src="src/assets/audio/battle/battle1.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/intro.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/beach.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/forest.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/save.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/battle/battle-start.mp3" preload="auto" style="display: none"></audio>
+	<audio src="src/static/audio/battle/battle1.mp3" preload="auto" style="display: none"></audio>
 {/if}
 
 <style lang="scss">

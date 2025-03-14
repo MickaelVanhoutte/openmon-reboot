@@ -2,7 +2,7 @@ import { MapSave, OpenMap } from "../mapping/maps";
 import { Player } from "../characters/player";
 import { CharacterPosition, type Character, type Interactive } from "../characters/characters-model";
 import { Settings } from "../characters/settings";
-import { Pokedex, PokemonInstance, SavedEntry } from "../pokemons/pokedex";
+import { Pokedex, PokemonInstance } from "../pokemons/pokedex";
 import { PokemonBox } from "../pokemons/boxes";
 import { Position } from "../mapping/positions";
 import { MenuType, OverworldContext, SceneType } from "./overworldContext";
@@ -22,6 +22,7 @@ import { OverworldSpawn } from "../characters/overworld-spawn";
 import { Flags, Objective, ObjectiveState, QUESTS, Quest, QuestState } from "../scripting/quests";
 import { Notifications } from "../scripting/notifications";
 import { BattleType } from "../battle/battle-model";
+import {SoundManager} from '$lib/js/managers/sound-manager';
 
 
 /**
@@ -63,9 +64,7 @@ export class GameContext {
     //tg: TourGuideClient;
     viewedGuides: number[];
 
-    sound?: Howl;
-    battleStartSound: Howl;
-    battleSound: Howl;
+    soundManager: SoundManager = new SoundManager();
 
     notifications: Notifications = new Notifications();
 
@@ -134,19 +133,6 @@ export class GameContext {
             } else {
                 this.scriptsByTrigger.set(script.triggerType, [script]);
             }
-        });
-
-        this.battleStartSound = new Howl({
-            src: ['src/assets/audio/battle/battle-start.mp3'],
-            autoplay: false,
-            loop: false,
-            volume: 0.5
-        });
-        this.battleSound = new Howl({
-            src: ['src/assets/audio/battle/battle2.mp3'],
-            autoplay: false,
-            loop: true,
-            volume: 0.5
         });
 
         this.bindKeys();
@@ -385,13 +371,13 @@ export class GameContext {
     }
 
     changeMap(jonction: Jonction) {
-        if (!!this.sound) {
+        /*if (!!this.sound) {
             this.sound.fade(0.5, 0, 900);
             setTimeout(() => {
                 this.sound?.stop();
                 this.sound = undefined;
             }, 900);
-        }
+        }*/
 
 
         // stop every scripts
@@ -406,12 +392,13 @@ export class GameContext {
 
     playMapSound() {
         if (this.map?.sound) {
-            this.sound = new Howl({
-                src: ['src/assets/audio/' + this.map?.sound + '.mp3'],
+            this.soundManager.playSound(this.map.sound, true);
+            /*this.sound = new Howl({
+                src: ['src/static/audio/' + this.map?.sound + '.mp3'],
                 autoplay: true,
                 loop: true,
                 volume: 0.5
-            });
+            });*/
         }
     }
 
@@ -586,7 +573,7 @@ export class GameContext {
     startBattle(opponent: PokemonInstance | Character, battleType: BattleType, onEnd?: () => void) {
         this.overWorldContext.setPaused(true, 'battle-start gameContext');
 
-        if (this.sound && this.sound.playing()) {
+        /*if (this.sound && this.sound.playing()) {
             this.sound.fade(0.5, 0, 500);
             this.battleStartSound.play();
             setTimeout(() => {
@@ -598,7 +585,8 @@ export class GameContext {
         setTimeout(() => {
             this.battleStartSound.stop();
             this.battleSound.play();
-        }, 1500);
+        }, 1500);*/
+        this.soundManager.playBattleSound();
 
         console.log(battleType)
         if(battleType === BattleType.DOUBLE && this.player.monsters.length < 2){
@@ -618,7 +606,8 @@ export class GameContext {
         let battleContext = new BattleContext(this.player, opponent, this.settings, battleType);
         let unsubscribe = battleContext.events.end.subscribe((result) => {
             if (result) {
-                this.battleSound.fade(0.5, 0, 1000);
+                //this.battleSound.fade(0.5, 0, 1000);
+                this.soundManager.fadeOutSound();
 
                 battleContext.events.ending.set(true);
 
@@ -657,7 +646,8 @@ export class GameContext {
                     // End of battle, 2 sec later for fade out
                     this.overWorldContext.setPaused(false, 'battle-end gameContext');
                     this.battleContext.set(undefined);
-                    this.battleSound.stop();
+                    //this.battleSound.stop();
+                    this.soundManager.stopSound();
                     this.hasEvolutions = this.player.monsters.some(pkmn => pkmn.canEvolve());
                     if (onEnd) {
                         onEnd();

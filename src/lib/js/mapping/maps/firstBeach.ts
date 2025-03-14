@@ -609,7 +609,7 @@ const npcs = [
     ),
 ]
 
-export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.png', 150, 150,
+export const firstBeach = OpenMap.fromScratch(0, 'src/static/maps/First-beach.png', 150, 150,
     collisions, waterCollision, battle, monsters,
     new Position(130, 94),
     [3, 6], [
@@ -617,7 +617,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
     //     99, [new Position(86, 29)], new Position(9, 12),
     // ),
     new Jonction(2, 1, [new Position(141, 0), new Position(142, 0), new Position(143, 0), new Position(144, 0), new Position(145, 0), new Position(146, 0), new Position(147, 0)], new Position(6, 159))
-], 'src/assets/maps/First-beach-foreground.png', 39951, 40104, 40111, npcs,
+], 'src/static/maps/First-beach-foreground.png', 39951, 40104, 40111, npcs,
     [
         new Script('onGameStart', [
             new Dialog([
@@ -633,7 +633,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
         ])
     ], 'beach',
     [
-        new OverworldItem('Pokeball', true, new Position(137, 84), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', true, new Position(137, 84), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found a Pokeball !', 'System'),
@@ -661,7 +661,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
             ])
         ]),
 
-        new OverworldItem('Pokeball', true, new Position(137, 90), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', true, new Position(137, 90), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found your pokedex !', 'System'),
@@ -676,7 +676,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
             ])
         ]),
 
-        new OverworldItem('Pokeball', true, new Position(128, 90), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', true, new Position(128, 90), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found your trainer card !', 'System'),
@@ -691,7 +691,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
             ])
         ]),
 
-        new OverworldItem('Pokeball', true, new Position(131, 87), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', true, new Position(131, 87), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found your bag !', 'System'),
@@ -708,7 +708,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
             ])
         ]),
 
-        new OverworldItem('Pokeball', true, new Position(135, 94), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', true, new Position(135, 94), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found your running shoes !', 'System'),
@@ -723,7 +723,7 @@ export const firstBeach = OpenMap.fromScratch(0, 'src/assets/maps/First-beach.pn
             ])
         ]),
 
-        new OverworldItem('Pokeball', false, new Position(143, 87), 'src/assets/menus/pokeball.png', undefined, [
+        new OverworldItem('Pokeball', false, new Position(143, 87), 'src/static/menus/pokeball.png', undefined, [
             new Script('onInteract', [
                 new Dialog([
                     new Message('You found a Fresh water !', 'System'),

@@ -1,6 +1,6 @@
 import { EXPERIENCE_CHART } from "./experience";
 import type { Effect } from "./move-effects";
-import pokedexJson from "../../../assets/data/final/beta/pokedex-animatedV3.json";
+import pokedexJson from "$static/data/final/beta/pokedex-animatedV3.json";
 import { typeChart } from "../battle/battle-model";
 
 export class Nature {
@@ -410,7 +410,7 @@ export class PokedexEntry {
     }
 
     getSprite(): string {
-        return `src/assets/monsters/static/sprites/${this.normalizedName}.png`
+        return `src/static/monsters/static/sprites/${this.normalizedName}.png`
 	}
 }
 
@@ -882,9 +882,9 @@ export class PokemonInstance extends PokedexEntry {
 
     public getSprite(back?: boolean): string {
         if(this.isShiny){
-            return `src/assets/monsters/static/sprites-shiny${(back ? '-back/' : '/') + this.normalizedName}.png`
+            return `src/static/monsters/static/sprites-shiny${(back ? '-back/' : '/') + this.normalizedName}.png`
         }
-        return `src/assets/monsters/static/sprites${(back ? '-back/' : '/') + this.normalizedName}.png`
+        return `src/static/monsters/static/sprites${(back ? '-back/' : '/') + this.normalizedName}.png`
     }
 
     public hasType(type: string): boolean {

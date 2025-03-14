@@ -1,6 +1,6 @@
 import { EXPERIENCE_CHART } from "../pokemons/experience";
-import noviceData from "../../../assets/data/final/beta/masteries-initiate.json";
-import expertData from "../../../assets/data/final/beta/masteries-expert.json";
+import noviceData from "$static/data/final/beta/masteries-initiate.json";
+import expertData from "$static/data/final/beta/masteries-expert.json";
 
 export class Mastery {
     q: number;

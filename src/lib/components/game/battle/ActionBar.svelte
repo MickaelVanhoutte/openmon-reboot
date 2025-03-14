@@ -443,7 +443,7 @@
 	{:else}
 		<div class="combo-jauge">
 			<div class="counter">
-				<svg use:inlineSvg={'src/assets/menus/combo.svg'} />
+				<svg use:inlineSvg={'src/static/menus/combo.svg'} />
 				<span>
 					{comboStored}
 				</span>
@@ -549,7 +549,7 @@
 						</p>
 						<img
 							class="move-cat"
-							src={`src/assets/moves-cat/${battleCtx?.playerSide[battleCtx.actionIdx]?.moves[selectedMoveIdx]?.category}.png`}
+							src={`src/static/moves-cat/${battleCtx?.playerSide[battleCtx.actionIdx]?.moves[selectedMoveIdx]?.category}.png`}
 							alt={battleCtx?.playerSide[battleCtx.actionIdx]?.moves[selectedMoveIdx]?.category}
 						/>
 					{/if}
@@ -665,7 +665,7 @@
 					on:click={() => launchMove(index, move)}
 				>
 					<span class="move-type" style="--offset: {index * 1.5}%">
-						<svg use:inlineSvg={`src/assets/types/${move.type}.svg`} fill="currentColor"> </svg>
+						<svg use:inlineSvg={`src/static/types/${move.type}.svg`} fill="currentColor"> </svg>
 					</span>
 					<span class="move-name">{move.name.toUpperCase()}</span>
 
@@ -691,7 +691,7 @@
 						])}
 				>
 					<!-- <span class="move-type" style="--offset: {index * 1.5}%">
-					<svg use:inlineSvg={`src/assets/types/${move.type}.svg`} fill="currentColor"> </svg>
+					<svg use:inlineSvg={`$static/types/${move.type}.svg`} fill="currentColor"> </svg>
 				</span> -->
 					<span class="move-name">{target.name.toUpperCase()}</span>
 					<span

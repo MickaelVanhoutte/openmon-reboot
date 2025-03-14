@@ -64,8 +64,8 @@
 							<td>
 								<div class="types">
 									<div class="type" style="--tcolor:{typeChart[move.type].color}">
-										<!-- <img alt={move.type} src="src/assets/types/{move.type}.svg" /> -->
-										<svg use:inlineSvg={`src/assets/types/${move.type}.svg`} fill="currentColor"> </svg>
+										<!-- <img alt={move.type} src="$static/types/{move.type}.svg" /> -->
+										<svg use:inlineSvg={`src/static/types/${move.type}.svg`} fill="currentColor"> </svg>
 									</div>
 								</div>
 							</td>
@@ -73,7 +73,7 @@
 								<img
 									class="move-cat"
 									alt={move.type}
-									src="src/assets/moves-cat/{move.category}.png"
+									src="src/static/moves-cat/{move.category}.png"
 								/>
 							</td>
 							<td>

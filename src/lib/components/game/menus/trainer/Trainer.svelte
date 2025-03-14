@@ -191,7 +191,7 @@ out:fade>
 			width: 100%;
 			box-sizing: border-box;
 			background-color: #0e2742f0;
-			//background-image: url('src/assets/menus/p-sum.jpg');
+			//background-image: url('$static/menus/p-sum.jpg');
 			background: rgb(0, 29, 43);
 			background: -moz-linear-gradient(
 				140deg,

@@ -188,7 +188,7 @@
 					border-radius: 50%;
 					border: 4px solid black;
 					box-sizing: border-box;
-					background: url(src/assets/common/squared-ball.png);
+					background: url('src/static/common/squared-ball.png');
 					background-repeat: no-repeat;
 					background-size: cover;
 					background-position: 50% 50%;
